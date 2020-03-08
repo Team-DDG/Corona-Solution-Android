@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.golddog.mask_location">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="2fe0d73a2afa2b0dd86126cd6326a3d5"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
