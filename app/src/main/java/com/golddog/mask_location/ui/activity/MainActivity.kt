@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fab_corona_manual_main.setOnClickListener(this)
         fab_corona_now_main.setOnClickListener(this)
 
+
+
         val mapView = MapView(this)
         val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
         mapViewContainer.addView(mapView)
