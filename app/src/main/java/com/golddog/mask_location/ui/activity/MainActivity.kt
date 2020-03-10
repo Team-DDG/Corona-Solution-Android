@@ -1,5 +1,6 @@
 package com.golddog.mask_location.ui.activity
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.golddog.mask_location.R
+import com.gun0912.tedpermission.TedPermissionResult
+import com.tedpark.tedpermission.rx2.TedRx2Permission
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -49,7 +54,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fab_corona_manual_main.setOnClickListener(this)
         fab_corona_now_main.setOnClickListener(this)
 
-
+        TedRx2Permission.with(this)
+            .setRationaleTitle("권한 요청")
+            .setRationaleMessage("애플리케이션을 이용하기 위해서는 권한이 필요합니다") // "we need permission for read contact and find your location"
+            .setPermissions(
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            .request()
+            .subscribe(
+                Consumer { tedPermissionResult: TedPermissionResult ->
+                    if (tedPermissionResult.isGranted) {
+                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                                this,
+                                "Permission Denied\n" + tedPermissionResult.deniedPermissions
+                                    .toString(), Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }
+                },
+                Consumer { throwable: Throwable? -> }
+            //consumer keyword is able to erase(not curly bracket, only consumer keyword)
+            )
 
         val mapView = MapView(this)
         val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
