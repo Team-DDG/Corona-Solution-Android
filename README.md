@@ -28,6 +28,10 @@
 - *Spotlight (first start)*
 - GitKraken (칸반보드, 스케줄, 이슈, 핫픽스 등...)
 
+## update
+
+- MotionLayout
+
 ## 멤버
 
 - 쇠븡민 (Android Dev)
