@@ -1,28 +1,43 @@
-package com.golddog.mask_location
+package com.golddog.mask_location.ui.activity
 
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.golddog.mask_location.R
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var isFabOpen = false
-    val fab_open: Animation by lazy { AnimationUtils.loadAnimation(applicationContext, R.anim.fab_open) }
-    val fab_close: Animation by lazy { AnimationUtils.loadAnimation(applicationContext, R.anim.fab_close) }
-    val fab_rotate_forward by lazy { AnimationUtils.loadAnimation(applicationContext, R.anim.rotate_forward) }
-    val fab_rotate_backward: Animation by lazy { AnimationUtils.loadAnimation(applicationContext, R.anim.rotate_backward) }
+    private val fabOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            applicationContext,
+            R.anim.fab_open
+        )
+    }
+    private val fabClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            applicationContext,
+            R.anim.fab_close
+        )
+    }
+    private val fabRotateForward by lazy {
+        AnimationUtils.loadAnimation(
+            applicationContext,
+            R.anim.rotate_forward
+        )
+    }
+    private val fabRotateBackward: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            applicationContext,
+            R.anim.rotate_backward
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,48 +55,48 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        when(view) {
+        when (view) {
             fab_main_main -> {
-                fab_anim()
+                fabAnim()
                 Toast.makeText(this, "fab_1", Toast.LENGTH_LONG).show()
             }
             fab_help_main -> {
-                fab_anim()
+                fabAnim()
                 Toast.makeText(this, "fab_2", Toast.LENGTH_LONG).show()
             }
             fab_1339call_main -> {
-                fab_anim()
+                fabAnim()
                 Toast.makeText(this, "fab_3", Toast.LENGTH_LONG).show()
             }
             fab_corona_manual_main -> {
-                fab_anim()
+                fabAnim()
                 Toast.makeText(this, "fab_4", Toast.LENGTH_LONG).show()
             }
             fab_corona_now_main -> {
-                fab_anim()
+                fabAnim()
                 Toast.makeText(this, "fab_5", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun fab_anim(){
-        if (isFabOpen){
-            fab_main_main.startAnimation(fab_rotate_backward)
-            fab_help_main.startAnimation(fab_close)
-            fab_1339call_main.startAnimation(fab_close)
-            fab_corona_manual_main.startAnimation(fab_close)
-            fab_corona_now_main.startAnimation(fab_close)
+    private fun fabAnim() {
+        if (isFabOpen) {
+            fab_main_main.startAnimation(fabRotateBackward)
+            fab_help_main.startAnimation(fabClose)
+            fab_1339call_main.startAnimation(fabClose)
+            fab_corona_manual_main.startAnimation(fabClose)
+            fab_corona_now_main.startAnimation(fabClose)
             fab_help_main.isClickable = false
             fab_1339call_main.isClickable = false
             fab_corona_manual_main.isClickable = false
             fab_corona_now_main.isClickable = false
             isFabOpen = false
-        } else{
-            fab_main_main.startAnimation(fab_rotate_forward)
-            fab_help_main.startAnimation(fab_open)
-            fab_1339call_main.startAnimation(fab_open)
-            fab_corona_manual_main.startAnimation(fab_open)
-            fab_corona_now_main.startAnimation(fab_open)
+        } else {
+            fab_main_main.startAnimation(fabRotateForward)
+            fab_help_main.startAnimation(fabOpen)
+            fab_1339call_main.startAnimation(fabOpen)
+            fab_corona_manual_main.startAnimation(fabOpen)
+            fab_corona_now_main.startAnimation(fabOpen)
             fab_help_main.isClickable = true
             fab_1339call_main.isClickable = true
             fab_corona_manual_main.isClickable = true
