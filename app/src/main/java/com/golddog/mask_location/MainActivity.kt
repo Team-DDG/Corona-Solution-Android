@@ -1,12 +1,20 @@
 package com.golddog.mask_location
 
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import net.daum.mf.map.api.MapView
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,6 +33,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fab_1339call_main.setOnClickListener(this)
         fab_corona_manual_main.setOnClickListener(this)
         fab_corona_now_main.setOnClickListener(this)
+
+        val mapView = MapView(this)
+        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
+        mapViewContainer.addView(mapView)
     }
 
     override fun onClick(view: View?) {
