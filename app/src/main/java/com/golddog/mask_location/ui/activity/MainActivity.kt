@@ -50,17 +50,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fab_main_main.setOnClickListener(this)
-        fab_help_main.setOnClickListener(this)
-        fab_1339call_main.setOnClickListener(this)
-        fab_corona_manual_main.setOnClickListener(this)
-        fab_corona_now_main.setOnClickListener(this)
-
-        permission()
-
-        val mapView = MapView(this)
-        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
-        mapViewContainer.addView(mapView)
+        setupFab()
+        setupMap()
+        setupPermission()
     }
 
     override fun onClick(view: View?) {
@@ -88,7 +80,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun permission() {
+    private fun setupFab(){
+        fab_main_main.setOnClickListener(this)
+        fab_help_main.setOnClickListener(this)
+        fab_1339call_main.setOnClickListener(this)
+        fab_corona_manual_main.setOnClickListener(this)
+        fab_corona_now_main.setOnClickListener(this)
+    }
+
+    private fun setupMap(){
+        val mapView = MapView(this)
+        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
+        mapViewContainer.addView(mapView)
+    }
+
+    private fun setupPermission() {
         TedRx2Permission.with(this)
             .setRationaleTitle("권한 요청")
             .setRationaleMessage("애플리케이션을 이용하기 위해서는 권한이 필요합니다") // "we need permission for read contact and find your location"
