@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    def viewmodel = "2.2.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -57,4 +59,8 @@ dependencies {
 
     // TedPermission
     implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
+
+    // LiveData, ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:${viewmodel}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${viewmodel}"
 }

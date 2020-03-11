@@ -5,7 +5,9 @@
     tools:context=".ui.activity.MainActivity">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.golddog.mask_location.viewmodel.MainViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
