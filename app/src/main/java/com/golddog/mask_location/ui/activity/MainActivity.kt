@@ -2,7 +2,6 @@ package com.golddog.mask_location.ui.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -11,13 +10,12 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
-import com.golddog.mask_location.util.SharedPreference
+import com.golddog.mask_location.util.FabAnimation
+import com.golddog.mask_location.data.local.SharedPreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedpermission.rx2.TedRx2Permission
@@ -27,30 +25,6 @@ import net.daum.mf.map.api.MapView
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var isFabOpen = false
-    private val fabOpen: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            applicationContext,
-            R.anim.fab_open
-        )
-    }
-    private val fabClose: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            applicationContext,
-            R.anim.fab_close
-        )
-    }
-    private val fabRotateForward by lazy {
-        AnimationUtils.loadAnimation(
-            applicationContext,
-            R.anim.rotate_forward
-        )
-    }
-    private val fabRotateBackward: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            applicationContext,
-            R.anim.rotate_backward
-        )
-    }
 
     private val preference by lazy {
         SharedPreference.getInstance(applicationContext)
@@ -64,7 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setupMap()
         setupPermission()
 
-        if (!preference?.getAgreement()!!){
+        if (!preference?.getAgreement()!!) {
             setupAgreementDialog().show()
         }
     }
@@ -101,17 +75,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agree)
             .setMessage(span)
-            .setNegativeButton(R.string.disagree, object : DialogInterface.OnClickListener{
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    finish()
-                }
-            })
-            .setPositiveButton(R.string.agree, object : DialogInterface.OnClickListener{
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    preference?.setAgreement(true)
-                }
-            })
+            .setNegativeButton(
+                R.string.disagree
+            ) { _, _ -> finish() }
+            .setPositiveButton(
+                R.string.agree
+            ) { _, _ -> preference?.setAgreement(true) }
             .setCancelable(false)
+        // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용
     }
 
     private fun setupFab() {
@@ -151,22 +122,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun fabAnim() {
         if (isFabOpen) {
+            val fabClose = FabAnimation.fabClose()
+            val fabRotateBackward = FabAnimation.fabRotateBackward()
+
             fab_main_main.startAnimation(fabRotateBackward)
             fab_mask_main.startAnimation(fabClose)
             fab_1339call_main.startAnimation(fabClose)
             fab_corona_manual_main.startAnimation(fabClose)
             fab_corona_now_main.startAnimation(fabClose)
+
             fab_mask_main.isClickable = false
             fab_1339call_main.isClickable = false
             fab_corona_manual_main.isClickable = false
             fab_corona_now_main.isClickable = false
             isFabOpen = false
         } else {
+            val fabRotateForward = FabAnimation.fabRotateFoward()
+            val fabOpen = FabAnimation.fabOpen()
+
             fab_main_main.startAnimation(fabRotateForward)
             fab_mask_main.startAnimation(fabOpen)
             fab_1339call_main.startAnimation(fabOpen)
             fab_corona_manual_main.startAnimation(fabOpen)
             fab_corona_now_main.startAnimation(fabOpen)
+
             fab_mask_main.isClickable = true
             fab_1339call_main.isClickable = true
             fab_corona_manual_main.isClickable = true
