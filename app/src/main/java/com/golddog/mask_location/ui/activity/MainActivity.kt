@@ -8,12 +8,12 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
 import com.golddog.mask_location.data.local.SharedPreference
 import com.golddog.mask_location.util.FabAnimation
+import com.golddog.mask_location.util.showToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (view) {
             fab_main_main -> {
                 fabAnim()
-                Toast.makeText(this, "fab_1", Toast.LENGTH_LONG).show()
+                showToast("fab_1")
             }
             fab_mask_main -> {
                 fabAnim()
-                Toast.makeText(this, "fab_2", Toast.LENGTH_LONG).show()
+                showToast("fab_2")
             }
             fab_1339call_main -> {
                 fabAnim()
@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             fab_corona_manual_main -> {
                 fabAnim()
-                Toast.makeText(this, "fab_4", Toast.LENGTH_LONG).show()
+                showToast("fab_4")
             }
             fab_corona_now_main -> {
                 fabAnim()
-                Toast.makeText(this, "fab_5", Toast.LENGTH_LONG).show()
+                showToast("fab_5")
             }
         }
     }
@@ -87,14 +87,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .setNegativeButton(
                 R.string.disagree
             ) { _, _ ->
-                Toast.makeText(this, "서약 비동의시 서비스를 이용할 수 없습니다.", Toast.LENGTH_LONG).show()
+                showToast("서약 비동의시 서비스를 이용할 수 없습니다.")
                 finish()
             }
             .setPositiveButton(
                 R.string.agree
             ) { _, _ ->
                 preference?.setAgreement(true)
-                Toast.makeText(this, "서비스 사용 서약에 동의했습니다.", Toast.LENGTH_LONG).show()
+                showToast("서비스 사용 서약에 동의했습니다.")
             }
             .setCancelable(false)
         // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용

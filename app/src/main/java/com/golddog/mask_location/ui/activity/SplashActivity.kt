@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.golddog.mask_location.R
+import com.golddog.mask_location.util.showToast
 import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 
@@ -27,14 +28,9 @@ class SplashActivity : AppCompatActivity() {
             .request()
             .subscribe { tedPermissionResult: TedPermissionResult ->
                 if (tedPermissionResult.isGranted) {
-                    Toast.makeText(this, R.string.permisstion_granted, Toast.LENGTH_SHORT)
-                        .show()
+                    showToast(resources.getString(R.string.permisstion_granted))
                 } else {
-                    Toast.makeText(
-                        this,
-                        R.string.permission_denied.toString() + tedPermissionResult.deniedPermissions.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(resources.getString(R.string.permission_denied))
                 }
 
                 startActivity(Intent(this, MainActivity::class.java))
