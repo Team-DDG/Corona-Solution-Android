@@ -2,6 +2,7 @@ package com.golddog.mask_location.ui.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -16,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
+import com.golddog.mask_location.util.SharedPreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedpermission.rx2.TedRx2Permission
@@ -50,6 +52,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
+    private val preference by lazy {
+        SharedPreference.getInstance(applicationContext)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,7 +64,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setupMap()
         setupPermission()
 
-        setupAgreementDialog().show()
+        if (!preference?.getAgreement()!!){
+            setupAgreementDialog().show()
+        }
     }
 
     override fun onClick(view: View?) {
@@ -93,8 +101,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agree)
             .setMessage(span)
-            .setNegativeButton(R.string.disagree, null)
-            .setPositiveButton(R.string.agree, null)
+            .setNegativeButton(R.string.disagree, object : DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    finish()
+                }
+            })
+            .setPositiveButton(R.string.agree, object : DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    preference?.setAgreement(true)
+                }
+            })
             .setCancelable(false)
     }
 
