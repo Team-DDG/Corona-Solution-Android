@@ -1,8 +1,8 @@
-package com.golddog.mask_location.util
+package com.golddog.mask_location.data.local
 
 import android.content.Context
 
-class SharedPreference(private val context: Context){
+class SharedPreference(context: Context){
     private val preference = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
 
     companion object {
@@ -11,7 +11,8 @@ class SharedPreference(private val context: Context){
 
         fun getInstance(context: Context): SharedPreference? {
             if (INSTANCE == null) {
-                INSTANCE = SharedPreference(context)
+                INSTANCE =
+                    SharedPreference(context)
             }
             return INSTANCE
         }
