@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         span.setSpan(ForegroundColorSpan(Color.RED), 225, 444, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle("서비스 사용 서약 동의")
+            .setTitle(R.string.agree)
             .setMessage(span)
             .setNegativeButton(R.string.disagree, null)
             .setPositiveButton(R.string.agree, null)
@@ -117,8 +117,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setupPermission() {
         TedRx2Permission.with(this)
-            .setRationaleTitle("권한 요청")
-            .setRationaleMessage("애플리케이션을 이용하기 위해서는 권한이 필요합니다") // "we need permission for read contact and find your location"
+            .setRationaleTitle(R.string.require_authority)
+            .setRationaleMessage(R.string.require_authority_content) // "we need permission for read contact and find your location"
             .setPermissions(
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -127,11 +127,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .subscribe(
                 Consumer { tedPermissionResult: TedPermissionResult ->
                     if (tedPermissionResult.isGranted) {
-                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.permisstion_granted, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(
                                 this,
-                                "Permission Denied\n" + tedPermissionResult.deniedPermissions
+                                R.string.permission_denied.toString() + tedPermissionResult.deniedPermissions
                                     .toString(), Toast.LENGTH_SHORT
                             )
                             .show()
