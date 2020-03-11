@@ -10,10 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
 import com.golddog.mask_location.data.local.SharedPreference
+import com.golddog.mask_location.databinding.ActivityMainBinding
 import com.golddog.mask_location.util.FabAnimation
 import com.golddog.mask_location.util.showToast
+import com.golddog.mask_location.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
@@ -21,6 +25,8 @@ import net.daum.mf.map.api.MapView
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var isFabOpen = false
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     private val preference by lazy {
         SharedPreference.getInstance(applicationContext)
@@ -28,7 +34,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
 
         setupFab()
         setupMap()
