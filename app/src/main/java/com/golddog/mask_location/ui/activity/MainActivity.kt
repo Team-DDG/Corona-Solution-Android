@@ -2,15 +2,21 @@ package com.golddog.mask_location.ui.activity
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.functions.Consumer
@@ -53,6 +59,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setupFab()
         setupMap()
         setupPermission()
+
+        setupAgreementDialog().show()
     }
 
     override fun onClick(view: View?) {
@@ -80,7 +88,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun setupFab(){
+    private fun setupAgreementDialog(): MaterialAlertDialogBuilder {
+        val span: Spannable = getString(R.string.service_agreement).toSpannable()
+        span.setSpan(ForegroundColorSpan(Color.RED), 225, 444, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("서비스 사용 서약 동의")
+            .setMessage(span)
+            .setNegativeButton(R.string.disagree, null)
+            .setPositiveButton(R.string.agree, null)
+            .setCancelable(false)
+        return dialog
+    }
+
+    private fun setupFab() {
         fab_main_main.setOnClickListener(this)
         fab_help_main.setOnClickListener(this)
         fab_1339call_main.setOnClickListener(this)
@@ -88,7 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fab_corona_now_main.setOnClickListener(this)
     }
 
-    private fun setupMap(){
+    private fun setupMap() {
         val mapView = MapView(this)
         val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
         mapViewContainer.addView(mapView)
