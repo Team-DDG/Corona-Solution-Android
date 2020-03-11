@@ -1,7 +1,5 @@
 package com.golddog.mask_location.ui.activity
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -14,11 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
-import com.golddog.mask_location.util.FabAnimation
 import com.golddog.mask_location.data.local.SharedPreference
+import com.golddog.mask_location.util.FabAnimation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gun0912.tedpermission.TedPermissionResult
-import com.tedpark.tedpermission.rx2.TedRx2Permission
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
 
@@ -36,7 +32,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         setupFab()
         setupMap()
-        setupPermission()
 
         if (!preference?.getAgreement()!!) {
             setupAgreementDialog().show()
@@ -68,23 +63,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun setupAgreementDialog(): MaterialAlertDialogBuilder {
-        val span: Spannable = getString(R.string.service_agreement).toSpannable()
-        span.setSpan(ForegroundColorSpan(Color.RED), 225, 444, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        return MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.agree)
-            .setMessage(span)
-            .setNegativeButton(
-                R.string.disagree
-            ) { _, _ -> finish() }
-            .setPositiveButton(
-                R.string.agree
-            ) { _, _ -> preference?.setAgreement(true) }
-            .setCancelable(false)
-        // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용
-    }
-
     private fun setupFab() {
         fab_main_main.setOnClickListener(this)
         fab_mask_main.setOnClickListener(this)
@@ -94,30 +72,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupMap() {
-        val mapView = MapView(this)
+//        val mapView = MapView(this)
         val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
-        mapViewContainer.addView(mapView)
+        mapViewContainer.addView(MapView(this))
     }
 
-    @SuppressLint("CheckResult")
-    private fun setupPermission() {
-        TedRx2Permission.with(this)
-            .setRationaleTitle(R.string.require_authority)
-            .setRationaleMessage(R.string.require_authority_content)
-            .setPermissions(Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION)
-            .request()
-            .subscribe { tedPermissionResult: TedPermissionResult ->
-                if (tedPermissionResult.isGranted) {
-                    Toast.makeText(this, R.string.permisstion_granted, Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(
-                        this,
-                        R.string.permission_denied.toString() + tedPermissionResult.deniedPermissions.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+    private fun setupAgreementDialog(): MaterialAlertDialogBuilder {
+        val span: Spannable = getString(R.string.service_agreement).toSpannable()
+        span.setSpan(ForegroundColorSpan(Color.RED), 225, 442, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        return MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.agreement)
+            .setMessage(span)
+            .setNegativeButton(
+                R.string.disagree
+            ) { _, _ ->
+                Toast.makeText(this, "서약 비동의시 서비스를 이용할 수 없습니다.", Toast.LENGTH_LONG).show()
+                finish()
             }
+            .setPositiveButton(
+                R.string.agree
+            ) { _, _ ->
+                preference?.setAgreement(true)
+                Toast.makeText(this, "서비스 사용 서약에 동의했습니다.", Toast.LENGTH_LONG).show()
+            }
+            .setCancelable(false)
+        // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용
     }
 
     private fun fabAnim() {
