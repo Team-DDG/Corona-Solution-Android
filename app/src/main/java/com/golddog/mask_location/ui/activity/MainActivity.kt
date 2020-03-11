@@ -1,6 +1,7 @@
 package com.golddog.mask_location.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -12,17 +13,14 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import com.golddog.mask_location.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedpermission.rx2.TedRx2Permission
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 import net.daum.mf.map.api.MapView
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 fabAnim()
                 Toast.makeText(this, "fab_1", Toast.LENGTH_LONG).show()
             }
-            fab_help_main -> {
+            fab_mask_main -> {
                 fabAnim()
                 Toast.makeText(this, "fab_2", Toast.LENGTH_LONG).show()
             }
@@ -92,18 +90,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val span: Spannable = getString(R.string.service_agreement).toSpannable()
         span.setSpan(ForegroundColorSpan(Color.RED), 225, 444, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        val dialog = MaterialAlertDialogBuilder(this)
+        return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agree)
             .setMessage(span)
             .setNegativeButton(R.string.disagree, null)
             .setPositiveButton(R.string.agree, null)
             .setCancelable(false)
-        return dialog
     }
 
     private fun setupFab() {
         fab_main_main.setOnClickListener(this)
-        fab_help_main.setOnClickListener(this)
+        fab_mask_main.setOnClickListener(this)
         fab_1339call_main.setOnClickListener(this)
         fab_corona_manual_main.setOnClickListener(this)
         fab_corona_now_main.setOnClickListener(this)
@@ -115,52 +112,46 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mapViewContainer.addView(mapView)
     }
 
+    @SuppressLint("CheckResult")
     private fun setupPermission() {
         TedRx2Permission.with(this)
             .setRationaleTitle(R.string.require_authority)
-            .setRationaleMessage(R.string.require_authority_content) // "we need permission for read contact and find your location"
-            .setPermissions(
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
+            .setRationaleMessage(R.string.require_authority_content)
+            .setPermissions(Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION)
             .request()
-            .subscribe(
-                Consumer { tedPermissionResult: TedPermissionResult ->
-                    if (tedPermissionResult.isGranted) {
-                        Toast.makeText(this, R.string.permisstion_granted, Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(
-                                this,
-                                R.string.permission_denied.toString() + tedPermissionResult.deniedPermissions
-                                    .toString(), Toast.LENGTH_SHORT
-                            )
-                            .show()
-                    }
-                },
-                Consumer { throwable: Throwable? -> }
-                //consumer keyword is able to erase(not curly bracket, only consumer keyword)
-            )
+            .subscribe { tedPermissionResult: TedPermissionResult ->
+                if (tedPermissionResult.isGranted) {
+                    Toast.makeText(this, R.string.permisstion_granted, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(
+                        this,
+                        R.string.permission_denied.toString() + tedPermissionResult.deniedPermissions.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     private fun fabAnim() {
         if (isFabOpen) {
             fab_main_main.startAnimation(fabRotateBackward)
-            fab_help_main.startAnimation(fabClose)
+            fab_mask_main.startAnimation(fabClose)
             fab_1339call_main.startAnimation(fabClose)
             fab_corona_manual_main.startAnimation(fabClose)
             fab_corona_now_main.startAnimation(fabClose)
-            fab_help_main.isClickable = false
+            fab_mask_main.isClickable = false
             fab_1339call_main.isClickable = false
             fab_corona_manual_main.isClickable = false
             fab_corona_now_main.isClickable = false
             isFabOpen = false
         } else {
             fab_main_main.startAnimation(fabRotateForward)
-            fab_help_main.startAnimation(fabOpen)
+            fab_mask_main.startAnimation(fabOpen)
             fab_1339call_main.startAnimation(fabOpen)
             fab_corona_manual_main.startAnimation(fabOpen)
             fab_corona_now_main.startAnimation(fabOpen)
-            fab_help_main.isClickable = true
+            fab_mask_main.isClickable = true
             fab_1339call_main.isClickable = true
             fab_corona_manual_main.isClickable = true
             fab_corona_now_main.isClickable = true
