@@ -91,7 +91,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:visibility="invisible"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/colorSecondaryLight"
                 app:pressedTranslationZ="12dp"
                 android:src="@drawable/ic_help_outline_black_24dp"/>
 
@@ -104,7 +104,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:visibility="invisible"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/colorSecondaryLight"
                 app:pressedTranslationZ="12dp"
                 android:src="@drawable/ic_local_phone_black_24dp"/>
 
@@ -117,7 +117,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:visibility="invisible"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/colorSecondaryLight"
                 app:pressedTranslationZ="12dp"
                 android:src="@drawable/ic_warning_black_24dp"/>
 
@@ -130,7 +130,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:visibility="invisible"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/colorSecondaryLight"
                 app:pressedTranslationZ="12dp"
                 android:src="@drawable/ic_insert_chart_black_24dp"/>
 
