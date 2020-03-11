@@ -1,6 +1,8 @@
 package com.golddog.mask_location.ui.activity
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +56,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fab_corona_manual_main.setOnClickListener(this)
         fab_corona_now_main.setOnClickListener(this)
 
+        permission()
+
+        val mapView = MapView(this)
+        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
+        mapViewContainer.addView(mapView)
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            fab_main_main -> {
+                fabAnim()
+                Toast.makeText(this, "fab_1", Toast.LENGTH_LONG).show()
+            }
+            fab_help_main -> {
+                fabAnim()
+                Toast.makeText(this, "fab_2", Toast.LENGTH_LONG).show()
+            }
+            fab_1339call_main -> {
+                fabAnim()
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
+            }
+            fab_corona_manual_main -> {
+                fabAnim()
+                Toast.makeText(this, "fab_4", Toast.LENGTH_LONG).show()
+            }
+            fab_corona_now_main -> {
+                fabAnim()
+                Toast.makeText(this, "fab_5", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun permission() {
         TedRx2Permission.with(this)
             .setRationaleTitle("권한 요청")
             .setRationaleMessage("애플리케이션을 이용하기 위해서는 권한이 필요합니다") // "we need permission for read contact and find your location"
@@ -76,37 +111,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 },
                 Consumer { throwable: Throwable? -> }
-            //consumer keyword is able to erase(not curly bracket, only consumer keyword)
+                //consumer keyword is able to erase(not curly bracket, only consumer keyword)
             )
-
-        val mapView = MapView(this)
-        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
-        mapViewContainer.addView(mapView)
-    }
-
-    override fun onClick(view: View?) {
-        when (view) {
-            fab_main_main -> {
-                fabAnim()
-                Toast.makeText(this, "fab_1", Toast.LENGTH_LONG).show()
-            }
-            fab_help_main -> {
-                fabAnim()
-                Toast.makeText(this, "fab_2", Toast.LENGTH_LONG).show()
-            }
-            fab_1339call_main -> {
-                fabAnim()
-                Toast.makeText(this, "fab_3", Toast.LENGTH_LONG).show()
-            }
-            fab_corona_manual_main -> {
-                fabAnim()
-                Toast.makeText(this, "fab_4", Toast.LENGTH_LONG).show()
-            }
-            fab_corona_now_main -> {
-                fabAnim()
-                Toast.makeText(this, "fab_5", Toast.LENGTH_LONG).show()
-            }
-        }
     }
 
     private fun fabAnim() {
