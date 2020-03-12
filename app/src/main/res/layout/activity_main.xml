@@ -5,6 +5,9 @@
     tools:context=".ui.activity.MainActivity">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.golddog.mask_location.viewmodel.MainViewModel" />
@@ -81,6 +84,7 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:onClick="@{() -> vm.clickFabMain()}"
                 app:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +97,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="invisible"
+                android:clickable="@{vm.fabOpen}"
+                android:onClick="@{() -> vm.clickFabMask()}"
+                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_main_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +112,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="invisible"
+                android:clickable="@{vm.fabOpen}"
+                android:onClick="@{() -> vm.clickFabCall()}"
+                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +127,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="invisible"
+                android:clickable="@{vm.fabOpen}"
+                android:onClick="@{() -> vm.clickFabManualCorona()}"
+                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +142,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="invisible"
+                android:clickable="@{vm.fabOpen}"
+                android:onClick="@{() -> vm.clickFabCurrentCorona()}"
+                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintEnd_toEndOf="parent"
