@@ -10,7 +10,7 @@
 
        <variable
             name="isFabOpen"
-            type="java.lang.Boolean"/>
+            type="Boolean"/>
 
         <variable
             name="vm"
@@ -101,10 +101,8 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{isFabOpen}"
                 android:onClick="clickFabMask"
-                android:visibility="@{isFabOpen ? View.VISIBLE : View.INVISIBLE}"
-                app:change_status="@{isFabOpen}"
+                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_main_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,8 +116,8 @@
                 app:layout_constraintEnd_toStartOf="@id/fab_mask_main"
                 app:layout_constraintTop_toTopOf="@id/fab_mask_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
+                label_status="@{isFabOpen}"
                 android:padding="5dp"
-                app:change_status="@{isFabOpen}"
                 android:text="@string/about_mask_5days_sys"
                 android:background="@drawable/fab_label_background"/>
 
@@ -130,7 +128,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabCall"
-                app:change_status="@{isFabOpen}"
+                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +142,8 @@
                 app:layout_constraintEnd_toStartOf="@id/fab_1339call_main"
                 app:layout_constraintTop_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
+                label_status="@{isFabOpen}"
                 android:padding="5dp"
-                app:change_status="@{isFabOpen}"
                 android:text="@string/call1339"
                 android:background="@drawable/fab_label_background"/>
 
@@ -156,7 +154,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabManualCorona"
-                app:change_status="@{isFabOpen}"
+                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -170,8 +168,8 @@
                 app:layout_constraintEnd_toStartOf="@id/fab_corona_manual_main"
                 app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
+                label_status="@{isFabOpen}"
                 android:padding="5dp"
-                app:change_status="@{isFabOpen}"
                 android:text="@string/corona_manual"
                 android:background="@drawable/fab_label_background"/>
 
@@ -182,7 +180,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabCurrentCorona"
-                app:change_status="@{isFabOpen}"
+                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -196,8 +194,8 @@
                 app:layout_constraintEnd_toStartOf="@id/fab_corona_current_main"
                 app:layout_constraintTop_toTopOf="@id/fab_corona_current_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
+                label_status="@{isFabOpen}"
                 android:padding="5dp"
-                app:change_status="@{isFabOpen}"
                 android:text="@string/corona_status"
                 android:background="@drawable/fab_label_background"/>
 
