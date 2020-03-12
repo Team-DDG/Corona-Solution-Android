@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         binding.vm = viewModel
+        binding.isFabOpen = false
         binding.lifecycleOwner = this
 
         checkAgreement()
@@ -134,5 +135,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeFabOpenValue() {
 //        binding.vm?.isFabOpen?.value = !binding.vm?.isFabOpen?.value!!
+        binding.isFabOpen = !binding.isFabOpen!!
     }
 }
