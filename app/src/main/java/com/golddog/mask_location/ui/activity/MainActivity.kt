@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.ui = this
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -77,32 +77,32 @@ class MainActivity : AppCompatActivity() {
         // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용
     }
 
-    fun clickFabMain() {
+    fun clickFabMain(view: View) {
         showToast("fab_1")
         fabAnimation()
         changeFabOpenValue()
     }
 
-    fun clickFabMask() {
+    fun clickFabMask(view: View) {
         showToast("fab_2")
         fabAnimation()
         changeFabOpenValue()
     }
 
-    fun clickFabCall() {
+    fun clickFabCall(view: View) {
         showToast("fab_3")
         fabAnimation()
         changeFabOpenValue()
         startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
     }
 
-    fun clickFabManualCorona() {
+    fun clickFabManualCorona(view: View) {
         showToast("fab_4")
         fabAnimation()
         changeFabOpenValue()
     }
 
-    fun clickFabCurrentCorona() {
+    fun clickFabCurrentCorona(view: View) {
         showToast("fab_5")
         fabAnimation()
         changeFabOpenValue()
