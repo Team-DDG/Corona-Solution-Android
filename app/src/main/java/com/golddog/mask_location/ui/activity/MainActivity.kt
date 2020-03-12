@@ -1,6 +1,8 @@
 package com.golddog.mask_location.ui.activity
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -8,12 +10,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
+import com.golddog.mask_location.base.BaseApplication
 import com.golddog.mask_location.data.local.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
-import com.golddog.mask_location.util.showToast
+import com.golddog.mask_location.ext.showToast
+import com.golddog.mask_location.util.FabAnimation
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.daum.mf.map.api.MapView
@@ -23,22 +26,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
 
+    private val preference by lazy {
+        BaseApplication.appContext?.let { SharedPreference(it) }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        binding.ui = this
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        val agreement = Observer<Boolean> {
-            if (!it) {
-                setupAgreementDialog().show()
-            }
-        }
+        checkAgreement()
 
-        viewModel.agreement.observe(this, agreement)
         setupMap()
     }
 
@@ -47,7 +50,11 @@ class MainActivity : AppCompatActivity() {
         mapViewContainer.addView(MapView(this))
     }
 
-    private fun setupAgreementDialog(): MaterialAlertDialogBuilder {
+    private fun checkAgreement() {
+        if (!preference?.getAgreement()!!) getAgreementDialog().show()
+    }
+
+    private fun getAgreementDialog(): MaterialAlertDialogBuilder {
         val span: Spannable = getString(R.string.service_agreement).toSpannable()
         span.setSpan(ForegroundColorSpan(Color.RED), 225, 442, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
@@ -57,50 +64,67 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(
                 R.string.disagree
             ) { _, _ ->
-                showToast("서약 비동의시 서비스를 이용할 수 없습니다.")
+                showToast(R.string.authority_denied)
                 finish()
             }
             .setPositiveButton(
                 R.string.agree
             ) { _, _ ->
-                binding.vm?.setLocalAgreementData(true)
-                showToast("서비스 사용 서약에 동의했습니다.")
+                preference?.setAgreement(true)
+                showToast(R.string.authority_granted)
             }
             .setCancelable(false)
         // 람다로 작성함, 기능에 대해 변경해야 될 사항이 있다면, 중괄호 안에 확장해서 사용
     }
 
-//    private fun fabAnim() {
-//        if (isFabOpen) {
-//            val fabClose = FabAnimation.fabClose()
-//            val fabRotateBackward = FabAnimation.fabRotateBackward()
-//
-//            fab_main_main.startAnimation(fabRotateBackward)
-//            fab_mask_main.startAnimation(fabClose)
-//            fab_1339call_main.startAnimation(fabClose)
-//            fab_corona_manual_main.startAnimation(fabClose)
-//            fab_corona_now_main.startAnimation(fabClose)
-//
-//            fab_mask_main.isClickable = false
-//            fab_1339call_main.isClickable = false
-//            fab_corona_manual_main.isClickable = false
-//            fab_corona_now_main.isClickable = false
-//            isFabOpen = false
-//        } else {
-//            val fabRotateForward = FabAnimation.fabRotateForward()
-//            val fabOpen = FabAnimation.fabOpen()
-//
-//            fab_main_main.startAnimation(fabRotateForward)
-//            fab_mask_main.startAnimation(fabOpen)
-//            fab_1339call_main.startAnimation(fabOpen)
-//            fab_corona_manual_main.startAnimation(fabOpen)
-//            fab_corona_now_main.startAnimation(fabOpen)
-//
-//            fab_mask_main.isClickable = true
-//            fab_1339call_main.isClickable = true
-//            fab_corona_manual_main.isClickable = true
-//            fab_corona_now_main.isClickable = true
-//            isFabOpen = true
-//        }
-//    }
+    fun clickFabMain() {
+        showToast("fab_1")
+        fabAnimation()
+        changeFabOpenValue()
+    }
+
+    fun clickFabMask() {
+        showToast("fab_2")
+        fabAnimation()
+        changeFabOpenValue()
+    }
+
+    fun clickFabCall() {
+        showToast("fab_3")
+        fabAnimation()
+        changeFabOpenValue()
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
+    }
+
+    fun clickFabManualCorona() {
+        showToast("fab_4")
+        fabAnimation()
+        changeFabOpenValue()
+    }
+
+    fun clickFabCurrentCorona() {
+        showToast("fab_5")
+        fabAnimation()
+        changeFabOpenValue()
+    }
+
+    private fun fabAnimation() {
+        if (binding.vm?.isFabOpen?.value!!) {
+            binding.fabMainMain.startAnimation(FabAnimation.fabRotateBackward())
+            binding.fabMaskMain.startAnimation(FabAnimation.fabClose())
+            binding.fab1339callMain.startAnimation(FabAnimation.fabClose())
+            binding.fabCoronaManualMain.startAnimation(FabAnimation.fabClose())
+            binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabClose())
+        } else {
+            binding.fabMainMain.startAnimation(FabAnimation.fabRotateForward())
+            binding.fabMaskMain.startAnimation(FabAnimation.fabOpen())
+            binding.fab1339callMain.startAnimation(FabAnimation.fabOpen())
+            binding.fabCoronaManualMain.startAnimation(FabAnimation.fabOpen())
+            binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabOpen())
+        }
+    }
+
+    private fun changeFabOpenValue() {
+        binding.vm?.isFabOpen?.value = !binding.vm?.isFabOpen?.value!!
+    }
 }
