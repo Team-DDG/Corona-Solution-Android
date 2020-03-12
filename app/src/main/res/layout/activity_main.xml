@@ -9,6 +9,10 @@
         <import type="android.view.View" />
 
        <variable
+            name="isFabOpen"
+            type="java.lang.Boolean"/>
+
+        <variable
             name="vm"
             type="com.golddog.mask_location.viewmodel.MainViewModel" />
     </data>
@@ -97,9 +101,10 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.isFabOpen}"
+                android:clickable="@{isFabOpen}"
                 android:onClick="clickFabMask"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:visibility="@{isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_main_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +119,7 @@
                 app:layout_constraintTop_toTopOf="@id/fab_mask_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
                 android:padding="5dp"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 android:text="@string/about_mask_5days_sys"
                 android:background="@drawable/fab_label_background"/>
 
@@ -124,9 +129,8 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.isFabOpen}"
                 android:onClick="clickFabCall"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +145,7 @@
                 app:layout_constraintTop_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
                 android:padding="5dp"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 android:text="@string/call1339"
                 android:background="@drawable/fab_label_background"/>
 
@@ -151,9 +155,8 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.isFabOpen}"
                 android:onClick="clickFabManualCorona"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -168,7 +171,7 @@
                 app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
                 android:padding="5dp"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 android:text="@string/corona_manual"
                 android:background="@drawable/fab_label_background"/>
 
@@ -178,9 +181,8 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.isFabOpen}"
                 android:onClick="clickFabCurrentCorona"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -195,7 +197,7 @@
                 app:layout_constraintTop_toTopOf="@id/fab_corona_current_main"
                 app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
                 android:padding="5dp"
-                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                app:change_status="@{isFabOpen}"
                 android:text="@string/corona_status"
                 android:background="@drawable/fab_label_background"/>
 
