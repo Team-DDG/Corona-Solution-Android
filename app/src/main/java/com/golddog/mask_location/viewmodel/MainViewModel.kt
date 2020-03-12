@@ -6,5 +6,5 @@ import com.golddog.mask_location.base.BaseApplication
 import com.golddog.mask_location.data.local.SharedPreference
 
 class MainViewModel : ViewModel() {
-    var isFabOpen: MutableLiveData<Boolean> = MutableLiveData(false)
+//    var isFabOpen: MutableLiveData<Boolean> = MutableLiveData(false)
 }
