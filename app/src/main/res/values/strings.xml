@@ -20,4 +20,8 @@
     <string name="permission_denied">권한 거부</string>
     <string name="authority_denied">서약 비동의시 서비스를 이용할 수 없습니다.</string>
     <string name="authority_granted">서비스 사용 서약에 동의했습니다.</string>
+    <string name="call1339">1339 전화</string>
+    <string name="corona_manual">코로나 대응 수칙</string>
+    <string name="corona_status">코로나 현황 확인</string>
+    <string name="about_mask_5days_sys">마스크 5부제란?</string>
 </resources>

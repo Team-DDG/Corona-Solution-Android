@@ -112,15 +112,23 @@ class MainActivity : AppCompatActivity() {
         if (binding.vm?.isFabOpen?.value!!) {
             binding.fabMainMain.startAnimation(FabAnimation.fabRotateBackward())
             binding.fabMaskMain.startAnimation(FabAnimation.fabClose())
+            binding.tvFabMaskLabelMain.startAnimation(FabAnimation.fabClose())
             binding.fab1339callMain.startAnimation(FabAnimation.fabClose())
+            binding.tvFab1339callLabelMain.startAnimation(FabAnimation.fabClose())
             binding.fabCoronaManualMain.startAnimation(FabAnimation.fabClose())
+            binding.tvFabCoronaManualLabelMain.startAnimation(FabAnimation.fabClose())
             binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabClose())
+            binding.tvFabCoronaCurrentLabelMain.startAnimation(FabAnimation.fabClose())
         } else {
             binding.fabMainMain.startAnimation(FabAnimation.fabRotateForward())
             binding.fabMaskMain.startAnimation(FabAnimation.fabOpen())
+            binding.tvFabMaskLabelMain.startAnimation(FabAnimation.fabOpen())
             binding.fab1339callMain.startAnimation(FabAnimation.fabOpen())
+            binding.tvFab1339callLabelMain.startAnimation(FabAnimation.fabOpen())
             binding.fabCoronaManualMain.startAnimation(FabAnimation.fabOpen())
+            binding.tvFabCoronaManualLabelMain.startAnimation(FabAnimation.fabOpen())
             binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabOpen())
+            binding.tvFabCoronaCurrentLabelMain.startAnimation(FabAnimation.fabOpen())
         }
     }
 
