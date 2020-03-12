@@ -9,6 +9,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="ui"
+            type="com.golddog.mask_location.ui.activity.MainActivity" />
+
+        <variable
             name="vm"
             type="com.golddog.mask_location.viewmodel.MainViewModel" />
     </data>
@@ -84,7 +88,7 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:onClick="@{() -> vm.clickFabMain()}"
+                android:onClick="@{() -> ui.clickFabMain()}"
                 app:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,9 +101,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.fabOpen}"
-                android:onClick="@{() -> vm.clickFabMask()}"
-                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:clickable="@{vm.isFabOpen}"
+                android:onClick="@{() -> ui.clickFabMask()}"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_main_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -112,9 +116,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.fabOpen}"
-                android:onClick="@{() -> vm.clickFabCall()}"
-                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:clickable="@{vm.isFabOpen}"
+                android:onClick="@{() -> ui.clickFabCall()}"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,9 +131,9 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.fabOpen}"
-                android:onClick="@{() -> vm.clickFabManualCorona()}"
-                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:clickable="@{vm.isFabOpen}"
+                android:onClick="@{() -> ui.clickFabManualCorona()}"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,14 +141,14 @@
                 app:srcCompat="@drawable/ic_warning_black_24dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_corona_now_main"
+                android:id="@+id/fab_corona_current_main"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="@{vm.fabOpen}"
-                android:onClick="@{() -> vm.clickFabCurrentCorona()}"
-                android:visibility="@{vm.fabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:clickable="@{vm.isFabOpen}"
+                android:onClick="@{() -> ui.clickFabCurrentCorona()}"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintEnd_toEndOf="parent"
