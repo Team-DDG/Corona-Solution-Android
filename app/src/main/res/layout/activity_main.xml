@@ -106,6 +106,18 @@
                 app:pressedTranslationZ="12dp"
                 app:srcCompat="@drawable/ic_mask" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_mask_label_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/fab_mask_main"
+                app:layout_constraintTop_toTopOf="@id/fab_mask_main"
+                app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
+                android:padding="5dp"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:text="@string/about_mask_5days_sys"
+                android:background="@drawable/fab_label_background"/>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_1339call_main"
                 android:layout_width="56dp"
@@ -120,6 +132,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:pressedTranslationZ="12dp"
                 app:srcCompat="@drawable/ic_local_phone_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_1339call_label_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/fab_1339call_main"
+                app:layout_constraintTop_toTopOf="@id/fab_1339call_main"
+                app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
+                android:padding="5dp"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:text="@string/call1339"
+                android:background="@drawable/fab_label_background"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_corona_manual_main"
@@ -136,6 +160,18 @@
                 app:pressedTranslationZ="12dp"
                 app:srcCompat="@drawable/ic_warning_black_24dp" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_corona_manual_label_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_manual_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
+                android:padding="5dp"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:text="@string/corona_manual"
+                android:background="@drawable/fab_label_background"/>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_corona_current_main"
                 android:layout_width="56dp"
@@ -150,6 +186,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:pressedTranslationZ="12dp"
                 app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_corona_current_label_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_current_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_current_main"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
+                android:padding="5dp"
+                android:visibility="@{vm.isFabOpen ? View.VISIBLE : View.INVISIBLE}"
+                android:text="@string/corona_status"
+                android:background="@drawable/fab_label_background"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
