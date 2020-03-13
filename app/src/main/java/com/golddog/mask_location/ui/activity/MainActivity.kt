@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabCurrentCorona(view: View) {
         showToast("fab_5")
+        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
         changeFabOpenValue()
     }
 
