@@ -1,4 +1,4 @@
-package com.golddog.mask_location.data.local
+package com.golddog.mask_location.data.pref
 
 import android.content.Context
 
