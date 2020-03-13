@@ -1,8 +1,8 @@
 package com.golddog.mask_location.data.datasource
 
-import com.golddog.mask_location.entity.CoronaStatus
-import io.reactivex.Single
+import com.golddog.mask_location.entity.CoronaList
+import io.reactivex.Flowable
 
 interface StatusDataSource {
-    fun getAccumulateData(): Single<CoronaStatus>
+    fun getAccumulateData(): Flowable<CoronaList>
 }

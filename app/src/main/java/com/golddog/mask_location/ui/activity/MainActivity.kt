@@ -19,7 +19,7 @@ import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
 import com.golddog.mask_location.ext.showToast
 import com.golddog.mask_location.viewmodel.MainViewModel
-import com.golddog.mask_location.viewmodelfactory.ViewModelFactory
+import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.daum.mf.map.api.MapView
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModelFactory: MainViewModelFactory
 
     private val preference by lazy {
         BaseApplication.appContext?.let { SharedPreference(it) }
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModelFactory = ViewModelFactory(ApiClient())
+        viewModelFactory = MainViewModelFactory(ApiClient())
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.vm = viewModel
