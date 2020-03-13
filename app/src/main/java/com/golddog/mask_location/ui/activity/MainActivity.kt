@@ -14,10 +14,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
 import com.golddog.mask_location.base.BaseApplication
-import com.golddog.mask_location.data.local.SharedPreference
+import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
 import com.golddog.mask_location.ext.showToast
-import com.golddog.mask_location.util.FabAnimation
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.daum.mf.map.api.MapView

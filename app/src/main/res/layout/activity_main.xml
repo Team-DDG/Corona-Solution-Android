@@ -8,9 +8,9 @@
 
         <import type="android.view.View" />
 
-       <variable
+        <variable
             name="isFabOpen"
-            type="Boolean"/>
+            type="Boolean" />
 
         <variable
             name="vm"
@@ -97,12 +97,12 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_mask_main"
+                fab_status="@{isFabOpen}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabMask"
-                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_main_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -111,24 +111,26 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_fab_mask_label_main"
+                label_status="@{isFabOpen}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/fab_mask_main"
-                app:layout_constraintTop_toTopOf="@id/fab_mask_main"
-                app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
-                label_status="@{isFabOpen}"
-                android:padding="5dp"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
                 android:text="@string/about_mask_5days_sys"
-                android:background="@drawable/fab_label_background"/>
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_mask_main"
+                app:layout_constraintTop_toTopOf="@id/fab_mask_main" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_1339call_main"
+                fab_status="@{isFabOpen}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabCall"
-                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,24 +139,26 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_fab_1339call_label_main"
+                label_status="@{isFabOpen}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/fab_1339call_main"
-                app:layout_constraintTop_toTopOf="@id/fab_1339call_main"
-                app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
-                label_status="@{isFabOpen}"
-                android:padding="5dp"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
                 android:text="@string/call1339"
-                android:background="@drawable/fab_label_background"/>
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_1339call_main"
+                app:layout_constraintTop_toTopOf="@id/fab_1339call_main" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_corona_manual_main"
+                fab_status="@{isFabOpen}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabManualCorona"
-                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,24 +167,26 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_fab_corona_manual_label_main"
+                label_status="@{isFabOpen}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/fab_corona_manual_main"
-                app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main"
-                app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
-                label_status="@{isFabOpen}"
-                android:padding="5dp"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
                 android:text="@string/corona_manual"
-                android:background="@drawable/fab_label_background"/>
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_manual_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_corona_current_main"
+                fab_status="@{isFabOpen}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="clickFabCurrentCorona"
-                fab_status="@{isFabOpen}"
                 app:backgroundTint="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,15 +195,17 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_fab_corona_current_label_main"
+                label_status="@{isFabOpen}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/fab_corona_current_main"
-                app:layout_constraintTop_toTopOf="@id/fab_corona_current_main"
-                app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
-                label_status="@{isFabOpen}"
-                android:padding="5dp"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
                 android:text="@string/corona_status"
-                android:background="@drawable/fab_label_background"/>
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_current_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_current_main" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
