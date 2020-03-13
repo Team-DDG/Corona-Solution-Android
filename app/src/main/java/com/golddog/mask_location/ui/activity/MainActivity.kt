@@ -79,61 +79,32 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabMain(view: View) {
         showToast("fab_1")
-//        fabAnimation()
         changeFabOpenValue()
     }
 
     fun clickFabMask(view: View) {
         showToast("fab_2")
-//        fabAnimation()
         changeFabOpenValue()
     }
 
     fun clickFabCall(view: View) {
         showToast("fab_3")
-//        fabAnimation()
         changeFabOpenValue()
         startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
     }
 
     fun clickFabManualCorona(view: View) {
         showToast("fab_4")
-//        fabAnimation()
         changeFabOpenValue()
     }
 
     fun clickFabCurrentCorona(view: View) {
         showToast("fab_5")
-//        fabAnimation()
+        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
         changeFabOpenValue()
     }
 
-//    private fun fabAnimation() {
-//        if (binding.vm?.isFabOpen?.value!!) {
-//            binding.fabMainMain.startAnimation(FabAnimation.fabRotateBackward())
-//            binding.fabMaskMain.startAnimation(FabAnimation.fabClose())
-//            binding.tvFabMaskLabelMain.startAnimation(FabAnimation.fabClose())
-//            binding.fab1339callMain.startAnimation(FabAnimation.fabClose())
-//            binding.tvFab1339callLabelMain.startAnimation(FabAnimation.fabClose())
-//            binding.fabCoronaManualMain.startAnimation(FabAnimation.fabClose())
-//            binding.tvFabCoronaManualLabelMain.startAnimation(FabAnimation.fabClose())
-//            binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabClose())
-//            binding.tvFabCoronaCurrentLabelMain.startAnimation(FabAnimation.fabClose())
-//        } else {
-//            binding.fabMainMain.startAnimation(FabAnimation.fabRotateForward())
-//            binding.fabMaskMain.startAnimation(FabAnimation.fabOpen())
-//            binding.tvFabMaskLabelMain.startAnimation(FabAnimation.fabOpen())
-//            binding.fab1339callMain.startAnimation(FabAnimation.fabOpen())
-//            binding.tvFab1339callLabelMain.startAnimation(FabAnimation.fabOpen())
-//            binding.fabCoronaManualMain.startAnimation(FabAnimation.fabOpen())
-//            binding.tvFabCoronaManualLabelMain.startAnimation(FabAnimation.fabOpen())
-//            binding.fabCoronaCurrentMain.startAnimation(FabAnimation.fabOpen())
-//            binding.tvFabCoronaCurrentLabelMain.startAnimation(FabAnimation.fabOpen())
-//        }
-//    }
-
     private fun changeFabOpenValue() {
-//        binding.vm?.isFabOpen?.value = !binding.vm?.isFabOpen?.value!!
         binding.isFabOpen = !binding.isFabOpen!!
     }
 }
