@@ -29,6 +29,7 @@
             android:value="2fe0d73a2afa2b0dd86126cd6326a3d5" />
 
         <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.CoronaStatusActivity"/>
     </application>
 
 </manifest>
