@@ -3,7 +3,6 @@ package com.golddog.mask_location.ext
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.golddog.mask_location.util.FabAnimation
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("fab_status")
 fun change_fab_status(view: View, fab_status:Boolean?){
