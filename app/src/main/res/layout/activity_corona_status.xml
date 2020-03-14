@@ -5,6 +5,7 @@
     tools:context=".ui.activity.MainActivity">
 
     <data>
+
         <variable
             name="vm"
             type="com.golddog.mask_location.viewmodel.CoronaStatusViewModel" />
@@ -114,7 +115,7 @@
                         android:layout_marginTop="22dp"
                         android:layout_marginEnd="18dp"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@{vm.certified}"
+                        numberText="@{vm.coronaList.data.get(0).certified}"
                         tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="42sp"
@@ -128,7 +129,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="18dp"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@{vm.increased}"
+                        increaseNumberText="@{vm.coronaList.data.get(0).increased}"
                         tools:text="@string/sample_number_corona_status_changed"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="12sp"
@@ -164,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@{vm.cure}"
+                        numberText="@{vm.coronaList.data.get(0).cure}"
                         tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"
@@ -202,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@{vm.patient}"
+                        numberText="@{vm.patient}"
                         tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"
@@ -240,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@{vm.dead}"
+                        numberText="@{vm.coronaList.data.get(0).dead}"
                         tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"

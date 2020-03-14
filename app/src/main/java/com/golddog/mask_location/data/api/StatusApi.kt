@@ -1,7 +1,7 @@
 package com.golddog.mask_location.data.api
 
 import com.golddog.mask_location.entity.CoronaList
-import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,5 +24,5 @@ interface StatusApi {
     }
 
     @GET("status/korea")
-    fun getAccumulateData(@Header("APIKey") apiKey: String, @Query("locale") locale: String): Flowable<CoronaList>
+    fun getAccumulateData(@Header("APIKey") apiKey: String, @Query("locale") locale: String): Single<CoronaList>
 }
