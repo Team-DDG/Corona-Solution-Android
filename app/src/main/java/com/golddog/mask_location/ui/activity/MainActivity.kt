@@ -55,12 +55,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
-        val span: Spannable = getString(R.string.service_agreement).toSpannable()
-        span.setSpan(ForegroundColorSpan(Color.RED), 225, 442, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val contentSpan: Spannable = getString(R.string.service_agreement).toSpannable()
+        contentSpan.setSpan(ForegroundColorSpan(Color.RED), 283, 681, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agreement)
-            .setMessage(span)
+            .setMessage(contentSpan)
             .setNegativeButton(
                 R.string.disagree
             ) { _, _ ->
@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabMask(view: View) {
         showToast("fab_2")
+        startActivity(Intent(applicationContext, MaskActivity::class.java))
         changeFabOpenValue()
     }
 
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabManualCorona(view: View) {
         showToast("fab_4")
+        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
         changeFabOpenValue()
     }
 
