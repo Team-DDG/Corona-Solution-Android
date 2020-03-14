@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabMask(view: View) {
         showToast("fab_2")
+        startActivity(Intent(applicationContext, MaskActivity::class.java))
         changeFabOpenValue()
     }
 
