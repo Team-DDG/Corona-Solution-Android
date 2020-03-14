@@ -6,9 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -51,16 +55,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAgreement() {
-        if (!preference?.getAgreement()!!) getAgreementDialog().show()
+        getAgreementDialog().show()
+        //if (!preference?.getAgreement()!!)
     }
 
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
-        val span: Spannable = getString(R.string.service_agreement).toSpannable()
-        span.setSpan(ForegroundColorSpan(Color.RED), 225, 442, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val contentSpan: Spannable = getString(R.string.service_agreement).toSpannable()
+        contentSpan.setSpan(ForegroundColorSpan(Color.RED), 283, 681, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agreement)
-            .setMessage(span)
+            .setMessage(contentSpan)
             .setNegativeButton(
                 R.string.disagree
             ) { _, _ ->
