@@ -24,7 +24,5 @@ class CoronaStatusActivity : AppCompatActivity() {
 
         binding.vm = viewModel
         binding.lifecycleOwner = this
-
-        binding.vm?.setAccumulateData()
     }
 }

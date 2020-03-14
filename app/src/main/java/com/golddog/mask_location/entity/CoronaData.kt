@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class CoronaData(
 	@SerializedName("increased")
-	var increased: Int = -1,
-
-	@SerializedName("percentage")
-	val dead: Int = -1,
-
-	@SerializedName("certified")
-	val certified: Int = -1,
+	var increased: Int,
 
 	@SerializedName("dead")
-	val cure: Int = -1
+	var dead: Int,
+
+	@SerializedName("certified")
+	var certified: Int,
+
+	@SerializedName("deisolated")
+	var cure: Int
 ) {
 	override fun toString(): String {
 		return "increased : $increased dead : $dead certified : $certified dead : $dead"
