@@ -6,13 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -55,8 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAgreement() {
-        getAgreementDialog().show()
-        //if (!preference?.getAgreement()!!)
+        if (!preference?.getAgreement()!!) getAgreementDialog().show()
     }
 
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
@@ -101,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     fun clickFabManualCorona(view: View) {
         showToast("fab_4")
+        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
         changeFabOpenValue()
     }
 
