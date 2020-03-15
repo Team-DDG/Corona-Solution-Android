@@ -32,7 +32,7 @@
     <string name="patient_status">환자 현황</string>
     <string name="total_patient">누적 확진자</string>
     <string name="sample_number_corona_status">7,513</string>
-    <string name="sample_naumber_corona_status_changed">( + 131 )</string>
+    <string name="sample_number_corona_status_changed">( + 131 )</string>
     <string name="cured">완치</string>
     <string name="curing">치료 중</string>
     <string name="dead">사망</string>

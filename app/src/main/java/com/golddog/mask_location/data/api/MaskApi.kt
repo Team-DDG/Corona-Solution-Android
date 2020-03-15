@@ -8,16 +8,11 @@ interface MaskApi {
     companion object {
         private const val baseUrl = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1"
 
-        private lateinit var retrofit : Retrofit
-
-        fun createRetrofit(): Retrofit {
-            retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            return retrofit
-        }
+        fun createMaskRetrofit(): MaskApi = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MaskApi::class.java)
     }
 }

@@ -2,7 +2,7 @@ package com.golddog.mask_location.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class StoresItem(
+data class Store(
 
 	@SerializedName("code")
 	val code: String? = null,
