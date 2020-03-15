@@ -8,7 +8,7 @@ import com.golddog.mask_location.entity.CoronaList
 import io.reactivex.disposables.CompositeDisposable
 
 class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : ViewModel() {
-    var coronaList: MutableLiveData<CoronaList> = MutableLiveData(CoronaList(listOf(CoronaData(0, 0, 0, 0))))
+    var coronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
     var patient: MutableLiveData<String> = MutableLiveData("0")
     private var disposable = CompositeDisposable()
 
@@ -20,10 +20,11 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     private fun setAccumulateData() {
         val accumulateDataDisposable = statusDataSource.getCoronaStatusData()
             .subscribe({
-                coronaList.postValue(it)
-                val patientData = it.data[0].certified - it.data[0].cure - it.data[0].dead
+                val serverData = it.data[0]
+                coronaList.value = serverData
+                val patientData = serverData.certified - serverData.cure - serverData.dead
 
-                patient.postValue("$patientData")
+                patient.value = patientData.toString()
             }) {
                 // TODO : Toast 띄워서 오류발생 알리기, 오류로그 : 데이터를 불러오지 못했습니다.
             }
