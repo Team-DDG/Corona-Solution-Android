@@ -6,9 +6,6 @@
     tools:context=".ui.activity.MainActivity">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="isFabOpen"
             type="Boolean" />

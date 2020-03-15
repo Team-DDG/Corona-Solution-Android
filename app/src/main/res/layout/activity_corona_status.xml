@@ -6,6 +6,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.golddog.mask_location.viewmodel.CoronaStatusViewModel" />
 
     </data>
 
@@ -112,7 +115,8 @@
                         android:layout_marginTop="22dp"
                         android:layout_marginEnd="18dp"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_number_corona_status"
+                        numberText="@{vm.coronaList.certified}"
+                        tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="42sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +129,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="18dp"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_naumber_corona_status_changed"
+                        increaseNumberText="@{vm.coronaList.increased}"
+                        tools:text="@string/sample_number_corona_status_changed"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -160,26 +165,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_number_corona_status"
+                        numberText="@{vm.coronaList.cure}"
+                        tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_changed_cure_corona_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_naumber_corona_status_changed"
-                        android:textColor="@color/colorSecondaryLight"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_cured_corona_status" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -210,26 +203,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_number_corona_status"
+                        numberText="@{vm.patient}"
+                        tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_changed_curing_corona_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_naumber_corona_status_changed"
-                        android:textColor="@color/colorSecondaryLight"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_curing_corona_status" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -260,26 +241,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_number_corona_status"
+                        numberText="@{vm.coronaList.dead}"
+                        tools:text="@string/sample_number_corona_status"
                         android:textColor="@color/colorSecondaryLight"
                         android:textSize="25sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_changed_dead_corona_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/nanum_barun_gothic_bold"
-                        android:text="@string/sample_naumber_corona_status_changed"
-                        android:textColor="@color/colorSecondaryLight"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_dead_corona_status" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
