@@ -35,36 +35,21 @@ fun setTextWithIncreaseNumberFormat(textView: TextView, numberData: Int) {
 @BindingAdapter("setTextColor")
 fun setTextColor(textView: TextView, year: Int) {
     val context = BaseApplication.appContext!!
-    Log.d("binding", year.toString())
+    Log.d("binding", year.toString()+" "+textView.text)
     when(year){
-        1 -> if(textView.text == "월") {
+        1, 6 -> if(textView.text == "월") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
         } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        6 -> if(textView.text == "월") {
+        2, 7 -> if(textView.text == "화") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
         } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        2 -> if(textView.text == "화") {
+        3, 8 -> if(textView.text == "수") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
         } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        7 -> if(textView.text == "화") {
+        4, 9 -> if(textView.text == "목") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
         } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        3 -> if(textView.text == "수") {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        8 -> if(textView.text == "수") {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        4 -> if(textView.text == "목") {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        9 -> if(textView.text == "목") {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        5 -> if(textView.text == "금") {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-        0 -> if(textView.text == "금") {
+        5, 0 -> if(textView.text == "금") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
         } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
     }

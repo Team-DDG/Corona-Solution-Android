@@ -179,7 +179,6 @@
                         android:textSize="24sp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/tv_friday_mask"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/tv_wednesday_mask"
                         app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
 
@@ -192,7 +191,6 @@
                         android:textSize="24sp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/tv_thursday_mask"
                         app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
 
