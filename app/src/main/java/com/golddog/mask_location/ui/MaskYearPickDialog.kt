@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
@@ -23,8 +25,15 @@ class MaskYearPickDialog : DialogFragment(){
         this.listener = listener
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val inflater = activity!!.layoutInflater
         val dialog: View = inflater.inflate(R.layout.year_picker, null)
         val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
@@ -38,7 +47,6 @@ class MaskYearPickDialog : DialogFragment(){
         yearPicker?.maxValue = 2099
         yearPicker?.minValue = 1900
         yearPicker?.value = Calendar.getInstance().get(Calendar.YEAR)
-        builder.setView(dialog) // Add action buttons
-        return builder.create()
+        return dialog
     }
 }
