@@ -19,8 +19,7 @@
     <string name="agreement">서비스 사용 서약 동의</string>
     <string name="require_authority">권한요청</string>
     <string name="require_authority_content">
-        서비스를 이용하기 위해서는 권한이 필요합니다.
-        \n위치 정보는 사용자 근처 위치의 마스크 판매 장소를 조회하기 위한 목적으로만 사용되며, 위치 정보를 저장하지 않습니다.</string>
+        서비스를 이용하기 위해서는 권한이 필요합니다. 위치 정보는 사용자 근처 위치의 마스크 판매 장소를 조회하기 위한 목적으로만 사용되며, 위치 정보를 저장하지 않습니다.</string>
     <string name="permission_granted">권한 승인</string>
     <string name="permission_denied">권한 거부시 서비스를 이용할 수 없습니다.</string>
     <string name="authority_denied">서약 비동의시 서비스를 이용할 수 없습니다.</string>
