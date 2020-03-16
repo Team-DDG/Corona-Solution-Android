@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
         val contentSpan: Spannable = getString(R.string.service_agreement).toSpannable()
-        contentSpan.setSpan(ForegroundColorSpan(Color.RED), 283, 681, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        contentSpan.setSpan(ForegroundColorSpan(Color.RED), 200, 598, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return MaterialAlertDialogBuilder(this)
             .setTitle(R.string.agreement)
