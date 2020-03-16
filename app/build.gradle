@@ -73,4 +73,7 @@ dependencies {
 
     // Naver Map
     implementation 'com.naver.maps:map-sdk:3.7.1'
+
+    // Google Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
