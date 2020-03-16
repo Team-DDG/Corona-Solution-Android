@@ -1,23 +1,17 @@
 package com.golddog.mask_location.ui
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.golddog.mask_location.R
 import kotlinx.android.synthetic.main.year_picker.*
 import java.util.*
 
 
-class MaskYearPickDialog : DialogFragment(){
-    private val MAX_YEAR = 2099
-    private val MIN_YEAR = 1900
+class MaskYearPickDialog : DialogFragment() {
 
     private var listener: OnDateSetListener? = null
 
@@ -34,19 +28,18 @@ class MaskYearPickDialog : DialogFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflater = activity!!.layoutInflater
-        val dialog: View = inflater.inflate(R.layout.year_picker, null)
-        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
-        val btnConfirm = dialog.findViewById<Button>(R.id.btn_confirm)
-        val yearPicker = dialog.findViewById<NumberPicker>(R.id.picker_year)
-        btnCancel?.setOnClickListener { this@MaskYearPickDialog.dialog?.cancel() }
-        btnConfirm?.setOnClickListener {
-            listener?.onDateSet(null, yearPicker.value, 0, 0)
+        return inflater.inflate(R.layout.year_picker, null)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btn_cancel.setOnClickListener { this@MaskYearPickDialog.dialog?.cancel() }
+        btn_confirm.setOnClickListener {
+            listener?.onDateSet(null, picker_year.value, 0, 0)
             this@MaskYearPickDialog.dialog?.cancel()
         }
-        yearPicker?.maxValue = 2099
-        yearPicker?.minValue = 1900
-        yearPicker?.value = Calendar.getInstance().get(Calendar.YEAR)
-        return dialog
+        picker_year.maxValue = 2099
+        picker_year.minValue = 1900
+        picker_year.value = Calendar.getInstance().get(Calendar.YEAR)
     }
 }

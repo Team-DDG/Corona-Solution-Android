@@ -39,18 +39,38 @@ fun setTextColor(textView: TextView, year: Int) {
     when(year){
         1, 6 -> if(textView.text == "월") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        } else {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        }
         2, 7 -> if(textView.text == "화") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        } else {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        }
         3, 8 -> if(textView.text == "수") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        } else {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        }
         4, 9 -> if(textView.text == "목") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        } else {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        }
         5, 0 -> if(textView.text == "금") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        } else {
+            textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
+            Log.d("binding", "inside when"+textView.text)
+        }
     }
 }
