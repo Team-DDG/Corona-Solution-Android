@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
@@ -21,15 +20,12 @@ import com.golddog.mask_location.ext.showToast
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.activity_main.*
-import net.daum.mf.map.api.MapView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var viewModelFactory: MainViewModelFactory
-    private val mapView by lazy { MapView(this) }
 
     private val preference by lazy {
         BaseApplication.appContext?.let { SharedPreference(it) }
@@ -52,8 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        val mapViewContainer = findViewById<ViewGroup>(R.id.map_view)
-        mapViewContainer.addView(mapView)
+
     }
 
     private fun checkAgreement() {
