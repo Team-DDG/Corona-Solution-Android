@@ -1,15 +1,18 @@
 package com.golddog.mask_location.data
 
+import com.golddog.mask_location.data.api.MaskApi
 import com.golddog.mask_location.data.api.StatusApi
 import com.golddog.mask_location.data.datasource.MaskDataSource
 import com.golddog.mask_location.data.datasource.StatusDataSource
 import com.golddog.mask_location.entity.CoronaList
+import com.golddog.mask_location.entity.StoresList
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ApiClient : MaskDataSource, StatusDataSource {
+class ApiClient : StatusDataSource, MaskDataSource {
     private val statusApi: StatusApi by lazy { StatusApi.createDrugStoreRetrofit() }
+    private val maskApi: MaskApi by lazy { MaskApi.createMaskRetrofit() }
 
     override fun getCoronaStatusData(): Single<CoronaList> {
         return statusApi.getAccumulateData("synthesize")
@@ -22,4 +25,10 @@ class ApiClient : MaskDataSource, StatusDataSource {
      *      따라서 개발할 때, 위 getCoronaStatusData() 를 개량해서 사용하는 것을 추천
      *      locale 을 parameter 로 받아서 등록해서 개발해 보는 것이 좋을 것 같음.
      */
+
+    override fun getAroundMaskData(lat: Int, lng: Int, meter: Int): Single<StoresList> {
+        return maskApi.getAroundMaskData(lat, lng, meter)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

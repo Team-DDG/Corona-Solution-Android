@@ -16,7 +16,6 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
         setAccumulateData()
     }
 
-
     private fun setAccumulateData() {
         val accumulateDataDisposable = statusDataSource.getCoronaStatusData()
             .subscribe({
