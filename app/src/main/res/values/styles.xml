@@ -19,4 +19,8 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="NoneMaterial" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:elevation">0dp</item>
+    </style>
+
 </resources>

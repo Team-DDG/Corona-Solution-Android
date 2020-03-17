@@ -76,4 +76,17 @@
     <string name="few_number_status">~ 30</string>
     <string name="some_number_status">30 ~</string>
     <string name="plenty_number_status">100 ~</string>
+    <string name="my_mask_date">내 마스크 구매일 계산기</string>
+    <string name="enter_your_year">자신의 출생년도 4자리를 입력해주세요</string>
+    <string name="sample_year">ex)1998</string>
+    <string name="available_date">구매 가능 요일</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="cancel">취소</string>
+    <string name="confirm">확인</string>
+    <string name="touch_to_select_year">눌러서 연도를 선택해 주세요</string>
+    <string name="pick_year">연도를 선택해 주세요</string>
 </resources>

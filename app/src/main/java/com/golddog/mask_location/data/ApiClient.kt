@@ -14,10 +14,16 @@ class ApiClient : StatusDataSource, MaskDataSource {
     private val statusApi: StatusApi by lazy { StatusApi.createDrugStoreRetrofit() }
     private val maskApi: MaskApi by lazy { MaskApi.createMaskRetrofit() }
 
-    override fun getCoronaStatusData(): Single<CoronaList> {
-        return statusApi.getAccumulateData("synthesize")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    override fun getCoronaStatusData(locale: String?): Single<CoronaList> {
+        return if (locale == null){
+            statusApi.getAccumulateData("synthesize")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        } else {
+            statusApi.getAccumulateData("locale")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 
     /**
