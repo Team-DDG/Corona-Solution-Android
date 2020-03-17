@@ -21,7 +21,7 @@ interface MaskApi {
     }
 
     @GET("storesByGeo/json")
-    fun getAroundMaskData(@Query("lat") lat: Int,
-                          @Query("lng") lng: Int,
+    fun getAroundMaskData(@Query("lat") lat: Double,
+                          @Query("lng") lng: Double,
                           @Query("m") meter: Int): Single<StoresList>
 }
