@@ -69,4 +69,17 @@
         \nㆍ요양시설 등 종사자는 발열, 기침 등 호흡기 증상이 있거나 환자발생국가 해외여행력이 있으면 14일 간 업무에서 배제하고 있으며, 시설 내 외부인 출입도 제한하고 있습니다.
         \nㆍ사회복지 이용시설이 휴관하더라도 일상생활 유지에 필수적인 아동 도시락 지원, 장애인 활동지원 등의 서비스는 지속 제공합니다.</string>
     <string name="corona_manual_source">자료 출저: 질병관리본부 코로나 바이러스 감염증 예방 조치 안내</string>
+    <string name="my_mask_date">내 마스크 구매일 계산기</string>
+    <string name="enter_your_year">자신의 출생년도 4자리를 입력해주세요</string>
+    <string name="sample_year">ex)1998</string>
+    <string name="available_date">구매 가능 요일</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="cancel">취소</string>
+    <string name="confirm">확인</string>
+    <string name="touch_to_select_year">눌러서 연도를 선택해 주세요</string>
+    <string name="pick_year">연도를 선택해 주세요</string>
 </resources>
