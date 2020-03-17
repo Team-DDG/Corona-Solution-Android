@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(),
     private var fewMarkerList: ArrayList<Marker> = arrayListOf()
     private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
     private var breakMarkerList: ArrayList<Marker> = arrayListOf()
+    // Marker들은 UI들에서 사용되므로, 데이터를 받아서 여기에 넣겠음
 
     private val infoWindow = InfoWindow()
 
@@ -155,26 +156,48 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setMarkerInvisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = null
+    fun clickFabMain(view: View) {
+        changeFabOpenValue()
+    }
+
+    fun clickFabMask(view: View) {
+        startActivity(Intent(applicationContext, MaskActivity::class.java))
+        changeFabOpenValue()
+    }
+
+    fun clickFabCall(view: View) {
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
+        changeFabOpenValue()
+    }
+
+    fun clickFabManualCorona(view: View) {
+        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
+        changeFabOpenValue()
+    }
+
+    fun clickFabCurrentCorona(view: View) {
+        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
+        changeFabOpenValue()
+    }
+
+    override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
+        if (e.errorCode == "429") {
+            showToast("사용량이 많아 지도를 사용할 수 없습니다.")
         }
     }
 
-    private fun setMarkerVisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = naverMap
-        }
-    }
-
-    private fun setNaverMap() {
-        val fm = supportFragmentManager
-        mapView = fm.findFragmentById(R.id.mapView) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.mapView, it).commit()
-            }
-
-        mapView.getMapAsync(this)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
+        ) return
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     @UiThread
@@ -189,6 +212,28 @@ class MainActivity : AppCompatActivity(),
             binding.vm?.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
         }
         this.naverMap = naverMap
+    }
+
+    private fun setNaverMap() {
+        val fm = supportFragmentManager
+        mapView = fm.findFragmentById(R.id.mapView) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.mapView, it).commit()
+            }
+
+        mapView.getMapAsync(this)
+    }
+
+    private fun setMarkerVisible(markers: List<Marker>) {
+        markers.forEach {
+            it.map = naverMap
+        }
+    }
+
+    private fun setMarkerInvisible(markers: List<Marker>) {
+        markers.forEach {
+            it.map = null
+        }
     }
 
     private fun setMarkerOnMap(storeSales: StoreSales) {
@@ -208,76 +253,61 @@ class MainActivity : AppCompatActivity(),
             marker.icon = OverlayImage.fromResource(R.drawable.marker_plenty)
             marker = setMarkerTag(
                 storeSales,
-                "재고 100개 이상",
+                getString(R.string.plenty_status),
                 ContextCompat.getColor(this, R.color.marker_plenty),
                 marker
             )
-            if (binding.vm?.plentyChecked?.value!!) {
-                marker.map = naverMap
-            } else {
-                marker.map = null
-            }
+            setMarkerVisibility(marker, binding.vm?.plentyChecked?.value!!)
             plentyMarkerList.add(marker)
         } else if (status == "some") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_some)
             marker = setMarkerTag(
                 storeSales,
-                "재고 30개 이상",
+                getString(R.string.some_status),
                 ContextCompat.getColor(this, R.color.marker_some),
                 marker
             )
-            if (binding.vm?.someChecked?.value!!) {
-                marker.map = naverMap
-            } else {
-                marker.map = null
-            }
+            setMarkerVisibility(marker, binding.vm?.someChecked?.value!!)
             someMarkerList.add(marker)
         } else if (status == "few") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_few)
             marker = setMarkerTag(
                 storeSales,
-                "재고 30개 이하",
+                getString(R.string.few_status),
                 ContextCompat.getColor(this, R.color.marker_few),
                 marker
             )
-            if (binding.vm?.fewChecked?.value!!) {
-                marker.map = naverMap
-            } else {
-                marker.map = null
-            }
+            setMarkerVisibility(marker, binding.vm?.fewChecked?.value!!)
             fewMarkerList.add(marker)
         } else if (status == "empty") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_empty)
             marker = setMarkerTag(
                 storeSales,
-                "품절",
+                getString(R.string.empty_status),
                 ContextCompat.getColor(this, R.color.marker_none),
                 marker
             )
-            if (binding.vm?.emptyChecked?.value!!) {
-                marker.map = naverMap
-            } else {
-                marker.map = null
-            }
+            setMarkerVisibility(marker, binding.vm?.emptyChecked?.value!!)
             emptyMarkerList.add(marker)
         } else if (status == "break") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_break)
             marker = setMarkerTag(
                 storeSales,
-                "판매 중지",
+                getString(R.string.break_status),
                 ContextCompat.getColor(this, R.color.marker_none),
                 marker
             )
-            if (binding.vm?.breakChecked?.value!!) {
-                marker.map = naverMap
-            } else {
-                marker.map = null
-            }
+            setMarkerVisibility(marker, binding.vm?.breakChecked?.value!!)
             breakMarkerList.add(marker)
         } else {
             marker.map = null
         }
         // if문으로 비교하는 이유는 when문은 hashcode 까지 비교해서 오류가 발생함.
+    }
+
+    private fun setMarkerVisibility(marker: Marker, visibility: Boolean) {
+        if (visibility) marker.map = naverMap
+        else marker.map = null
     }
 
     private fun setMarkerTag(
@@ -320,20 +350,6 @@ class MainActivity : AppCompatActivity(),
         return marker
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (locationSource.onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
-            )
-        ) return
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
     private fun checkAgreement() {
         if (!preference.getAgreement()) getAgreementDialog().show()
     }
@@ -365,37 +381,7 @@ class MainActivity : AppCompatActivity(),
             .setCancelable(false)
     }
 
-    fun clickFabMain(view: View) {
-        changeFabOpenValue()
-    }
-
-    fun clickFabMask(view: View) {
-        startActivity(Intent(applicationContext, MaskActivity::class.java))
-        changeFabOpenValue()
-    }
-
-    fun clickFabCall(view: View) {
-        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
-        changeFabOpenValue()
-    }
-
-    fun clickFabManualCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
-        changeFabOpenValue()
-    }
-
-    fun clickFabCurrentCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
-        changeFabOpenValue()
-    }
-
     private fun changeFabOpenValue() {
         binding.isFabOpen = !binding.isFabOpen!!
-    }
-
-    override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
-        if (e.errorCode == "429") {
-            showToast("사용량이 많아 지도를 사용할 수 없습니다.")
-        }
     }
 }

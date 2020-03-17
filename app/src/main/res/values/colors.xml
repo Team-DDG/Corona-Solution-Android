@@ -15,6 +15,5 @@
     <color name="marker_plenty">#2a9211</color>
     <color name="marker_some">#ff8000</color>
     <color name="marker_few">#e40000</color>
-    <color name="marker_none">#f1f9ff
-    </color>
+    <color name="marker_none">#929292</color>
 </resources>
