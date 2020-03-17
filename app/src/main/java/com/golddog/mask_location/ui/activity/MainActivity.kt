@@ -36,6 +36,7 @@ import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
     OnMapReadyCallback, NaverMapSdk.OnAuthFailedListener {
@@ -75,6 +76,10 @@ class MainActivity : AppCompatActivity(),
         binding.vm = viewModel
         binding.isFabOpen = false
         binding.lifecycleOwner = this
+
+        val toolbar = toolbar
+        toolbar.setTitle("")
+        setSupportActionBar(toolbar)
 
         setNaverMap()
         checkAgreement()
@@ -319,7 +324,7 @@ class MainActivity : AppCompatActivity(),
         val storeName = "${storeSales.name}\n"
         val tagString =
             "${storeSales.name}\n${storeSales.address}\n${status}\n" +
-                    "입고시간 :${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
+                    "입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
         val storeNameStart = 0
         val storeNameEnd = storeName.length
         val statusStart = tagString.indexOf(status)
