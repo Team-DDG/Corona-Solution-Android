@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : ViewModel() {
     var coronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
+    var cityCoronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
     var patient: MutableLiveData<String> = MutableLiveData("0")
     private val disposable = CompositeDisposable()
 
@@ -17,7 +18,7 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     }
 
     private fun setAccumulateData() {
-        val accumulateDataDisposable = statusDataSource.getCoronaStatusData()
+        val accumulateDataDisposable = statusDataSource.getCoronaStatusData(null)
             .subscribe({
                 val serverData = it.data[0]
                 coronaList.value = serverData
@@ -29,6 +30,21 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
             }
 
         disposable.add(accumulateDataDisposable)
+    }
+
+    private fun setCityStatusData() {
+        val cityArray = ArrayList<String>()
+        for (city in cityArray){
+            val cityStatusDataDisposable = statusDataSource.getCoronaStatusData(city)
+                .subscribe({
+                    val serverData = it.data[0]
+                    cityCoronaList.value = serverData
+                }){
+
+                }
+
+            disposable.add(cityStatusDataDisposable)
+        }
     }
 
     override fun onCleared() {
