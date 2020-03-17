@@ -26,7 +26,7 @@ class ApiClient : StatusDataSource, MaskDataSource {
      *      locale 을 parameter 로 받아서 등록해서 개발해 보는 것이 좋을 것 같음.
      */
 
-    override fun getAroundMaskData(lat: Int, lng: Int, meter: Int): Single<StoresList> {
+    override fun getAroundMaskData(lat: Double, lng: Double, meter: Int): Single<StoresList> {
         return maskApi.getAroundMaskData(lat, lng, meter)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
