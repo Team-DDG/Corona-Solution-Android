@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(),
         binding.lifecycleOwner = this
 
         val toolbar = toolbar
-        toolbar.setTitle("")
+        toolbar.title = ""
         setSupportActionBar(toolbar)
 
         setNaverMap()
@@ -364,7 +364,7 @@ class MainActivity : AppCompatActivity(),
         contentSpan.setSpan(
             ForegroundColorSpan(Color.RED),
             200,
-            598,
+            582,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 

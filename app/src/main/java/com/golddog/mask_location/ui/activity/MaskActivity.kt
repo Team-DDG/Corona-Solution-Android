@@ -2,11 +2,8 @@ package com.golddog.mask_location.ui.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.widget.DatePicker
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
 import com.golddog.mask_location.databinding.ActivityMaskBinding
@@ -25,7 +22,7 @@ class MaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_mask)
-        viewModelFactory = MaskViewModelFactory(application)
+        viewModelFactory = MaskViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(MaskViewModel::class.java)
 
         binding.vm = viewModel
@@ -33,7 +30,7 @@ class MaskActivity : AppCompatActivity() {
 
         val maskDialogListener = DatePickerDialog.OnDateSetListener { _, p1, _, _ ->
             year = p1
-            viewModel.year.value = year
+            binding.vm?.year?.value = year
             tv_year_mask.text = year.toString()
         }
 

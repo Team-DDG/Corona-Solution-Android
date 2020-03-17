@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface MaskApi {
     companion object {
-        private const val baseUrl = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/"
+        private const val baseUrl = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v2/"
 
         fun createMaskRetrofit(): MaskApi = Retrofit.Builder()
             .baseUrl(baseUrl)
