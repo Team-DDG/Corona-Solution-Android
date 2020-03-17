@@ -81,4 +81,5 @@
     <string name="cancel">취소</string>
     <string name="confirm">확인</string>
     <string name="touch_to_select_year">눌러서 연도를 선택해 주세요</string>
+    <string name="pick_year">연도를 선택해 주세요</string>
 </resources>

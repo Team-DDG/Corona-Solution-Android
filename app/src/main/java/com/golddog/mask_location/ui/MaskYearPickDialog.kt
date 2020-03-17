@@ -1,12 +1,17 @@
 package com.golddog.mask_location.ui
 
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.golddog.mask_location.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.year_picker.*
 import java.util.*
 
@@ -23,23 +28,25 @@ class MaskYearPickDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.year_picker, null)
-    }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = MaterialAlertDialogBuilder(activity)
+        val inflater = activity!!.layoutInflater
+        val dialog = inflater.inflate(R.layout.year_picker, null)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        btn_cancel.setOnClickListener { this@MaskYearPickDialog.dialog?.cancel() }
-        btn_confirm.setOnClickListener {
-            listener?.onDateSet(null, picker_year.value, 0, 0)
+        val btnCancel = dialog.findViewById<TextView>(R.id.btn_cancel)
+        val btnConfirm = dialog.findViewById<TextView>(R.id.btn_confirm)
+
+        val yearPicker = dialog.findViewById<NumberPicker>(R.id.picker_year)
+
+        btnCancel.setOnClickListener { this@MaskYearPickDialog.dialog?.cancel() }
+        btnConfirm.setOnClickListener {
+            listener?.onDateSet(null, yearPicker.value, 0, 0)
             this@MaskYearPickDialog.dialog?.cancel()
         }
-        picker_year.maxValue = 2099
-        picker_year.minValue = 1900
-        picker_year.value = Calendar.getInstance().get(Calendar.YEAR)
+        yearPicker.maxValue = 2099
+        yearPicker.minValue = 1900
+        yearPicker.value = Calendar.getInstance().get(Calendar.YEAR)
+        builder.setView(dialog)
+        return builder.create()
     }
 }

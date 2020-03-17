@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/NoneMaterial">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,27 +22,34 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|end"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
             android:text="@string/cancel"
-            android:textAllCaps="false" />
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@null"/>
 
-        <Button
+        <TextView
             android:id="@+id/btn_confirm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/confirm"
-            android:textAllCaps="false" />
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@null"/>
 
     </LinearLayout>
 </LinearLayout>

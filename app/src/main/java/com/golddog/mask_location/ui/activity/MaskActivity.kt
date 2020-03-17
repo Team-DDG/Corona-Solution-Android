@@ -34,7 +34,7 @@ class MaskActivity : AppCompatActivity() {
         val maskDialogListener = DatePickerDialog.OnDateSetListener { _, p1, _, _ ->
             year = p1
             viewModel.year.value = year
-//            Toast.makeText(applicationContext, year.toString(), Toast.LENGTH_LONG).show()
+            tv_year_mask.text = year.toString()
         }
 
         tv_year_mask.setOnClickListener {
