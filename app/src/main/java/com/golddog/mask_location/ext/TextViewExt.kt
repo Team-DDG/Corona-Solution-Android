@@ -36,41 +36,31 @@ fun setTextWithIncreaseNumberFormat(textView: TextView, numberData: Int) {
 fun setTextColor(textView: TextView, year: Int) {
     val context = BaseApplication.appContext!!
     Log.d("binding", year.toString()+" "+textView.text)
-    when(year){
-        1, 6 -> if(textView.text == "월") {
+    when(year.toString().takeLast(1)){
+        "1", "6" -> if(textView.text == "월") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-            Log.d("binding", "inside when"+textView.text)
-        } else {
+        } else{
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-            Log.d("binding", "inside when"+textView.text)
         }
-        2, 7 -> if(textView.text == "화") {
+        "2", "7" -> if(textView.text == "화") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-            Log.d("binding", "inside when"+textView.text)
-        } else {
+        } else{
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-            Log.d("binding", "inside when"+textView.text)
         }
-        3, 8 -> if(textView.text == "수") {
+        "3", "8" -> if(textView.text == "수") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-            Log.d("binding", "inside when"+textView.text)
-        } else {
+        } else{
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-            Log.d("binding", "inside when"+textView.text)
         }
-        4, 9 -> if(textView.text == "목") {
+        "4", "9" -> if(textView.text == "목") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-            Log.d("binding", "inside when"+textView.text)
-        } else {
+        } else{
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-            Log.d("binding", "inside when"+textView.text)
         }
-        5, 0 -> if(textView.text == "금") {
+        "5", "0" -> if(textView.text == "금") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-            Log.d("binding", "inside when"+textView.text)
-        } else {
+        } else{
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
-            Log.d("binding", "inside when"+textView.text)
         }
     }
 }
