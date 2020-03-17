@@ -11,10 +11,16 @@ import io.reactivex.schedulers.Schedulers
 class ApiClient : MaskDataSource, StatusDataSource {
     private val statusApi: StatusApi by lazy { StatusApi.createDrugStoreRetrofit() }
 
-    override fun getCoronaStatusData(): Single<CoronaList> {
-        return statusApi.getAccumulateData("synthesize")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    override fun getCoronaStatusData(locale: String?): Single<CoronaList> {
+        return if (locale == null){
+            statusApi.getAccumulateData("synthesize")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        } else {
+            statusApi.getAccumulateData("locale")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 
     /**
