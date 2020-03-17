@@ -37,7 +37,8 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuthFailedListener {
+class MainActivity : AppCompatActivity(),
+    OnMapReadyCallback, NaverMapSdk.OnAuthFailedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -46,7 +47,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
     private lateinit var mapView: MapFragment
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
-    private var markerList: ArrayList<Marker> = arrayListOf()
+
+    private var plentyMarkerList: ArrayList<Marker> = arrayListOf()
+    private var someMarkerList: ArrayList<Marker> = arrayListOf()
+    private var fewMarkerList: ArrayList<Marker> = arrayListOf()
+    private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
+    private var breakMarkerList: ArrayList<Marker> = arrayListOf()
+
     private val infoWindow = InfoWindow()
 
     private val preference by lazy { SharedPreference(this) }
@@ -71,27 +78,92 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
         setNaverMap()
         checkAgreement()
 
-        binding.vm?.storesData?.observe(this,
-            Observer { list ->
-                markerList.forEach {
-                    it.map = null
-                }
-
-                list.forEach {
-                    setMarkerOnMap(it)
-                }
-            })
         /** marker list 를 V에서 observe 해서 map 에 등록하는 로직
          * 비교 & 지도에 핀 꼽는 로직 중 비교하는 로직을 VM 으로 Refactoring 하는 방법이 있을까 ?
          * MapView 를 FrameLayout 으로 설정해서, BindingAdapter 를 이용하는 방법에는 한계가 있을 거 같다.
          * foreach 를 두번 도는데 코드는 간결해 보이나 실제 도는 횟수는 몇 천번에 육박할 듯 함
          * 이부분 메모리 릭이 발생할거 같음 로직 변경을 생각해 봐야 한다
          */
+        binding.vm?.storesData?.observe(this,
+            Observer { list ->
+                setMarkerInvisible(plentyMarkerList)
+                setMarkerInvisible(someMarkerList)
+                setMarkerInvisible(fewMarkerList)
+                setMarkerInvisible(emptyMarkerList)
+                setMarkerInvisible(breakMarkerList)
+
+                plentyMarkerList.clear()
+                someMarkerList.clear()
+                fewMarkerList.clear()
+                emptyMarkerList.clear()
+                breakMarkerList.clear()
+
+                list.forEach {
+                    setMarkerOnMap(it)
+                }
+            })
+
+        binding.vm?.plentyChecked?.observe(this,
+            Observer {
+                if (it) {
+                    setMarkerVisible(plentyMarkerList)
+                } else {
+                    setMarkerInvisible(plentyMarkerList)
+                }
+            })
+
+        binding.vm?.someChecked?.observe(this,
+            Observer {
+                if (it) {
+                    setMarkerVisible(someMarkerList)
+                } else {
+                    setMarkerInvisible(someMarkerList)
+                }
+            })
+
+        binding.vm?.fewChecked?.observe(this,
+            Observer {
+                if (it) {
+                    setMarkerVisible(fewMarkerList)
+                } else {
+                    setMarkerInvisible(fewMarkerList)
+                }
+            })
+
+        binding.vm?.emptyChecked?.observe(this,
+            Observer {
+                if (it) {
+                    setMarkerVisible(emptyMarkerList)
+                } else {
+                    setMarkerInvisible(emptyMarkerList)
+                }
+            })
+
+        binding.vm?.breakChecked?.observe(this,
+            Observer {
+                if (it) {
+                    setMarkerVisible(breakMarkerList)
+                } else {
+                    setMarkerInvisible(breakMarkerList)
+                }
+            })
 
         infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(this) {
             override fun getText(infoWindow: InfoWindow): CharSequence {
                 return infoWindow.marker?.tag as CharSequence? ?: ""
             }
+        }
+    }
+
+    private fun setMarkerInvisible(markers: List<Marker>) {
+        markers.forEach {
+            it.map = null
+        }
+    }
+
+    private fun setMarkerVisible(markers: List<Marker>) {
+        markers.forEach {
+            it.map = naverMap
         }
     }
 
@@ -105,6 +177,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
         mapView.getMapAsync(this)
     }
 
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationSource = locationSource
+        naverMap.setOnMapClickListener { _, _ ->
+            infoWindow.close()
+        }
+        naverMap.addOnCameraIdleListener {
+            val cameraLatLng = naverMap.cameraPosition.target
+            binding.vm?.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
+        }
+        this.naverMap = naverMap
+    }
+
     private fun setMarkerOnMap(storeSales: StoreSales) {
         val status = storeSales.remainStat
         val lat = storeSales.lat
@@ -113,32 +199,85 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
 
         marker.position = LatLng(lat, lng)
         marker.map = naverMap
-
-        if (status == "plenty") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_plenty)
-            marker = setMarkerTag(storeSales, "재고 100개 이상", ContextCompat.getColor(this, R.color.marker_plenty), marker)
-        } else if (status == "some") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_some)
-            marker = setMarkerTag(storeSales, "재고 30개 이상", ContextCompat.getColor(this, R.color.marker_some), marker)
-        } else if (status == "few") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_few)
-            marker = setMarkerTag(storeSales, "재고 30개 이하", ContextCompat.getColor(this, R.color.marker_few), marker)
-        } else if (status == "empty") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_empty)
-            marker = setMarkerTag(storeSales, "품절", ContextCompat.getColor(this, R.color.marker_none), marker)
-        } else if (status == "break") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_break)
-            marker = setMarkerTag(storeSales, "판매 중지", ContextCompat.getColor(this, R.color.marker_none), marker)
-        } else {
-            marker.map = null
-        }
-        // if문으로 비교하는 이유는 when문은 hashcode 까지 비교함;
-
         marker.setOnClickListener {
             infoWindow.open(marker)
             true
         }
-        markerList.add(marker)
+
+        if (status == "plenty") {
+            marker.icon = OverlayImage.fromResource(R.drawable.marker_plenty)
+            marker = setMarkerTag(
+                storeSales,
+                "재고 100개 이상",
+                ContextCompat.getColor(this, R.color.marker_plenty),
+                marker
+            )
+            if (binding.vm?.plentyChecked?.value!!) {
+                marker.map = naverMap
+            } else {
+                marker.map = null
+            }
+            plentyMarkerList.add(marker)
+        } else if (status == "some") {
+            marker.icon = OverlayImage.fromResource(R.drawable.marker_some)
+            marker = setMarkerTag(
+                storeSales,
+                "재고 30개 이상",
+                ContextCompat.getColor(this, R.color.marker_some),
+                marker
+            )
+            if (binding.vm?.someChecked?.value!!) {
+                marker.map = naverMap
+            } else {
+                marker.map = null
+            }
+            someMarkerList.add(marker)
+        } else if (status == "few") {
+            marker.icon = OverlayImage.fromResource(R.drawable.marker_few)
+            marker = setMarkerTag(
+                storeSales,
+                "재고 30개 이하",
+                ContextCompat.getColor(this, R.color.marker_few),
+                marker
+            )
+            if (binding.vm?.fewChecked?.value!!) {
+                marker.map = naverMap
+            } else {
+                marker.map = null
+            }
+            fewMarkerList.add(marker)
+        } else if (status == "empty") {
+            marker.icon = OverlayImage.fromResource(R.drawable.marker_empty)
+            marker = setMarkerTag(
+                storeSales,
+                "품절",
+                ContextCompat.getColor(this, R.color.marker_none),
+                marker
+            )
+            if (binding.vm?.emptyChecked?.value!!) {
+                marker.map = naverMap
+            } else {
+                marker.map = null
+            }
+            emptyMarkerList.add(marker)
+        } else if (status == "break") {
+            marker.icon = OverlayImage.fromResource(R.drawable.marker_break)
+            marker = setMarkerTag(
+                storeSales,
+                "판매 중지",
+                ContextCompat.getColor(this, R.color.marker_none),
+                marker
+            )
+            if (binding.vm?.breakChecked?.value!!) {
+                marker.map = naverMap
+            } else {
+                marker.map = null
+            }
+            breakMarkerList.add(marker)
+        } else {
+            marker.map = null
+        }
+        // if문으로 비교하는 이유는 when문은 hashcode 까지 비교해서 오류가 발생함.
     }
 
     private fun setMarkerTag(
@@ -148,16 +287,33 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
         marker: Marker
     ): Marker {
         val storeName = "${storeSales.name}\n"
-        val tagString = "${storeSales.name}\n${storeSales.address}\n${status}\n입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
+        val tagString =
+            "${storeSales.name}\n${storeSales.address}\n${status}\n" +
+                    "입고시간 :${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
         val storeNameStart = 0
         val storeNameEnd = storeName.length
         val statusStart = tagString.indexOf(status)
         val statusEnd = statusStart + status.length
 
         val spannableString = SpannableString(tagString)
-        spannableString.setSpan(StyleSpan(Typeface.BOLD), storeNameStart, storeNameEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(RelativeSizeSpan(1.35f), storeNameStart, storeNameEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(ForegroundColorSpan(colorCode), statusStart, statusEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            storeNameStart,
+            storeNameEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            RelativeSizeSpan(1.35f),
+            storeNameStart,
+            storeNameEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(colorCode),
+            statusStart,
+            statusEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 
         marker.tag = spannableString
 
@@ -176,20 +332,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
             )
         ) return
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    @UiThread
-    override fun onMapReady(naverMap: NaverMap) {
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationSource = locationSource
-        naverMap.setOnMapClickListener { _, _ ->
-            infoWindow.close()
-        }
-        naverMap.addOnCameraIdleListener {
-            val cameraLatLng = naverMap.cameraPosition.target
-            binding.vm?.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
-        }
-        this.naverMap = naverMap
     }
 
     private fun checkAgreement() {
