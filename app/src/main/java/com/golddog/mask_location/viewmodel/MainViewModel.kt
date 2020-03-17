@@ -36,6 +36,5 @@ class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
         super.onCleared()
         disposable.clear()
     }
-
 }
 

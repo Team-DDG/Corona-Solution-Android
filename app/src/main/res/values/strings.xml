@@ -68,4 +68,12 @@
         \nㆍ요양시설 등 종사자는 발열, 기침 등 호흡기 증상이 있거나 환자발생국가 해외여행력이 있으면 14일 간 업무에서 배제하고 있으며, 시설 내 외부인 출입도 제한하고 있습니다.
         \nㆍ사회복지 이용시설이 휴관하더라도 일상생활 유지에 필수적인 아동 도시락 지원, 장애인 활동지원 등의 서비스는 지속 제공합니다.</string>
     <string name="corona_manual_source">자료 출저: 질병관리본부 코로나 바이러스 감염증 예방 조치 안내</string>
+    <string name="plenty_status">재고 100개 이상</string>
+    <string name="some_status">재고 30개 이상</string>
+    <string name="few_status">재고 30개 이하</string>
+    <string name="empty_status">품절</string>
+    <string name="break_status">판매 중지</string>
+    <string name="few_number_status">~ 30</string>
+    <string name="some_number_status">30 ~</string>
+    <string name="plenty_number_status">100 ~</string>
 </resources>
