@@ -9,6 +9,12 @@ import io.reactivex.disposables.CompositeDisposable
 
 class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
     var storesData: MutableLiveData<List<StoreSales>> = MutableLiveData()
+    var plentyChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    var someChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    var fewChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    var emptyChecked: MutableLiveData<Boolean> = MutableLiveData(false)
+    var breakChecked: MutableLiveData<Boolean> = MutableLiveData(false)
+
 //    var clinicData: MutableLiveData<StoresList> = MutableLiveData()
 //    var hospitalData: MutableLiveData<StoresList> = MutableLiveData()
 //    TODO : 장호승 서버개발 완료시 사용할 데이터, 자료형 변경예정
