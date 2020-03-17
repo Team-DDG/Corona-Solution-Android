@@ -2,14 +2,18 @@ package com.golddog.mask_location.ui.activity
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
+import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.view.View
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -112,23 +116,23 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
 
         if (status == "plenty") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_plenty)
-            marker = setMarkerInfoWindow(storeSales, "재고 100개 이상", marker)
+            marker = setMarkerTag(storeSales, "재고 100개 이상", ContextCompat.getColor(this, R.color.marker_plenty), marker)
         } else if (status == "some") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_some)
-            marker = setMarkerInfoWindow(storeSales, "재고 30개 이상", marker)
+            marker = setMarkerTag(storeSales, "재고 30개 이상", ContextCompat.getColor(this, R.color.marker_some), marker)
         } else if (status == "few") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_few)
-            marker = setMarkerInfoWindow(storeSales, "재고 30개 이하", marker)
+            marker = setMarkerTag(storeSales, "재고 30개 이하", ContextCompat.getColor(this, R.color.marker_few), marker)
         } else if (status == "empty") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_empty)
-            marker = setMarkerInfoWindow(storeSales, "품절", marker)
+            marker = setMarkerTag(storeSales, "품절", ContextCompat.getColor(this, R.color.marker_none), marker)
         } else if (status == "break") {
             marker.icon = OverlayImage.fromResource(R.drawable.marker_break)
-            marker = setMarkerInfoWindow(storeSales, "판매 중지", marker)
+            marker = setMarkerTag(storeSales, "판매 중지", ContextCompat.getColor(this, R.color.marker_none), marker)
         } else {
             marker.map = null
         }
-        // if문으로 비교하는 이유는 왜인지 when문을 이용하니 튕기는 현상이 발생. 이유는 모름 ㅠㅠ
+        // if문으로 비교하는 이유는 when문은 hashcode 까지 비교함;
 
         marker.setOnClickListener {
             infoWindow.open(marker)
@@ -137,13 +141,26 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, NaverMapSdk.OnAuth
         markerList.add(marker)
     }
 
-    private fun setMarkerInfoWindow(
+    private fun setMarkerTag(
         storeSales: StoreSales,
         status: String,
+        colorCode: Int,
         marker: Marker
     ): Marker {
-        marker.tag =
-            "${storeSales.name}\n${storeSales.address}\n${status}\n입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
+        val storeName = "${storeSales.name}\n"
+        val tagString = "${storeSales.name}\n${storeSales.address}\n${status}\n입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
+        val storeNameStart = 0
+        val storeNameEnd = storeName.length
+        val statusStart = tagString.indexOf(status)
+        val statusEnd = statusStart + status.length
+
+        val spannableString = SpannableString(tagString)
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), storeNameStart, storeNameEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(RelativeSizeSpan(1.35f), storeNameStart, storeNameEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(colorCode), statusStart, statusEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        marker.tag = spannableString
+
         return marker
     }
 
