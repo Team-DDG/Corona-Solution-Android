@@ -8,7 +8,7 @@
         \n☞ 안내사항
         \n· 공적마스크 판매 정보는 5분 이상 지연된 정보입니다.
         \n· 혼선을 방지하기 위해 정확한 재고 수치는 제공하지 않으며, 4구간으로 분할된 상태로 제공됩니다.
-        \n· [코로나 솔루션]은 8시부터 23시 사이에만 사용이 가능합니다. 이외 시간에는 어플리케이션을 실행할 수 없습니다.
+        \n· 8시부터 23시 사이에만 데이터가 갱신됩니다. 이 점 참고해서 이용해주시기 바랍니다.
         \n· 정부 데이터 공개는 베타서비스 중으로 실수량과 일부 차이가 있을 수 있습니다
         \n· 위치 정보는 사용자 근처 위치의 마스크 판매 장소를 조회하기 위한 목적으로만 사용되며, 위치 정보를 저장하지 않습니다.
         \n· 위 내용을 숙지해 주시고, 공적 마스크 정보가 실제와 차이가 날 수 있으니, 일선 현장분들에게 문제를 제기하지 말아 주세요.
@@ -77,7 +77,7 @@
     <string name="some_number_status">30 ~</string>
     <string name="plenty_number_status">100 ~</string>
     <string name="my_mask_date">내 마스크 구매일 계산기</string>
-    <string name="enter_your_year">자신의 출생년도 4자리를 입력해주세요</string>
+    <string name="enter_your_year">아래를 눌러 자신의 출생년도 4자리를 선택해주세요</string>
     <string name="sample_year">ex)1998</string>
     <string name="available_date">구매 가능 요일</string>
     <string name="monday">월</string>
