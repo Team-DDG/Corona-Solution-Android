@@ -34,6 +34,7 @@ import com.naver.maps.map.NaverMapSdk
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
@@ -54,7 +55,6 @@ class MainActivity : AppCompatActivity(),
     private var fewMarkerList: ArrayList<Marker> = arrayListOf()
     private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
     private var breakMarkerList: ArrayList<Marker> = arrayListOf()
-    // Marker들은 UI들에서 사용되므로, 데이터를 받아서 여기에 넣겠음
 
     private val infoWindow = InfoWindow()
 
@@ -84,13 +84,7 @@ class MainActivity : AppCompatActivity(),
         setNaverMap()
         checkAgreement()
 
-        /** marker list 를 V에서 observe 해서 map 에 등록하는 로직
-         * 비교 & 지도에 핀 꼽는 로직 중 비교하는 로직을 VM 으로 Refactoring 하는 방법이 있을까 ?
-         * MapView 를 FrameLayout 으로 설정해서, BindingAdapter 를 이용하는 방법에는 한계가 있을 거 같다.
-         * foreach 를 두번 도는데 코드는 간결해 보이나 실제 도는 횟수는 몇 천번에 육박할 듯 함
-         * 이부분 메모리 릭이 발생할거 같음 로직 변경을 생각해 봐야 한다
-         */
-        binding.vm?.storesData?.observe(this,
+        viewModel.storesData.observe(this,
             Observer { list ->
                 setMarkerInvisible(plentyMarkerList)
                 setMarkerInvisible(someMarkerList)
@@ -109,49 +103,34 @@ class MainActivity : AppCompatActivity(),
                 }
             })
 
-        binding.vm?.plentyChecked?.observe(this,
+        viewModel.plentyChecked.observe(this,
             Observer {
-                if (it) {
-                    setMarkerVisible(plentyMarkerList)
-                } else {
-                    setMarkerInvisible(plentyMarkerList)
-                }
+                if (it) setMarkerVisible(plentyMarkerList)
+                else setMarkerInvisible(plentyMarkerList)
             })
 
-        binding.vm?.someChecked?.observe(this,
+        viewModel.someChecked.observe(this,
             Observer {
-                if (it) {
-                    setMarkerVisible(someMarkerList)
-                } else {
-                    setMarkerInvisible(someMarkerList)
-                }
+                if (it) setMarkerVisible(someMarkerList)
+                else setMarkerInvisible(someMarkerList)
             })
 
-        binding.vm?.fewChecked?.observe(this,
+        viewModel.fewChecked.observe(this,
             Observer {
-                if (it) {
-                    setMarkerVisible(fewMarkerList)
-                } else {
-                    setMarkerInvisible(fewMarkerList)
-                }
+                if (it) setMarkerVisible(fewMarkerList)
+                else setMarkerInvisible(fewMarkerList)
             })
 
-        binding.vm?.emptyChecked?.observe(this,
+        viewModel.emptyChecked.observe(this,
             Observer {
-                if (it) {
-                    setMarkerVisible(emptyMarkerList)
-                } else {
-                    setMarkerInvisible(emptyMarkerList)
-                }
+                if (it) setMarkerVisible(emptyMarkerList)
+                else setMarkerInvisible(emptyMarkerList)
             })
 
-        binding.vm?.breakChecked?.observe(this,
+        viewModel.breakChecked.observe(this,
             Observer {
-                if (it) {
-                    setMarkerVisible(breakMarkerList)
-                } else {
-                    setMarkerInvisible(breakMarkerList)
-                }
+                if (it) setMarkerVisible(breakMarkerList)
+                else setMarkerInvisible(breakMarkerList)
             })
 
         infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(this) {
@@ -162,33 +141,27 @@ class MainActivity : AppCompatActivity(),
     }
 
     fun clickFabMain(view: View) {
-        changeFabOpenValue()
+        changeIsFabOpen()
     }
 
     fun clickFabMask(view: View) {
         startActivity(Intent(applicationContext, MaskActivity::class.java))
-        changeFabOpenValue()
+        changeIsFabOpen()
     }
 
     fun clickFabCall(view: View) {
         startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
-        changeFabOpenValue()
+        changeIsFabOpen()
     }
 
     fun clickFabManualCorona(view: View) {
         startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
-        changeFabOpenValue()
+        changeIsFabOpen()
     }
 
     fun clickFabCurrentCorona(view: View) {
         startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
-        changeFabOpenValue()
-    }
-
-    override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
-        if (e.errorCode == "429") {
-            showToast("사용량이 많아 지도를 사용할 수 없습니다.")
-        }
+        changeIsFabOpen()
     }
 
     override fun onRequestPermissionsResult(
@@ -242,67 +215,64 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun setMarkerOnMap(storeSales: StoreSales) {
+        val marker = Marker()
         val status = storeSales.remainStat
-        val lat = storeSales.lat
-        val lng = storeSales.lng
-        var marker = Marker()
 
-        marker.position = LatLng(lat, lng)
-        marker.map = naverMap
+        marker.position = LatLng(storeSales.lat, storeSales.lng)
         marker.setOnClickListener {
             infoWindow.open(marker)
             true
         }
 
         if (status == "plenty") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_plenty)
-            marker = setMarkerTag(
+            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
+            setMarkerTag(
                 storeSales,
                 getString(R.string.plenty_status),
                 ContextCompat.getColor(this, R.color.marker_plenty),
                 marker
             )
-            setMarkerVisibility(marker, binding.vm?.plentyChecked?.value!!)
+            viewModel.plentyChecked.value?.let { setMarkerVisibility(marker, it) }
             plentyMarkerList.add(marker)
         } else if (status == "some") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_some)
-            marker = setMarkerTag(
+            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
+            setMarkerTag(
                 storeSales,
                 getString(R.string.some_status),
                 ContextCompat.getColor(this, R.color.marker_some),
                 marker
             )
-            setMarkerVisibility(marker, binding.vm?.someChecked?.value!!)
+            viewModel.someChecked.value?.let { setMarkerVisibility(marker, it) }
             someMarkerList.add(marker)
         } else if (status == "few") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_few)
-            marker = setMarkerTag(
+            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
+            setMarkerTag(
                 storeSales,
                 getString(R.string.few_status),
                 ContextCompat.getColor(this, R.color.marker_few),
                 marker
             )
-            setMarkerVisibility(marker, binding.vm?.fewChecked?.value!!)
+            viewModel.fewChecked.value?.let { setMarkerVisibility(marker, it) }
             fewMarkerList.add(marker)
         } else if (status == "empty") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_empty)
-            marker = setMarkerTag(
+            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
+            setMarkerTag(
                 storeSales,
                 getString(R.string.empty_status),
                 ContextCompat.getColor(this, R.color.marker_none),
                 marker
             )
-            setMarkerVisibility(marker, binding.vm?.emptyChecked?.value!!)
+            viewModel.emptyChecked.value?.let { setMarkerVisibility(marker, it) }
             emptyMarkerList.add(marker)
         } else if (status == "break") {
-            marker.icon = OverlayImage.fromResource(R.drawable.marker_break)
-            marker = setMarkerTag(
+            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
+            setMarkerTag(
                 storeSales,
                 getString(R.string.break_status),
                 ContextCompat.getColor(this, R.color.marker_none),
                 marker
             )
-            setMarkerVisibility(marker, binding.vm?.breakChecked?.value!!)
+            viewModel.breakChecked.value?.let { setMarkerVisibility(marker, it) }
             breakMarkerList.add(marker)
         } else {
             marker.map = null
@@ -315,12 +285,16 @@ class MainActivity : AppCompatActivity(),
         else marker.map = null
     }
 
+    private fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
+        marker.icon = overlayImage
+    }
+
     private fun setMarkerTag(
         storeSales: StoreSales,
         status: String,
         colorCode: Int,
         marker: Marker
-    ): Marker {
+    ) {
         val storeName = "${storeSales.name}\n"
         val tagString =
             "${storeSales.name}\n${storeSales.address}\n${status}\n" +
@@ -349,10 +323,7 @@ class MainActivity : AppCompatActivity(),
             statusEnd,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-
         marker.tag = spannableString
-
-        return marker
     }
 
     private fun checkAgreement() {
@@ -386,7 +357,13 @@ class MainActivity : AppCompatActivity(),
             .setCancelable(false)
     }
 
-    private fun changeFabOpenValue() {
+    private fun changeIsFabOpen() {
         binding.isFabOpen = !binding.isFabOpen!!
+    }
+
+    override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
+        if (e.errorCode == "429") {
+            showToast("사용량이 많아 지도를 사용할 수 없습니다.")
+        }
     }
 }
