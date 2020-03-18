@@ -16,13 +16,16 @@
 
 - Kotlin 
 - Android Studio
-- **MVVM + RxKotlin**
-- Kakao Map
+- MVVM
+- AAC (LiveData, ViewModel)
+- Retrofit2
+- RxJava, RxKotlin
+- Naver Map
 - TedPermission
-- TedNaverMapClustering
 - Metarial Design
-- *Spotlight (first start)*
-- GitKraken (칸반보드, 스케줄, 이슈, 핫픽스 등...)
+- *Spotlight (after release)*
+- GitKraken Glo
+- Firebase Crashlytics
 
 ## update
 
