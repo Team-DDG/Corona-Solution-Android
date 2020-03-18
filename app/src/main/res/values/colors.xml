@@ -12,4 +12,8 @@
     <color name="chart_color_dark_blue">#3f51b5</color>
     <color name="chart_color_gray">#616161</color>
     <color name="city_chart_color_gray">#6e6e6e</color>
+    <color name="marker_plenty">#2a9211</color>
+    <color name="marker_some">#ff8000</color>
+    <color name="marker_few">#e40000</color>
+    <color name="marker_none">#929292</color>
 </resources>

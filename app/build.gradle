@@ -79,6 +79,11 @@ dependencies {
     // add SDKs for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+
+    // Naver Map
+    implementation 'com.naver.maps:map-sdk:3.7.1'
+
+    // Google Location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
-apply plugin: 'com.google.gms.google-services'

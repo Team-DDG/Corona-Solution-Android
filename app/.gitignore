@@ -1,4 +1,1 @@
 /build
-# /libs
-# /src/main/jniLibs1
-# private repository 이며 카카오 맵 API 공유를 위해 gitignore 해제

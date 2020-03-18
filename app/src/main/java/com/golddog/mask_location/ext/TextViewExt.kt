@@ -35,31 +35,31 @@ fun setTextWithIncreaseNumberFormat(textView: TextView, numberData: Int) {
 @BindingAdapter("setTextColor")
 fun setTextColor(textView: TextView, year: Int) {
     val context = BaseApplication.appContext!!
-    Log.d("binding", year.toString()+" "+textView.text)
-    when(year.toString().takeLast(1)){
-        "1", "6" -> if(textView.text == "월") {
+    Log.d("binding", year.toString() + " " + textView.text)
+    when (year.toString().takeLast(1)) {
+        "1", "6" -> if (textView.text == "월") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else{
+        } else {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
         }
-        "2", "7" -> if(textView.text == "화") {
+        "2", "7" -> if (textView.text == "화") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else{
+        } else {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
         }
-        "3", "8" -> if(textView.text == "수") {
+        "3", "8" -> if (textView.text == "수") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else{
+        } else {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
         }
-        "4", "9" -> if(textView.text == "목") {
+        "4", "9" -> if (textView.text == "목") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else{
+        } else {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
         }
-        "5", "0" -> if(textView.text == "금") {
+        "5", "0" -> if (textView.text == "금") {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight))
-        } else{
+        } else {
             textView.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark))
         }
     }

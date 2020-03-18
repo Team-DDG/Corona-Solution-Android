@@ -25,8 +25,8 @@
         </activity>
 
         <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="2fe0d73a2afa2b0dd86126cd6326a3d5" />
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="cr34hz45hw" />
 
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.CoronaStatusActivity"/>
