@@ -1,6 +1,5 @@
 package com.golddog.mask_location.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.golddog.mask_location.data.datasource.MaskDataSource
@@ -21,6 +20,10 @@ class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
 
     private val disposable = CompositeDisposable()
 
+    init {
+
+    }
+
     fun getAroundMaskData(lat: Double, lng: Double) {
         val storesDataDisposable = maskDataSource.getAroundMaskData(lat, lng, 3000)
             .subscribe({
@@ -28,7 +31,6 @@ class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
             }) {
                 // TODO : "공적 마스크 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
             }
-
         this.disposable.add(storesDataDisposable)
     }
 
