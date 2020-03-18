@@ -11,12 +11,11 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     var coronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
     var cityCoronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
     var patient: MutableLiveData<String> = MutableLiveData("0")
-    private var disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     init {
         setAccumulateData()
     }
-
 
     private fun setAccumulateData() {
         val accumulateDataDisposable = statusDataSource.getCoronaStatusData(null)

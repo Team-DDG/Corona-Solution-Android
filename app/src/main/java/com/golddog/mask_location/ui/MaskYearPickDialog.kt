@@ -3,16 +3,11 @@ package com.golddog.mask_location.ui
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.golddog.mask_location.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.year_picker.*
 import java.util.*
 
 
@@ -43,7 +38,7 @@ class MaskYearPickDialog : DialogFragment() {
             listener?.onDateSet(null, yearPicker.value, 0, 0)
             this@MaskYearPickDialog.dialog?.cancel()
         }
-        yearPicker.maxValue = 2099
+        yearPicker.maxValue = 2020
         yearPicker.minValue = 1900
         yearPicker.value = Calendar.getInstance().get(Calendar.YEAR)
         builder.setView(dialog)
