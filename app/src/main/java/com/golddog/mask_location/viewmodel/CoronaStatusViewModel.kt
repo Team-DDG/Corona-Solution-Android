@@ -4,18 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.golddog.mask_location.data.datasource.StatusDataSource
 import com.golddog.mask_location.entity.AccumulateCoronaData
-import com.golddog.mask_location.entity.CityCoronaData
-import com.golddog.mask_location.entity.CoronaStatus
+import com.golddog.mask_location.entity.CoronaResult
 import io.reactivex.disposables.CompositeDisposable
 
 class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : ViewModel() {
     var coronaList: MutableLiveData<AccumulateCoronaData> = MutableLiveData(
         AccumulateCoronaData(
-            " ",
-            CoronaStatus("0", "( + 0 )"),
-            CoronaStatus("0", "( + 0 )"),
-            CoronaStatus("0", "( + 0 )"),
-            CoronaStatus("0", "( + 0 )")
+            "갱신 중...",
+            CoronaResult()
         )
     )
     private val disposable = CompositeDisposable()
@@ -29,7 +25,7 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
             .subscribe({
                 coronaList.value = it
             }) {
-                // TODO : Toast 띄워서 오류발생 알리기, 오류로그 : 데이터를 불러오지 못했습니다.
+                coronaList.value?.baseDate = "갱신 실패"
             }
 
         disposable.add(accumulateDataDisposable)
