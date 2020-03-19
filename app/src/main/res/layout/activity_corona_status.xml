@@ -50,291 +50,304 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
+        <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_toolbar_corona_status"
-            app:layout_constraintVertical_bias="1.0">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl_left_corona_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.075" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl_right_corona_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.925" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/nanum_barun_gothic_bold"
-                android:text="@string/patient_status"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/nanum_barun_gothic"
-                android:text="@{vm.coronaList.baseDate}"
-                android:textColor="@color/black"
-                tools:text="@string/status_renewal"
-                app:layout_constraintEnd_toStartOf="@+id/gl_right_corona_status"
-                app:layout_constraintTop_toBottomOf="@+id/cv_container_dead_corona_status" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/nanum_barun_gothic_bold"
-                android:text="@string/sido_status"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_container_cure_corona_status" />
+            app:layout_constraintTop_toBottomOf="@+id/cv_toolbar_corona_status">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_container_accumulate_corona_status"
-                android:layout_width="0dp"
-                android:layout_height="115dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/corona_status_accumulate_background"
-                app:layout_constraintEnd_toEndOf="@id/gl_right_corona_status"
-                app:layout_constraintStart_toStartOf="@id/gl_left_corona_status"
-                app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/constraintLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_toolbar_corona_status"
+                app:layout_constraintVertical_bias="1.0">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_left_corona_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.075" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_right_corona_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.925" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@string/total_patient"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:text="@string/patient_status"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_total_patient_corona_status"
+                    android:id="@+id/appCompatTextView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="18dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.confirmed.total}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="42sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/sample_number_corona_status" />
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/nanum_barun_gothic"
+                    android:text="@{vm.accumulateData.baseDate}"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/gl_right_corona_status"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_container_dead_corona_status"
+                    tools:text="@string/status_renewal" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_changed_total_patient_corona_status"
+                    android:id="@+id/appCompatTextView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="18dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="32dp"
                     android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.confirmed.before}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_total_patient_corona_status"
-                    tools:text="@string/sample_number_corona_status_changed" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_container_cure_corona_status"
-                android:layout_width="0dp"
-                android:layout_height="104dp"
-                android:background="@drawable/corona_status_cure_background"
-                app:layout_constraintEnd_toStartOf="@id/cv_container_curing_corona_status"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@id/gl_left_corona_status"
-                app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@string/cured"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/sido_status"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/cv_container_cure_corona_status" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_cured_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.cured.total}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="25sp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_container_accumulate_corona_status"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/corona_status_accumulate_background"
+                    app:layout_constraintEnd_toEndOf="@id/gl_right_corona_status"
+                    app:layout_constraintStart_toStartOf="@id/gl_left_corona_status"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@string/total_patient"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_total_patient_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginEnd="18dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.confirmed.total}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="42sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/sample_number_corona_status" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_changed_total_patient_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="18dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.confirmed.before}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_total_patient_corona_status"
+                        tools:text="@string/sample_number_corona_status_changed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_container_cure_corona_status"
+                    android:layout_width="0dp"
+                    android:layout_height="104dp"
+                    android:background="@drawable/corona_status_cure_background"
+                    app:layout_constraintEnd_toStartOf="@id/cv_container_curing_corona_status"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/gl_left_corona_status"
+                    app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@string/cured"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_cured_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.cured.total}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/sample_number_corona_status" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_changed_cured_patient_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.cured.before}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_cured_corona_status"
+                        tools:text="@string/sample_number_corona_status_changed" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_container_curing_corona_status"
+                    android:layout_width="0dp"
+                    android:layout_height="104dp"
+                    android:background="@color/chart_color_dark_blue"
+                    app:layout_constraintEnd_toStartOf="@id/cv_container_dead_corona_status"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/cv_container_cure_corona_status"
+                    app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@string/curing"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_curing_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.curing.total}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/sample_number_corona_status" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_changed_curing_patient_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.curing.before}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_curing_corona_status"
+                        tools:text="@string/sample_number_corona_status_changed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_container_dead_corona_status"
+                    android:layout_width="0dp"
+                    android:layout_height="104dp"
+                    android:background="@drawable/corona_status_dead_background"
+                    app:layout_constraintEnd_toEndOf="@id/gl_right_corona_status"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/cv_container_curing_corona_status"
+                    app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@string/dead"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_dead_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.dead.total}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/sample_number_corona_status" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_changed_dead_patient_corona_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@{vm.accumulateData.result.dead.before}"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_dead_corona_status"
+                        tools:text="@string/sample_number_corona_status_changed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    list_item="@{vm.citiesData.cityStatuses}"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never"
+                    app:layoutManager="LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/sample_number_corona_status" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_changed_cured_patient_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.cured.before}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_cured_corona_status"
-                    tools:text="@string/sample_number_corona_status_changed" />
-
+                    app:layout_constraintEnd_toEndOf="@+id/gl_right_corona_status"
+                    app:layout_constraintStart_toStartOf="@+id/gl_left_corona_status"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_container_curing_corona_status"
-                android:layout_width="0dp"
-                android:layout_height="104dp"
-                android:background="@color/chart_color_dark_blue"
-                app:layout_constraintEnd_toStartOf="@id/cv_container_dead_corona_status"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/cv_container_cure_corona_status"
-                app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@string/curing"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_curing_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.curing.total}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="25sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/sample_number_corona_status" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_changed_curing_patient_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.curing.before}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_curing_corona_status"
-                    tools:text="@string/sample_number_corona_status_changed" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_container_dead_corona_status"
-                android:layout_width="0dp"
-                android:layout_height="104dp"
-                android:background="@drawable/corona_status_dead_background"
-                app:layout_constraintEnd_toEndOf="@id/gl_right_corona_status"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/cv_container_curing_corona_status"
-                app:layout_constraintTop_toBottomOf="@id/cv_container_accumulate_corona_status">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@string/dead"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_dead_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.dead.total}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="25sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/sample_number_corona_status" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_changed_dead_patient_corona_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/nanum_barun_gothic_bold"
-                    android:text="@{vm.coronaList.result.dead.before}"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_dead_corona_status"
-                    tools:text="@string/sample_number_corona_status_changed" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/gl_right_corona_status"
-                app:layout_constraintStart_toStartOf="@+id/gl_left_corona_status"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
