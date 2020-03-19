@@ -3,14 +3,21 @@ package com.golddog.mask_location.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.golddog.mask_location.data.datasource.StatusDataSource
-import com.golddog.mask_location.entity.CoronaData
-import com.golddog.mask_location.entity.CoronaList
+import com.golddog.mask_location.entity.AccumulateCoronaData
+import com.golddog.mask_location.entity.CityCoronaData
+import com.golddog.mask_location.entity.CoronaStatus
 import io.reactivex.disposables.CompositeDisposable
 
 class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : ViewModel() {
-    var coronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
-    var cityCoronaList: MutableLiveData<CoronaData> = MutableLiveData(CoronaData(0, 0, 0, 0))
-    var patient: MutableLiveData<String> = MutableLiveData("0")
+    var coronaList: MutableLiveData<AccumulateCoronaData> = MutableLiveData(
+        AccumulateCoronaData(
+            " ",
+            CoronaStatus("0", "( + 0 )"),
+            CoronaStatus("0", "( + 0 )"),
+            CoronaStatus("0", "( + 0 )"),
+            CoronaStatus("0", "( + 0 )")
+        )
+    )
     private val disposable = CompositeDisposable()
 
     init {
@@ -18,33 +25,14 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     }
 
     private fun setAccumulateData() {
-        val accumulateDataDisposable = statusDataSource.getCoronaStatusData(null)
+        val accumulateDataDisposable = statusDataSource.getAccumulateData()
             .subscribe({
-                val serverData = it.data[0]
-                coronaList.value = serverData
-                val patientData = serverData.certified - serverData.cure - serverData.dead
-
-                patient.value = patientData.toString()
+                coronaList.value = it
             }) {
                 // TODO : Toast 띄워서 오류발생 알리기, 오류로그 : 데이터를 불러오지 못했습니다.
             }
 
         disposable.add(accumulateDataDisposable)
-    }
-
-    private fun setCityStatusData() {
-        val cityArray = ArrayList<String>()
-        for (city in cityArray){
-            val cityStatusDataDisposable = statusDataSource.getCoronaStatusData(city)
-                .subscribe({
-                    val serverData = it.data[0]
-                    cityCoronaList.value = serverData
-                }){
-
-                }
-
-            disposable.add(cityStatusDataDisposable)
-        }
     }
 
     override fun onCleared() {
