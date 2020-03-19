@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.golddog.mask_location.R
 import com.golddog.mask_location.base.BaseApplication
+import com.golddog.mask_location.entity.CityStatus
 import java.text.NumberFormat
 import java.util.*
 
