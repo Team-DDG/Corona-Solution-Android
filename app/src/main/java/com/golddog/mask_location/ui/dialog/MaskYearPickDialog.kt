@@ -1,4 +1,4 @@
-package com.golddog.mask_location.ui
+package com.golddog.mask_location.ui.dialog
 
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog

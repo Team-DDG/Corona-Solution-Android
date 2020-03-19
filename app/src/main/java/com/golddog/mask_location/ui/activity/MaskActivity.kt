@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
 import com.golddog.mask_location.databinding.ActivityMaskBinding
-import com.golddog.mask_location.ui.MaskYearPickDialog
+import com.golddog.mask_location.ui.dialog.MaskYearPickDialog
 import com.golddog.mask_location.viewmodel.MaskViewModel
 import com.golddog.mask_location.viewmodelfactory.MaskViewModelFactory
 import kotlinx.android.synthetic.main.activity_mask.*
