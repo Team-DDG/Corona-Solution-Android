@@ -67,15 +67,6 @@ class CitiesAdapter :
             itemBinding.tvCityNameList.setTextColor(textColor)
             itemBinding.tvConfirmedList.setTextColor(textColor)
             itemBinding.tvDeadList.setTextColor(textColor)
-            if (adapterPosition == 0) {
-                itemBinding.layoutList.background = ContextCompat.getDrawable(
-                    itemView.context!!,
-                    R.drawable.corona_status_city_top_background
-                )
-                itemBinding.tvCityNameList.setTextColor(Color.WHITE)
-                itemBinding.tvConfirmedList.setTextColor(Color.WHITE)
-                itemBinding.tvDeadList.setTextColor(Color.WHITE)
-            }
             return itemBinding
         }
     }
