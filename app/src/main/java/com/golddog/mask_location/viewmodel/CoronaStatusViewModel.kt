@@ -35,7 +35,6 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     private fun setCitiesData() {
         val citiesDataDisposable = statusDataSource.getCitiesData()
             .subscribe({
-                it.cityStatuses.add(0, CityStatus("지역명", "누적 확진환자", "사망자"))
                 citiesData.value = it
             }) {
                 citiesData.value?.baseDate = "갱신 실패"

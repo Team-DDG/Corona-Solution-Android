@@ -1,19 +1,24 @@
 package com.golddog.mask_location.ui.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.golddog.mask_location.R
+import com.golddog.mask_location.base.BaseApplication
 import com.golddog.mask_location.databinding.ItemCitiesStatusBinding
 import com.golddog.mask_location.entity.CityStatus
 import com.golddog.mask_location.util.ItemBindDIffCallback
 
 
-class CitiesAdapter: RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder<ItemCitiesStatusBinding>>() {
+class CitiesAdapter :
+    RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
     private val cityStatus: ArrayList<CityStatus> = ArrayList()
 
     fun updateItems(cityStatus: ArrayList<CityStatus>?) {
@@ -27,13 +32,17 @@ class CitiesAdapter: RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder<ItemCit
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CitiesViewHolder<ItemCitiesStatusBinding> {
-        val inflater = LayoutInflater.from(parent.context)
-        return CitiesViewHolder(inflater.inflate(R.layout.item_cities_status, parent, false))
-    }
+    ): CitiesViewHolder =
+        CitiesViewHolder(
+            ItemCitiesStatusBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(
-        holder: CitiesViewHolder<ItemCitiesStatusBinding>,
+        holder: CitiesViewHolder,
         position: Int
     ) {
         holder.binding().status = cityStatus[position]
@@ -43,10 +52,22 @@ class CitiesAdapter: RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder<ItemCit
         return cityStatus.size
     }
 
-    inner class CitiesViewHolder<T: ViewDataBinding>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding: T = (DataBindingUtil.bind(itemView) as T?)!!
-        fun binding(): T {
-            return binding
+    inner class CitiesViewHolder(private val itemBinding: ItemCitiesStatusBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        private val textColor = Color.BLACK
+
+        fun binding(): ItemCitiesStatusBinding{
+            val backgroundColor =
+                if ((adapterPosition % 2) == 0) ContextCompat.getColor(
+                    itemView.context!!,
+                    R.color.colorSecondaryLight
+                )
+                else ContextCompat.getColor(itemView.context!!, R.color.colorSecondaryDark)
+            itemBinding.layoutList.background = backgroundColor.toDrawable()
+            itemBinding.tvCityNameList.setTextColor(textColor)
+            itemBinding.tvConfirmedList.setTextColor(textColor)
+            itemBinding.tvDeadList.setTextColor(textColor)
+            return itemBinding
         }
     }
 }

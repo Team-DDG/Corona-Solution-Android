@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
             .request()
             .subscribe { tedPermissionResult: TedPermissionResult ->
                 if (tedPermissionResult.isGranted) {
-                    showToast(R.string.permission_granted)
+//                    showToast(R.string.permission_granted)
                     startActivity(Intent(this, MainActivity::class.java))
 
                 } else {

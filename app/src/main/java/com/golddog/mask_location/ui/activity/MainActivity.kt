@@ -34,7 +34,6 @@ import com.naver.maps.map.NaverMapSdk
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
@@ -181,6 +180,7 @@ class MainActivity : AppCompatActivity(),
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
         naverMap.setOnMapClickListener { _, _ ->
             infoWindow.close()
