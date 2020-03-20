@@ -18,7 +18,7 @@ import com.golddog.mask_location.util.ItemBindDIffCallback
 
 
 class CitiesAdapter :
-    RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder<ItemCitiesStatusBinding>>() {
+    RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
     private val cityStatus: ArrayList<CityStatus> = ArrayList()
 
     fun updateItems(cityStatus: ArrayList<CityStatus>?) {
@@ -32,7 +32,7 @@ class CitiesAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CitiesViewHolder<ItemCitiesStatusBinding> =
+    ): CitiesViewHolder =
         CitiesViewHolder(
             ItemCitiesStatusBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -42,7 +42,7 @@ class CitiesAdapter :
         )
 
     override fun onBindViewHolder(
-        holder: CitiesViewHolder<ItemCitiesStatusBinding>,
+        holder: CitiesViewHolder,
         position: Int
     ) {
         holder.binding().status = cityStatus[position]
@@ -52,13 +52,11 @@ class CitiesAdapter :
         return cityStatus.size
     }
 
-    inner class CitiesViewHolder<T : ViewDataBinding>(private val itemBinding: ItemCitiesStatusBinding) :
+    inner class CitiesViewHolder(private val itemBinding: ItemCitiesStatusBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        private val binding: T = (DataBindingUtil.bind(itemBinding.root) as T?)!!
-
         private val textColor = Color.BLACK
 
-        fun binding(): T {
+        fun binding(): ItemCitiesStatusBinding{
             val backgroundColor =
                 if ((adapterPosition % 2) == 0) ContextCompat.getColor(
                     itemView.context!!,
@@ -78,7 +76,7 @@ class CitiesAdapter :
                 itemBinding.tvConfirmedList.setTextColor(Color.WHITE)
                 itemBinding.tvDeadList.setTextColor(Color.WHITE)
             }
-            return binding
+            return itemBinding
         }
     }
 }
