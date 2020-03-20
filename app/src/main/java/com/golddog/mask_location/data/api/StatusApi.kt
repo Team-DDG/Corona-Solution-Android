@@ -26,5 +26,5 @@ interface StatusApi {
     fun getAccumulateData(): Single<AccumulateCoronaData>
 
     @GET("api/status/sido")
-    fun getSidoData() : Single<CityCoronaData>
+    fun getCitiesData() : Single<CityCoronaData>
 }

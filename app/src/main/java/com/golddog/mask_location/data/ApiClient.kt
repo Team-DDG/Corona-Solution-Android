@@ -21,8 +21,8 @@ class ApiClient : StatusDataSource, MaskDataSource {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getSidoData(): Single<CityCoronaData> {
-        return statusApi.getSidoData()
+    override fun getCitiesData(): Single<CityCoronaData> {
+        return statusApi.getCitiesData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

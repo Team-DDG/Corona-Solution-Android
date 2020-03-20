@@ -1,7 +1,10 @@
 package com.golddog.mask_location.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class CityStatus(
-	val sido: String,
-	val dead: String,
-	val confirmed: String
+	@SerializedName("sido")
+	val cityName: String,
+	val confirmed: String,
+	val dead: String
 )
