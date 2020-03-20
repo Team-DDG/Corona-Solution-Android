@@ -1,18 +1,11 @@
 package com.golddog.mask_location.ext
 
-import android.content.Context
 import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.golddog.mask_location.R
 import com.golddog.mask_location.base.BaseApplication
-import com.golddog.mask_location.entity.CityStatus
-import java.text.NumberFormat
-import java.util.*
 
 @BindingAdapter("setTextColor")
 fun setTextColor(textView: TextView, year: Int) {

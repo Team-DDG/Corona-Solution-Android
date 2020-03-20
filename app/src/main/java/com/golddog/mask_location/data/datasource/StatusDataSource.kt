@@ -7,5 +7,5 @@ import io.reactivex.Single
 interface StatusDataSource {
     fun getAccumulateData(): Single<AccumulateCoronaData>
 
-    fun getSidoData(): Single<CityCoronaData>
+    fun getCitiesData(): Single<CityCoronaData>
 }

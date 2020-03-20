@@ -1,6 +1,9 @@
 package com.golddog.mask_location.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class CityCoronaData(
-	val baseDate: String,
-	val cityStatuses: List<CityStatus>
+	var baseDate: String,
+	@SerializedName("result")
+	var cityStatuses: MutableList<CityStatus>
 )
