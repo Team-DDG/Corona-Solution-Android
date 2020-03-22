@@ -10,7 +10,7 @@ import retrofit2.http.GET
 
 interface StatusApi {
     companion object {
-        private const val baseUrl = "http://www.janghoseung.com"
+        private const val baseUrl = "https://www.janghoseung.com"
 
         fun createDrugStoreRetrofit(): StatusApi {
             return Retrofit.Builder()
