@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
+import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.data.ApiClient
 import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
@@ -38,10 +39,10 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),
+class MainActivity : BaseActivity<ActivityMainBinding>(),
     OnMapReadyCallback, NaverMapSdk.OnAuthFailedListener {
+    override val layoutResourceId: Int = R.layout.activity_main
 
-    private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var viewModelFactory: MainViewModelFactory
 
@@ -68,13 +69,11 @@ class MainActivity : AppCompatActivity(),
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainViewModelFactory(ApiClient())
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.vm = viewModel
         binding.isFabOpen = false
-        binding.lifecycleOwner = this
 
         val toolbar = toolbar
         toolbar.title = ""
