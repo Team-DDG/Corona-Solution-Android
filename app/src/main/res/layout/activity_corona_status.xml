@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="vm"
             type="com.golddog.mask_location.viewmodel.CoronaStatusViewModel" />
@@ -83,6 +85,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.925" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/cv_container_curing_corona_status"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/title_view"
+                    android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
