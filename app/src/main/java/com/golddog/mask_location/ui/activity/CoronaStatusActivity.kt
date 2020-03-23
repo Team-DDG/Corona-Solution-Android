@@ -9,6 +9,7 @@ import com.golddog.mask_location.data.ApiClient
 import com.golddog.mask_location.databinding.ActivityCoronaStatusBinding
 import com.golddog.mask_location.viewmodel.CoronaStatusViewModel
 import com.golddog.mask_location.viewmodelfactory.CoronaStatusViewModelFactory
+import kotlinx.android.synthetic.main.activity_corona_status.*
 
 class CoronaStatusActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCoronaStatusBinding
@@ -24,5 +25,9 @@ class CoronaStatusActivity : AppCompatActivity() {
 
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        btn_back_corona_status.setOnClickListener {
+            finish()
+        }
     }
 }
