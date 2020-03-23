@@ -1,20 +1,17 @@
 package com.golddog.mask_location.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.golddog.mask_location.base.BaseViewModel
 import com.golddog.mask_location.data.datasource.StatusDataSource
 import com.golddog.mask_location.entity.AccumulateCoronaData
 import com.golddog.mask_location.entity.CityCoronaData
-import com.golddog.mask_location.entity.CityStatus
 import com.golddog.mask_location.entity.CoronaResult
-import io.reactivex.disposables.CompositeDisposable
 
-class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : ViewModel() {
-    val accumulateData: MutableLiveData<AccumulateCoronaData> = MutableLiveData(AccumulateCoronaData("갱신 중...", CoronaResult()))
-    val citiesData: MutableLiveData<CityCoronaData>
-            = MutableLiveData(CityCoronaData("갱신 중...", mutableListOf()))
-    private val disposable = CompositeDisposable()
+class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : BaseViewModel() {
+    val accumulateData: MutableLiveData<AccumulateCoronaData> =
+        MutableLiveData(AccumulateCoronaData("갱신 중...", CoronaResult()))
+    val citiesData: MutableLiveData<CityCoronaData> =
+        MutableLiveData(CityCoronaData("갱신 중...", mutableListOf()))
 
     init {
         setAccumulateData()
@@ -22,28 +19,24 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     }
 
     private fun setAccumulateData() {
-        val accumulateDataDisposable = statusDataSource.getAccumulateData()
-            .subscribe({
-                accumulateData.value = it
-            }) {
-                accumulateData.value?.baseDate = "갱신 실패"
-            }
-
-        disposable.add(accumulateDataDisposable)
+        addDisposable(
+            statusDataSource.getAccumulateData()
+                .subscribe({
+                    accumulateData.value = it
+                }, {
+                    accumulateData.value?.baseDate = "갱신 실패"
+                })
+        )
     }
 
     private fun setCitiesData() {
-        val citiesDataDisposable = statusDataSource.getCitiesData()
-            .subscribe({
-                citiesData.value = it
-            }) {
-                citiesData.value?.baseDate = "갱신 실패"
-            }
-        disposable.add(citiesDataDisposable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
+        addDisposable(
+            statusDataSource.getCitiesData()
+                .subscribe({
+                    citiesData.value = it
+                }, {
+                    citiesData.value?.baseDate = "갱신 실패"
+                })
+        )
     }
 }
