@@ -15,7 +15,7 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     val accumulateData: MutableLiveData<AccumulateCoronaData> = MutableLiveData(AccumulateCoronaData("갱신 중...", CoronaResult()))
     val citiesData: MutableLiveData<CityCoronaData>
             = MutableLiveData(CityCoronaData("갱신 중...", mutableListOf()))
-    val isLoading: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     private val disposable = CompositeDisposable()
 
     init {
@@ -24,13 +24,14 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     }
 
     private fun setAccumulateData() {
+        isLoading.value = true
         val accumulateDataDisposable = statusDataSource.getAccumulateData()
             .subscribe({
                 accumulateData.value = it
-                isLoading.value = View.INVISIBLE
+                isLoading.value = false
             }) {
                 accumulateData.value?.baseDate = "갱신 실패"
-                isLoading.value = View.INVISIBLE
+                isLoading.value = false
             }
 
         disposable.add(accumulateDataDisposable)
