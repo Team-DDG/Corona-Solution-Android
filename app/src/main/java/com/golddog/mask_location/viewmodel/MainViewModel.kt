@@ -1,12 +1,11 @@
 package com.golddog.mask_location.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.golddog.mask_location.base.BaseViewModel
 import com.golddog.mask_location.data.datasource.MaskDataSource
 import com.golddog.mask_location.entity.StoreSales
-import io.reactivex.disposables.CompositeDisposable
 
-class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
+class MainViewModel(private val maskDataSource: MaskDataSource) : BaseViewModel() {
     var storesData: MutableLiveData<List<StoreSales>> = MutableLiveData()
     var plentyChecked: MutableLiveData<Boolean> = MutableLiveData(true)
     var someChecked: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -18,25 +17,15 @@ class MainViewModel(private val maskDataSource: MaskDataSource) : ViewModel() {
 //    var hospitalData: MutableLiveData<StoresList> = MutableLiveData()
 //    TODO : 장호승 서버개발 완료시 사용할 데이터, 자료형 변경예정
 
-    private val disposable = CompositeDisposable()
-
-    init {
-
-    }
-
     fun getAroundMaskData(lat: Double, lng: Double) {
-        val storesDataDisposable = maskDataSource.getAroundMaskData(lat, lng, 3000)
-            .subscribe({
-                storesData.value = it.stores
-            }) {
-                // TODO : "공적 마스크 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
-            }
-        this.disposable.add(storesDataDisposable)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
+        addDisposable(
+            maskDataSource.getAroundMaskData(lat, lng, 3000)
+                .subscribe({
+                    storesData.value = it.stores
+                }, {
+                    // TODO : "공적 마스크 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
+                })
+        )
     }
 }
 
