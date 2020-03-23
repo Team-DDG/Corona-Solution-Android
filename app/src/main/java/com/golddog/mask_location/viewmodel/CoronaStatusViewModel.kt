@@ -12,6 +12,7 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Ba
         MutableLiveData(AccumulateCoronaData("갱신 중...", CoronaResult()))
     val citiesData: MutableLiveData<CityCoronaData> =
         MutableLiveData(CityCoronaData("갱신 중...", mutableListOf()))
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
     init {
         setAccumulateData()
@@ -19,12 +20,15 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Ba
     }
 
     private fun setAccumulateData() {
+        isLoading.value = true
         addDisposable(
             statusDataSource.getAccumulateData()
                 .subscribe({
                     accumulateData.value = it
+                    isLoading.value = false
                 }, {
                     accumulateData.value?.baseDate = "갱신 실패"
+                    isLoading.value = false
                 })
         )
     }

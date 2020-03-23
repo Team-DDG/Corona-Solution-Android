@@ -39,5 +39,9 @@ class MaskActivity : BaseActivity<ActivityMaskBinding>() {
             maskYearPickDialog.setListener(maskDialogListener)
             maskYearPickDialog.show(supportFragmentManager, "maskYearPickDialog")
         }
+
+        btn_back_mask.setOnClickListener {
+            finish()
+        }
     }
 }

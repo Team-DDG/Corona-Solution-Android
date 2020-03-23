@@ -24,5 +24,9 @@ class CoronaStatusActivity : BaseActivity<ActivityCoronaStatusBinding>() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(CoronaStatusViewModel::class.java)
 
         binding.vm = viewModel
+
+        btn_back_corona_status.setOnClickListener {
+            finish()
+        }
     }
 }
