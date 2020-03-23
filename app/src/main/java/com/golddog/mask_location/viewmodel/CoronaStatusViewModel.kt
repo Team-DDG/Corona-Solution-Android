@@ -1,6 +1,7 @@
 package com.golddog.mask_location.viewmodel
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.golddog.mask_location.data.datasource.StatusDataSource
@@ -14,6 +15,7 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
     val accumulateData: MutableLiveData<AccumulateCoronaData> = MutableLiveData(AccumulateCoronaData("갱신 중...", CoronaResult()))
     val citiesData: MutableLiveData<CityCoronaData>
             = MutableLiveData(CityCoronaData("갱신 중...", mutableListOf()))
+    val isLoading: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
     private val disposable = CompositeDisposable()
 
     init {
@@ -25,8 +27,10 @@ class CoronaStatusViewModel(private val statusDataSource: StatusDataSource) : Vi
         val accumulateDataDisposable = statusDataSource.getAccumulateData()
             .subscribe({
                 accumulateData.value = it
+                isLoading.value = View.INVISIBLE
             }) {
                 accumulateData.value?.baseDate = "갱신 실패"
+                isLoading.value = View.INVISIBLE
             }
 
         disposable.add(accumulateDataDisposable)
