@@ -6,14 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
+import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.databinding.ActivityMaskBinding
 import com.golddog.mask_location.ui.dialog.MaskYearPickDialog
 import com.golddog.mask_location.viewmodel.MaskViewModel
 import com.golddog.mask_location.viewmodelfactory.MaskViewModelFactory
 import kotlinx.android.synthetic.main.activity_mask.*
 
-class MaskActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMaskBinding
+class MaskActivity : BaseActivity<ActivityMaskBinding>() {
+    override val layoutResourceId: Int = R.layout.activity_mask
+
     private lateinit var viewModel: MaskViewModel
     private lateinit var viewModelFactory: MaskViewModelFactory
     private var year = -1
@@ -21,12 +23,10 @@ class MaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_mask)
         viewModelFactory = MaskViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(MaskViewModel::class.java)
 
         binding.vm = viewModel
-        binding.lifecycleOwner = this
 
         val maskDialogListener = DatePickerDialog.OnDateSetListener { _, p1, _, _ ->
             year = p1
