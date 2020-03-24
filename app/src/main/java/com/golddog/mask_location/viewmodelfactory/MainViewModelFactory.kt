@@ -9,7 +9,7 @@ import java.lang.IllegalArgumentException
 class MainViewModelFactory(private val apiClient: ApiClient) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(apiClient) as T
+            return MainViewModel(apiClient, apiClient) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

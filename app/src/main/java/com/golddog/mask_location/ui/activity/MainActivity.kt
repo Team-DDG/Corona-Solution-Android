@@ -10,12 +10,11 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import androidx.annotation.UiThread
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.golddog.mask_location.R
@@ -23,6 +22,7 @@ import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.data.ApiClient
 import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
+import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
 import com.golddog.mask_location.ext.showToast
 import com.golddog.mask_location.viewmodel.MainViewModel
@@ -55,6 +55,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private var fewMarkerList: ArrayList<Marker> = arrayListOf()
     private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
     private var breakMarkerList: ArrayList<Marker> = arrayListOf()
+    private var clinicMarkerList: ArrayList<Marker> = arrayListOf()
+    private var hospitalMarkerList: ArrayList<Marker> = arrayListOf()
 
     private val infoWindow = InfoWindow()
 
@@ -97,9 +99,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 breakMarkerList.clear()
 
                 list.forEach {
-                    setMarkerOnMap(it)
+                    setStoreMarkerOnMap(it)
                 }
             })
+
+        viewModel.clinicsData.observe(this,
+            Observer { list ->
+                setMarkerInvisible(clinicMarkerList)
+
+                clinicMarkerList.clear()
+
+                list.forEach {
+                    setClinicMarkerOnMap(it)
+                }
+        })
+
+        viewModel.hospitalsData.observe(this,
+            Observer{list ->
+                setMarkerInvisible(hospitalMarkerList)
+
+                hospitalMarkerList.clear()
+
+                list.forEach {
+                    setHospitalMarkerOnMap(it)
+                }
+        })
 
         viewModel.plentyChecked.observe(this,
             Observer {
@@ -138,30 +162,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
     }
 
-    fun clickFabMain(view: View) {
-        changeIsFabOpen()
-    }
-
-    fun clickFabMask(view: View) {
-        startActivity(Intent(applicationContext, MaskActivity::class.java))
-        changeIsFabOpen()
-    }
-
-    fun clickFabCall(view: View) {
-        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
-        changeIsFabOpen()
-    }
-
-    fun clickFabManualCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
-        changeIsFabOpen()
-    }
-
-    fun clickFabCurrentCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
-        changeIsFabOpen()
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -186,7 +186,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
         naverMap.addOnCameraIdleListener {
             val cameraLatLng = naverMap.cameraPosition.target
-            binding.vm?.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
+            viewModel.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
+            viewModel.getAroundClinicData(cameraLatLng.latitude, cameraLatLng.longitude)
+            viewModel.getAroundHospitalData(cameraLatLng.latitude, cameraLatLng.longitude)
         }
         this.naverMap = naverMap
     }
@@ -213,7 +215,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
     }
 
-    private fun setMarkerOnMap(storeSales: StoreSales) {
+    private fun setMarkerVisibility(marker: Marker, visibility: Boolean) {
+        if (visibility) marker.map = naverMap
+        else marker.map = null
+    }
+
+    private fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
+        marker.icon = overlayImage
+    }
+
+    private fun setStoreMarkerOnMap(storeSales: StoreSales) {
         val marker = Marker()
         val status = storeSales.remainStat
 
@@ -225,7 +236,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
         if (status == "plenty") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
-            setMarkerTag(
+            setStoreMarkerTag(
                 storeSales,
                 getString(R.string.plenty_status),
                 ContextCompat.getColor(this, R.color.marker_plenty),
@@ -235,7 +246,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             plentyMarkerList.add(marker)
         } else if (status == "some") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
-            setMarkerTag(
+            setStoreMarkerTag(
                 storeSales,
                 getString(R.string.some_status),
                 ContextCompat.getColor(this, R.color.marker_some),
@@ -245,7 +256,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             someMarkerList.add(marker)
         } else if (status == "few") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
-            setMarkerTag(
+            setStoreMarkerTag(
                 storeSales,
                 getString(R.string.few_status),
                 ContextCompat.getColor(this, R.color.marker_few),
@@ -255,7 +266,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             fewMarkerList.add(marker)
         } else if (status == "empty") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
-            setMarkerTag(
+            setStoreMarkerTag(
                 storeSales,
                 getString(R.string.empty_status),
                 ContextCompat.getColor(this, R.color.marker_none),
@@ -265,7 +276,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             emptyMarkerList.add(marker)
         } else if (status == "break") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
-            setMarkerTag(
+            setStoreMarkerTag(
                 storeSales,
                 getString(R.string.break_status),
                 ContextCompat.getColor(this, R.color.marker_none),
@@ -279,16 +290,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         // if문으로 비교하는 이유는 when문은 hashcode 까지 비교해서 오류가 발생함.
     }
 
-    private fun setMarkerVisibility(marker: Marker, visibility: Boolean) {
-        if (visibility) marker.map = naverMap
-        else marker.map = null
+    private fun setClinicMarkerOnMap(clinic: HospitalClinic) {
+        val marker = Marker()
+        marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
+        marker.setOnClickListener {
+            infoWindow.open(marker)
+            true
+        }
+        setMarkerVisible(listOf(marker))
+        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_clinic)
+        setHospitalClinicMarkerTag(clinic, true, marker)
+        clinicMarkerList.add(marker)
     }
 
-    private fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
-        marker.icon = overlayImage
+    private fun setHospitalMarkerOnMap(hospital: HospitalClinic) {
+        val marker = Marker()
+        marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
+        marker.setOnClickListener {
+            infoWindow.open(marker)
+            true
+        }
+        setMarkerVisible(listOf(marker))
+        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_hospital)
+        setHospitalClinicMarkerTag(hospital, false, marker)
+        hospitalMarkerList.add(marker)
     }
 
-    private fun setMarkerTag(
+    private fun setStoreMarkerTag(
         storeSales: StoreSales,
         status: String,
         colorCode: Int,
@@ -325,8 +353,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         marker.tag = spannableString
     }
 
+    private fun setHospitalClinicMarkerTag(
+        hospitalClinic: HospitalClinic,
+        isClinic: Boolean,
+        marker: Marker
+    ) {
+        val storeName = hospitalClinic.name
+        val hospitalOrClinic = if (isClinic) "선별진료소" else "국민안심병원"
+        val tagString = "$storeName ($hospitalOrClinic)\n" +
+                "${hospitalClinic.address}\n${hospitalClinic.phone}"
+        val firstLineStart = 0
+        val firstLineEnd = storeName.length + 3 + hospitalOrClinic.length
+
+        val spannableString = SpannableString(tagString)
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            firstLineStart,
+            firstLineEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            RelativeSizeSpan(1.35f),
+            firstLineStart,
+            firstLineEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        marker.tag = spannableString
+    }
+
     private fun checkAgreement() {
         if (!preference.getAgreement()) getAgreementDialog().show()
+    }
+
+    private fun changeIsFabOpen() {
+        binding.isFabOpen = !binding.isFabOpen!!
     }
 
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
@@ -356,13 +416,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             .setCancelable(false)
     }
 
-    private fun changeIsFabOpen() {
-        binding.isFabOpen = !binding.isFabOpen!!
-    }
-
     override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
         if (e.errorCode == "429") {
             showToast("사용량이 많아 지도를 사용할 수 없습니다.")
         }
+    }
+
+    fun clickFabMain(view: View) {
+        changeIsFabOpen()
+    }
+
+    fun clickFabMask(view: View) {
+        startActivity(Intent(applicationContext, MaskActivity::class.java))
+        changeIsFabOpen()
+    }
+
+    fun clickFabCall(view: View) {
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
+        changeIsFabOpen()
+    }
+
+    fun clickFabManualCorona(view: View) {
+        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
+        changeIsFabOpen()
+    }
+
+    fun clickFabCurrentCorona(view: View) {
+        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
+        changeIsFabOpen()
     }
 }

@@ -16,4 +16,6 @@
     <color name="marker_some">#ff8000</color>
     <color name="marker_few">#e40000</color>
     <color name="marker_none">#929292</color>
+    <color name="marker_clinic">#08FF42</color>
+    <color name="marker_hospital">#4741FF</color>
 </resources>
