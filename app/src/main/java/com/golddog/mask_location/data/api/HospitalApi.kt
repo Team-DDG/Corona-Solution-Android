@@ -1,12 +1,12 @@
 package com.golddog.mask_location.data.api
 
-import com.golddog.mask_location.entity.AccumulateCoronaData
-import com.golddog.mask_location.entity.CityCoronaData
+import com.golddog.mask_location.entity.HospitalClinicList
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface HospitalApi {
     companion object {
@@ -23,8 +23,10 @@ interface HospitalApi {
     }
 
     @GET("api/status/clinic")
-    fun getClinicData(): Single<AccumulateCoronaData>
+    fun getClinicData(@Query("lat") lat: Double,
+                      @Query("lng") lng: Double): Single<HospitalClinicList>
 
     @GET("api/status/hospital")
-    fun getHospitalData() : Single<CityCoronaData>
+    fun getHospitalData(@Query("lat") lat: Double,
+                        @Query("lng") lng: Double) : Single<HospitalClinicList>
 }

@@ -4,5 +4,5 @@ import com.golddog.mask_location.entity.StoresList
 import io.reactivex.Single
 
 interface MaskDataSource {
-    fun getAroundMaskData(lat: Double, lng: Double, meter: Int): Single<StoresList>
+    fun getAroundMaskData(lat: Double, lng: Double): Single<StoresList>
 }
