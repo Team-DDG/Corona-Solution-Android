@@ -13,8 +13,8 @@ android {
         applicationId "com.golddog.mask_location"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 5
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +24,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        releaseDebugKey { initWith release }
+    }
+
+    signingConfigs {
+        releaseDebugKey { initWith debug }
     }
 
     dataBinding {
