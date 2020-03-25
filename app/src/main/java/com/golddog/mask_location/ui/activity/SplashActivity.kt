@@ -3,6 +3,7 @@ package com.golddog.mask_location.ui.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.golddog.mask_location.R
@@ -15,7 +16,13 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        checkUpdate()
         setupPermission()
+    }
+
+    private fun checkUpdate() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("onestore://common/product/bg_update/0000747123"))
+        startActivity(intent)
     }
 
     @SuppressLint("CheckResult")
@@ -27,7 +34,6 @@ class SplashActivity : AppCompatActivity() {
             .request()
             .subscribe { tedPermissionResult: TedPermissionResult ->
                 if (tedPermissionResult.isGranted) {
-//                    showToast(R.string.permission_granted)
                     startActivity(Intent(this, MainActivity::class.java))
 
                 } else {
