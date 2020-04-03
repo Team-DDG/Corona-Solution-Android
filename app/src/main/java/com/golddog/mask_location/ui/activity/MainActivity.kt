@@ -10,9 +10,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
@@ -234,9 +232,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         marker.position = LatLng(storeSales.lat, storeSales.lng)
         marker.setOnClickListener {
             infoWindow.open(marker)
-            //TODO: here to call bottom sheet fragment
-            Log.d("marker", marker.tag.toString())
-            Toast.makeText(applicationContext, marker.tag.toString(), Toast.LENGTH_LONG).show()
             infoWindowDialog.setInfo(marker.tag.toString())
             infoWindowDialog.show(supportFragmentManager, "infoWindow")
             true

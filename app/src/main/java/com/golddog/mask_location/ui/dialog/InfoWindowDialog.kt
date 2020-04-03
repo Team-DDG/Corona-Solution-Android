@@ -9,6 +9,7 @@ import com.golddog.mask_location.R
 import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.base.BaseApplication
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.dialog_infowindow.*
 
 class InfoWindowDialog : BottomSheetDialogFragment(){
 
@@ -20,10 +21,12 @@ class InfoWindowDialog : BottomSheetDialogFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.dialog_infowindow, container, false)
-        textView = view.findViewById(R.id.tv_infowindow)
-        textView.text = text
-        return view
+        return inflater.inflate(R.layout.dialog_infowindow, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tv_infowindow.text = text
     }
 
     fun setInfo(info: String){
