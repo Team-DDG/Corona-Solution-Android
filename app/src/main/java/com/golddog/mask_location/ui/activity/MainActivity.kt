@@ -24,6 +24,7 @@ import com.golddog.mask_location.databinding.ActivityMainBinding
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
 import com.golddog.mask_location.ext.showToast
+import com.golddog.mask_location.ui.dialog.InfoWindowDialog
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -58,6 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private var hospitalMarkerList: ArrayList<Marker> = arrayListOf()
 
     private val infoWindow = InfoWindow()
+    private val infoWindowDialog = InfoWindowDialog()
 
     private val preference by lazy { SharedPreference(this) }
 
@@ -230,6 +232,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         marker.position = LatLng(storeSales.lat, storeSales.lng)
         marker.setOnClickListener {
             infoWindow.open(marker)
+            infoWindowDialog.setInfo(marker.tag.toString())
+            infoWindowDialog.show(supportFragmentManager, "infoWindow")
             true
         }
 
