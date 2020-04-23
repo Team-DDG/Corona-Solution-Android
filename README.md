@@ -16,13 +16,13 @@
 
 - Kotlin 
 - Android Studio
-- MVVM
+- MVVM(Model - View - ViewModel)
 - AAC (LiveData, ViewModel)
 - Retrofit2
 - RxJava, RxKotlin
 - Naver Map
 - TedPermission
-- Metarial Design
+- Material Design
 - *Spotlight (after release)*
 - GitKraken Glo
 - Firebase Crashlytics
