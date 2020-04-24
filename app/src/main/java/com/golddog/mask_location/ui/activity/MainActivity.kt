@@ -23,7 +23,7 @@ import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
-import com.golddog.mask_location.ext.showToast
+import com.golddog.mask_location.ext.*
 import com.golddog.mask_location.ui.dialog.InfoBottomSheet
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
@@ -55,6 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private var fewMarkerList: ArrayList<Marker> = arrayListOf()
     private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
     private var breakMarkerList: ArrayList<Marker> = arrayListOf()
+
     private var clinicMarkerList: ArrayList<Marker> = arrayListOf()
     private var hospitalMarkerList: ArrayList<Marker> = arrayListOf()
 
@@ -127,32 +128,42 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
         viewModel.plentyChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(plentyMarkerList)
-                else setMarkerInvisible(plentyMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(plentyMarkerList, naverMap)
+                    else setMarkerInvisible(plentyMarkerList)
+                }
             })
 
         viewModel.someChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(someMarkerList)
-                else setMarkerInvisible(someMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(someMarkerList, naverMap)
+                    else setMarkerInvisible(someMarkerList)
+                }
             })
 
         viewModel.fewChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(fewMarkerList)
-                else setMarkerInvisible(fewMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(fewMarkerList, naverMap)
+                    else setMarkerInvisible(fewMarkerList)
+                }
             })
 
         viewModel.emptyChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(emptyMarkerList)
-                else setMarkerInvisible(emptyMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(emptyMarkerList, naverMap)
+                    else setMarkerInvisible(emptyMarkerList)
+                }
             })
 
         viewModel.breakChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(breakMarkerList)
-                else setMarkerInvisible(breakMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(breakMarkerList, naverMap)
+                    else setMarkerInvisible(breakMarkerList)
+                }
             })
     }
 
@@ -194,28 +205,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         mapView.getMapAsync(this)
     }
 
-    private fun setMarkerVisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = naverMap
-        }
-    }
-
-    private fun setMarkerInvisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = null
-        }
-    }
-
-    private fun setMarkerVisibility(marker: Marker, visibility: Boolean) {
-        if (visibility) marker.map = naverMap
-        else marker.map = null
-    }
-
-    private fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
-        marker.icon = overlayImage
-    }
-
-    private fun setStoreMarkerOnMap(storeSales: StoreSales) {
+    fun setStoreMarkerOnMap(storeSales: StoreSales) {
         val marker = Marker()
         val status = storeSales.remainStat
         var tag = SpannableString("")
@@ -228,7 +218,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 getString(R.string.plenty_status),
                 ContextCompat.getColor(this, R.color.marker_plenty)
             )
-            viewModel.plentyChecked.value?.let { setMarkerVisibility(marker, it) }
+            viewModel.plentyChecked.value?.let {
+                if (::naverMap.isInitialized)
+                    setMarkerVisibility(
+                        marker,
+                        it,
+                        naverMap
+                    )
+            }
             plentyMarkerList.add(marker)
         } else if (status == "some") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
@@ -237,7 +234,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 getString(R.string.some_status),
                 ContextCompat.getColor(this, R.color.marker_some)
             )
-            viewModel.someChecked.value?.let { setMarkerVisibility(marker, it) }
+            viewModel.someChecked.value?.let {
+                if (::naverMap.isInitialized)
+                    setMarkerVisibility(
+                        marker,
+                        it,
+                        naverMap
+                    )
+            }
             someMarkerList.add(marker)
         } else if (status == "few") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
@@ -246,7 +250,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 getString(R.string.few_status),
                 ContextCompat.getColor(this, R.color.marker_few)
             )
-            viewModel.fewChecked.value?.let { setMarkerVisibility(marker, it) }
+            viewModel.fewChecked.value?.let {
+                if (::naverMap.isInitialized)
+                    setMarkerVisibility(
+                        marker,
+                        it,
+                        naverMap
+                    )
+            }
             fewMarkerList.add(marker)
         } else if (status == "empty") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
@@ -255,7 +266,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 getString(R.string.empty_status),
                 ContextCompat.getColor(this, R.color.marker_none)
             )
-            viewModel.emptyChecked.value?.let { setMarkerVisibility(marker, it) }
+            viewModel.emptyChecked.value?.let {
+                if (::naverMap.isInitialized)
+                    setMarkerVisibility(
+                        marker,
+                        it,
+                        naverMap
+                    )
+            }
             emptyMarkerList.add(marker)
         } else if (status == "break") {
             setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
@@ -264,12 +282,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 getString(R.string.break_status),
                 ContextCompat.getColor(this, R.color.marker_none)
             )
-            viewModel.breakChecked.value?.let { setMarkerVisibility(marker, it) }
+            viewModel.breakChecked.value?.let {
+                if (::naverMap.isInitialized)
+                    setMarkerVisibility(
+                        marker,
+                        it,
+                        naverMap
+                    )
+            }
             breakMarkerList.add(marker)
         } else {
             marker.map = null
         }
-        // if문으로 비교하는 이유는 when문은 hashcode 까지 비교해서 오류가 발생함.
 
         marker.setOnClickListener {
             infoBottomSheet.setInfo(tag)
@@ -281,7 +305,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private fun setClinicMarkerOnMap(clinic: HospitalClinic) {
         val marker = Marker()
         marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
-        setMarkerVisible(listOf(marker))
+        setMarkerVisible(listOf(marker), naverMap)
         marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_clinic)
         marker.setOnClickListener {
             infoBottomSheet.setInfo(setHospitalClinicMarkerTag(clinic, true))
@@ -294,7 +318,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private fun setHospitalMarkerOnMap(hospital: HospitalClinic) {
         val marker = Marker()
         marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
-        setMarkerVisible(listOf(marker))
+        setMarkerVisible(listOf(marker), naverMap)
         marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_hospital)
         marker.setOnClickListener {
             infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospital, false))
