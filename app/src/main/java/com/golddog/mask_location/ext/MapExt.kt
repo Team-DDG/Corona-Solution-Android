@@ -10,7 +10,6 @@ import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.golddog.mask_location.R
-import com.golddog.mask_location.base.BaseApplication
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
 import com.golddog.mask_location.ui.dialog.InfoBottomSheet
@@ -103,6 +102,61 @@ fun setHospitalClinicMarkerTag(
     )
     return spannableString
 }
+
+fun setStoreMarker(storeSales: StoreSales, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+    val marker = Marker()
+    val status = storeSales.remainStat
+    var tag = SpannableString("")
+    marker.position = LatLng(storeSales.lat, storeSales.lng)
+
+    if (status == "plenty") {
+        setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
+        tag = setStoreMarkerTag(
+            storeSales,
+            context.getString(R.string.plenty_status),
+            ContextCompat.getColor(context, R.color.marker_plenty)
+        )
+    } else if (status == "some") {
+        setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
+        tag = setStoreMarkerTag(
+            storeSales,
+            context.getString(R.string.some_status),
+            ContextCompat.getColor(context, R.color.marker_some)
+        )
+    } else if (status == "few") {
+        setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
+        tag = setStoreMarkerTag(
+            storeSales,
+            context.getString(R.string.few_status),
+            ContextCompat.getColor(context, R.color.marker_few)
+        )
+    } else if (status == "empty") {
+        setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
+        tag = setStoreMarkerTag(
+            storeSales,
+            context.getString(R.string.empty_status),
+            ContextCompat.getColor(context, R.color.marker_none)
+        )
+    } else if (status == "break") {
+        setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
+        tag = setStoreMarkerTag(
+            storeSales,
+            context.getString(R.string.break_status),
+            ContextCompat.getColor(context, R.color.marker_none)
+        )
+    } else {
+        marker.map = null
+    }
+
+    marker.setOnClickListener {
+        infoBottomSheet.setInfo(tag)
+        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
+        true
+    }
+
+    return marker
+}
+
 
 fun setClinicMarker(clinic: HospitalClinic, naverMap: NaverMap, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
     val marker = Marker()

@@ -55,7 +55,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private var fewMarkerList: ArrayList<Marker> = arrayListOf()
     private var emptyMarkerList: ArrayList<Marker> = arrayListOf()
     private var breakMarkerList: ArrayList<Marker> = arrayListOf()
-
     private var clinicMarkerList: ArrayList<Marker> = arrayListOf()
     private var hospitalMarkerList: ArrayList<Marker> = arrayListOf()
 
@@ -125,7 +124,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
                 list.forEach {
                     if (::naverMap.isInitialized) {
-                        hospitalMarkerList.add(setHospitalMarker(it, naverMap, infoBottomSheet, this))
+                        hospitalMarkerList.add(
+                            setHospitalMarker(
+                                it,
+                                naverMap,
+                                infoBottomSheet,
+                                this
+                            )
+                        )
                     }
                 }
             })
@@ -176,11 +182,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (locationSource.onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
-            )
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)
         ) return
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
@@ -191,10 +193,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
         naverMap.addOnCameraIdleListener {
-            val cameraLatLng = naverMap.cameraPosition.target
-            viewModel.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
-            viewModel.getAroundClinicData(cameraLatLng.latitude, cameraLatLng.longitude)
-            viewModel.getAroundHospitalData(cameraLatLng.latitude, cameraLatLng.longitude)
+            val latitude = naverMap.cameraPosition.target.latitude
+            val longitude = naverMap.cameraPosition.target.longitude
+
+            viewModel.getAroundMaskData(latitude, longitude)
+            viewModel.getAroundClinicData(latitude, longitude)
+            viewModel.getAroundHospitalData(latitude, longitude)
         }
         this.naverMap = naverMap
     }
@@ -210,79 +214,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     }
 
     private fun setStoreMarkerOnMap(storeSales: StoreSales) {
-        val marker = Marker()
         val status = storeSales.remainStat
-        var tag = SpannableString("")
-        marker.position = LatLng(storeSales.lat, storeSales.lng)
+        val marker = setStoreMarker(storeSales, infoBottomSheet, this)
 
         if (status == "plenty") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
-            tag = setStoreMarkerTag(
-                storeSales,
-                getString(R.string.plenty_status),
-                ContextCompat.getColor(this, R.color.marker_plenty)
-            )
-            viewModel.plentyChecked.value?.let {
-                if (::naverMap.isInitialized)
-                    setMarkerVisibility(marker, it, naverMap)
-            }
+            setMarkerVisibility(marker, viewModel.plentyChecked.value!!, naverMap)
             plentyMarkerList.add(marker)
         } else if (status == "some") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
-            tag = setStoreMarkerTag(
-                storeSales,
-                getString(R.string.some_status),
-                ContextCompat.getColor(this, R.color.marker_some)
-            )
-            viewModel.someChecked.value?.let {
-                if (::naverMap.isInitialized)
-                    setMarkerVisibility(marker, it, naverMap)
-            }
+            setMarkerVisibility(marker, viewModel.someChecked.value!!, naverMap)
             someMarkerList.add(marker)
         } else if (status == "few") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
-            tag = setStoreMarkerTag(
-                storeSales,
-                getString(R.string.few_status),
-                ContextCompat.getColor(this, R.color.marker_few)
-            )
-            viewModel.fewChecked.value?.let {
-                if (::naverMap.isInitialized)
-                    setMarkerVisibility(marker, it, naverMap)
-            }
+            setMarkerVisibility(marker, viewModel.fewChecked.value!!, naverMap)
             fewMarkerList.add(marker)
         } else if (status == "empty") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
-            tag = setStoreMarkerTag(
-                storeSales,
-                getString(R.string.empty_status),
-                ContextCompat.getColor(this, R.color.marker_none)
-            )
-            viewModel.emptyChecked.value?.let {
-                if (::naverMap.isInitialized)
-                    setMarkerVisibility(marker, it, naverMap)
-            }
+            setMarkerVisibility(marker, viewModel.emptyChecked.value!!, naverMap)
             emptyMarkerList.add(marker)
         } else if (status == "break") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
-            tag = setStoreMarkerTag(
-                storeSales,
-                getString(R.string.break_status),
-                ContextCompat.getColor(this, R.color.marker_none)
-            )
-            viewModel.breakChecked.value?.let {
-                if (::naverMap.isInitialized)
-                    setMarkerVisibility(marker, it, naverMap)
-            }
+            setMarkerVisibility(marker, viewModel.breakChecked.value!!, naverMap)
             breakMarkerList.add(marker)
         } else {
             marker.map = null
-        }
-
-        marker.setOnClickListener {
-            infoBottomSheet.setInfo(tag)
-            infoBottomSheet.show(supportFragmentManager, "infoWindow")
-            true
         }
     }
 
