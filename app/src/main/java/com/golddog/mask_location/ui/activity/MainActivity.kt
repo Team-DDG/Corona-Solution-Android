@@ -205,7 +205,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         mapView.getMapAsync(this)
     }
 
-    fun setStoreMarkerOnMap(storeSales: StoreSales) {
+    private fun setStoreMarkerOnMap(storeSales: StoreSales) {
         val marker = Marker()
         val status = storeSales.remainStat
         var tag = SpannableString("")
@@ -220,11 +220,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
             viewModel.plentyChecked.value?.let {
                 if (::naverMap.isInitialized)
-                    setMarkerVisibility(
-                        marker,
-                        it,
-                        naverMap
-                    )
+                    setMarkerVisibility(marker, it, naverMap)
             }
             plentyMarkerList.add(marker)
         } else if (status == "some") {
@@ -236,11 +232,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
             viewModel.someChecked.value?.let {
                 if (::naverMap.isInitialized)
-                    setMarkerVisibility(
-                        marker,
-                        it,
-                        naverMap
-                    )
+                    setMarkerVisibility(marker, it, naverMap)
             }
             someMarkerList.add(marker)
         } else if (status == "few") {
@@ -252,11 +244,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
             viewModel.fewChecked.value?.let {
                 if (::naverMap.isInitialized)
-                    setMarkerVisibility(
-                        marker,
-                        it,
-                        naverMap
-                    )
+                    setMarkerVisibility(marker, it, naverMap)
             }
             fewMarkerList.add(marker)
         } else if (status == "empty") {
@@ -268,11 +256,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
             viewModel.emptyChecked.value?.let {
                 if (::naverMap.isInitialized)
-                    setMarkerVisibility(
-                        marker,
-                        it,
-                        naverMap
-                    )
+                    setMarkerVisibility(marker, it, naverMap)
             }
             emptyMarkerList.add(marker)
         } else if (status == "break") {
@@ -284,11 +268,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
             viewModel.breakChecked.value?.let {
                 if (::naverMap.isInitialized)
-                    setMarkerVisibility(
-                        marker,
-                        it,
-                        naverMap
-                    )
+                    setMarkerVisibility(marker, it, naverMap)
             }
             breakMarkerList.add(marker)
         } else {
@@ -326,69 +306,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             true
         }
         hospitalMarkerList.add(marker)
-    }
-
-    private fun setStoreMarkerTag(
-        storeSales: StoreSales,
-        status: String,
-        colorCode: Int
-    ): SpannableString {
-        val storeName = "${storeSales.name}\n"
-        val tagString =
-            "${storeSales.name}\n${storeSales.address}\n${status}\n" +
-                    "입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
-        val storeNameStart = 0
-        val storeNameEnd = storeName.length
-        val statusStart = tagString.indexOf(status)
-        val statusEnd = statusStart + status.length
-
-        val spannableString = SpannableString(tagString)
-        spannableString.setSpan(
-            StyleSpan(Typeface.BOLD),
-            storeNameStart,
-            storeNameEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            RelativeSizeSpan(1.35f),
-            storeNameStart,
-            storeNameEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            ForegroundColorSpan(colorCode),
-            statusStart,
-            statusEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        return spannableString
-    }
-
-    private fun setHospitalClinicMarkerTag(
-        hospitalClinic: HospitalClinic,
-        isClinic: Boolean
-    ): SpannableString {
-        val storeName = hospitalClinic.name
-        val hospitalOrClinic = if (isClinic) "선별진료소" else "국민안심병원"
-        val tagString = "$storeName ($hospitalOrClinic)\n" +
-                "${hospitalClinic.address}\n${hospitalClinic.phone}"
-        val firstLineStart = 0
-        val firstLineEnd = storeName.length + 3 + hospitalOrClinic.length
-
-        val spannableString = SpannableString(tagString)
-        spannableString.setSpan(
-            StyleSpan(Typeface.BOLD),
-            firstLineStart,
-            firstLineEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            RelativeSizeSpan(1.35f),
-            firstLineStart,
-            firstLineEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        return spannableString
     }
 
     private fun checkAgreement() {
