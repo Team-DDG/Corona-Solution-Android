@@ -1,6 +1,7 @@
 package com.golddog.mask_location.ui.dialog
 
 import android.os.Bundle
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,9 @@ import com.golddog.mask_location.base.BaseApplication
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_infowindow.*
 
-class InfoWindowDialog : BottomSheetDialogFragment(){
+class InfoBottomSheet : BottomSheetDialogFragment(){
 
-    private lateinit var textView: TextView
-    private lateinit var text: String
+    private lateinit var text: SpannableString
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +29,7 @@ class InfoWindowDialog : BottomSheetDialogFragment(){
         tv_infowindow.text = text
     }
 
-    fun setInfo(info: String){
+    fun setInfo(info: SpannableString){
         text = info
     }
 }
