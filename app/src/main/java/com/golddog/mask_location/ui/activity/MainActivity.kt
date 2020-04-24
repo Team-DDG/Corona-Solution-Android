@@ -2,17 +2,12 @@ package com.golddog.mask_location.ui.activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
-import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import androidx.annotation.UiThread
-import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,21 +16,17 @@ import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.data.ApiClient
 import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
-import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
 import com.golddog.mask_location.ext.*
 import com.golddog.mask_location.ui.dialog.InfoBottomSheet
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapSdk
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -182,8 +173,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        ) return
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) return
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
@@ -195,7 +185,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         naverMap.addOnCameraIdleListener {
             val latitude = naverMap.cameraPosition.target.latitude
             val longitude = naverMap.cameraPosition.target.longitude
-
             viewModel.getAroundMaskData(latitude, longitude)
             viewModel.getAroundClinicData(latitude, longitude)
             viewModel.getAroundHospitalData(latitude, longitude)
@@ -209,7 +198,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.mapView, it).commit()
             }
-
         mapView.getMapAsync(this)
     }
 
