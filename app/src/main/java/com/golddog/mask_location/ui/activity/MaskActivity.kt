@@ -1,6 +1,7 @@
 package com.golddog.mask_location.ui.activity
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -32,6 +33,7 @@ class MaskActivity : BaseActivity<ActivityMaskBinding>() {
             year = p1
             binding.vm?.year?.value = year
             tv_year_mask.text = year.toString()
+            tv_year_mask.setTextColor(Color.WHITE)
         }
 
         tv_year_mask.setOnClickListener {
