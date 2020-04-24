@@ -111,7 +111,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 clinicMarkerList.clear()
 
                 list.forEach {
-                    setClinicMarkerOnMap(it)
+                    if (::naverMap.isInitialized) {
+                        clinicMarkerList.add(setClinicMarker(it, naverMap, infoBottomSheet, this))
+                    }
                 }
             })
 
@@ -122,7 +124,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 hospitalMarkerList.clear()
 
                 list.forEach {
-                    setHospitalMarkerOnMap(it)
+                    if (::naverMap.isInitialized) {
+                        hospitalMarkerList.add(setHospitalMarker(it, naverMap, infoBottomSheet, this))
+                    }
                 }
             })
 
@@ -280,32 +284,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             infoBottomSheet.show(supportFragmentManager, "infoWindow")
             true
         }
-    }
-
-    private fun setClinicMarkerOnMap(clinic: HospitalClinic) {
-        val marker = Marker()
-        marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
-        setMarkerVisible(listOf(marker), naverMap)
-        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_clinic)
-        marker.setOnClickListener {
-            infoBottomSheet.setInfo(setHospitalClinicMarkerTag(clinic, true))
-            infoBottomSheet.show(supportFragmentManager, "infoWindow")
-            true
-        }
-        clinicMarkerList.add(marker)
-    }
-
-    private fun setHospitalMarkerOnMap(hospital: HospitalClinic) {
-        val marker = Marker()
-        marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
-        setMarkerVisible(listOf(marker), naverMap)
-        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_hospital)
-        marker.setOnClickListener {
-            infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospital, false))
-            infoBottomSheet.show(supportFragmentManager, "infoWindow")
-            true
-        }
-        hospitalMarkerList.add(marker)
     }
 
     private fun checkAgreement() {

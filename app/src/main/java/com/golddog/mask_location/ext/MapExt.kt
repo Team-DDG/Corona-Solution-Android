@@ -1,13 +1,20 @@
 package com.golddog.mask_location.ext
 
+import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import com.golddog.mask_location.R
+import com.golddog.mask_location.base.BaseApplication
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
+import com.golddog.mask_location.ui.dialog.InfoBottomSheet
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
@@ -95,4 +102,32 @@ fun setHospitalClinicMarkerTag(
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     return spannableString
+}
+
+fun setClinicMarker(clinic: HospitalClinic, naverMap: NaverMap, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+    val marker = Marker()
+    marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
+    setMarkerVisible(listOf(marker), naverMap)
+    marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
+    marker.setOnClickListener {
+        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(clinic, true))
+        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
+        true
+    }
+
+    return marker
+}
+
+fun setHospitalMarker(hospital: HospitalClinic, naverMap: NaverMap, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+    val marker = Marker()
+    marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
+    setMarkerVisible(listOf(marker), naverMap)
+    marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
+    marker.setOnClickListener {
+        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospital, false))
+        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
+        true
+    }
+
+    return marker
 }
