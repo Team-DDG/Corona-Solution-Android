@@ -5,22 +5,33 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="2fe0d73a2afa2b0dd86126cd6326a3d5"/>
-
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_mask"
+        android:name=".base.BaseApplication"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_mask_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="cr34hz45hw" />
+
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.CoronaStatusActivity"/>
+        <activity android:name=".ui.activity.MaskActivity"/>
+        <activity android:name=".ui.activity.CoronaManualActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.golddog.mask_location.viewmodel.MaskViewModel" />
+
+        <import type="android.content.Context" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cv_toolbar_mask"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_back_mask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_barun_gothic_bold"
+                android:text="@string/my_mask"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_toolbar_mask">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_left_mask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.075" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_right_mask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.925" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_mask_calculator_mask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/nanum_barun_gothic_bold"
+                    android:text="@string/my_mask_date"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_container_mask_calculator_mask"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/mask_calculator_background"
+                    app:layout_constraintEnd_toEndOf="@id/gl_right_mask"
+                    app:layout_constraintStart_toStartOf="@id/gl_left_mask"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_enter_year_mask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/nanum_barun_gothic"
+                        android:text="@string/enter_your_year"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_year_mask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/nanum_barun_gothic_bold"
+                        android:text="@string/touch_to_select_year"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_enter_year_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_available_date_mask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/nanum_barun_gothic"
+                        android:text="@string/available_date"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_year_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_monday_mask"
+                        dayOfWeekNumber="@{1}"
+                        year="@{vm.year}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/monday"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_tuesday_mask"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_tuesday_mask"
+                        dayOfWeekNumber="@{2}"
+                        year="@{vm.year}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/tuesday"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_wednesday_mask"
+                        app:layout_constraintStart_toEndOf="@+id/tv_monday_mask"
+                        app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_wednesday_mask"
+                        dayOfWeekNumber="@{3}"
+                        year="@{vm.year}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/wednesday"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_thursday_mask"
+                        app:layout_constraintStart_toEndOf="@+id/tv_tuesday_mask"
+                        app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_thursday_mask"
+                        dayOfWeekNumber="@{4}"
+                        year="@{vm.year}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/thursday"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_friday_mask"
+                        app:layout_constraintStart_toEndOf="@+id/tv_wednesday_mask"
+                        app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_friday_mask"
+                        dayOfWeekNumber="@{0}"
+                        year="@{vm.year}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/friday"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_thursday_mask"
+                        app:layout_constraintTop_toBottomOf="@id/tv_available_date_mask" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/corona_mask"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/gl_right_mask"
+                    app:layout_constraintStart_toStartOf="@id/gl_left_mask"
+                    app:layout_constraintTop_toBottomOf="@id/cv_container_mask_calculator_mask" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

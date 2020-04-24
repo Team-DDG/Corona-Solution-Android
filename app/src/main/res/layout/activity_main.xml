@@ -1,18 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="isFabOpen"
+            type="Boolean" />
+
+        <variable
+            name="vm"
+            type="com.golddog.mask_location.viewmodel.MainViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/colorPrimary"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:theme="@style/AppBarTheme">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <FrameLayout
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:background="@android:color/black" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/marker_filter_background"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.05">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_plenty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={vm.plentyChecked}"
+                    android:text="@string/plenty_number_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/checkbox_some"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_some"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={vm.someChecked}"
+                    android:text="@string/some_number_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/checkbox_few"
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_plenty"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_few"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={vm.fewChecked}"
+                    android:text="@string/few_number_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/checkbox_empty"
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_some"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={vm.emptyChecked}"
+                    android:text="@string/empty_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/checkbox_break"
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_few"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_break"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={vm.breakChecked}"
+                    android:text="@string/break_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_empty"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_main_main"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="clickFabMain"
+                app:backgroundTint="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_mask_main"
+                fab_status="@{isFabOpen}"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="clickFabMask"
+                app:backgroundTint="@color/colorSecondaryLight"
+                app:layout_constraintBottom_toTopOf="@id/fab_main_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_mask" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_mask_label_main"
+                label_status="@{isFabOpen}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
+                android:text="@string/about_mask_5days_sys"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_mask_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_mask_main"
+                app:layout_constraintTop_toTopOf="@id/fab_mask_main" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_1339call_main"
+                fab_status="@{isFabOpen}"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="clickFabCall"
+                app:backgroundTint="@color/colorSecondaryLight"
+                app:layout_constraintBottom_toTopOf="@id/fab_mask_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_local_phone_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_1339call_label_main"
+                label_status="@{isFabOpen}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
+                android:text="@string/call1339"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_1339call_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_1339call_main"
+                app:layout_constraintTop_toTopOf="@id/fab_1339call_main" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_corona_manual_main"
+                fab_status="@{isFabOpen}"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="clickFabManualCorona"
+                app:backgroundTint="@color/colorSecondaryLight"
+                app:layout_constraintBottom_toTopOf="@id/fab_1339call_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_warning_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_corona_manual_label_main"
+                label_status="@{isFabOpen}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
+                android:text="@string/corona_manual"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_manual_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_manual_main" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_corona_current_main"
+                fab_status="@{isFabOpen}"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="clickFabCurrentCorona"
+                app:backgroundTint="@color/colorSecondaryLight"
+                app:layout_constraintBottom_toTopOf="@id/fab_corona_manual_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fab_corona_current_label_main"
+                label_status="@{isFabOpen}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fab_label_background"
+                android:padding="10dp"
+                android:text="@string/corona_status"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_corona_current_main"
+                app:layout_constraintEnd_toStartOf="@id/fab_corona_current_main"
+                app:layout_constraintTop_toTopOf="@id/fab_corona_current_main" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

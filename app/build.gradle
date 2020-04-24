@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.firebase.crashlytics'
+
 
 android {
     compileSdkVersion 29
@@ -9,9 +12,9 @@ android {
     defaultConfig {
         applicationId "com.golddog.mask_location"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 28
+        versionCode 5
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -21,17 +24,71 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        releaseDebugKey { initWith release }
     }
 
+    signingConfigs {
+        releaseDebugKey { initWith debug }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // RxJava, RxKotlin, RxAndroid ...
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+    implementation 'com.uniquext.android:rxlifecycle:2.0.0'
+
+    // TedPermission
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
+
+    // LiveData, ViewModel
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+
+    // Retrofit2, GsonConverter
+    implementation "com.squareup.okhttp3:okhttp:4.1.0"
+    implementation "com.squareup.retrofit2:retrofit:2.6.2"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.2"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.2"
+
+    //firebase
+    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    // add SDKs for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+
+    // Naver Map
+    implementation 'com.naver.maps:map-sdk:3.7.1'
+
+    // Google Location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
+

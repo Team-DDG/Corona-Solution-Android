@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="status"
+            type="com.golddog.mask_location.entity.CityStatus" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_list"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/tv_city_name_list"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@{status.cityName}"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/tv_confirmed_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_confirmed_list"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@{status.confirmed}"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/tv_dead_list"
+            app:layout_constraintStart_toEndOf="@+id/tv_city_name_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_dead_list"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@{status.dead}"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_confirmed_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

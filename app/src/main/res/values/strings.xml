@@ -1,3 +1,94 @@
 <resources>
-    <string name="app_name">MaskLocation</string>
+    <string name="app_name">코로나 솔루션</string>
+    <string name="service_agreement">
+        · [코로나 솔루션] 사용 방법은 상단 물음표 아이콘을 통해 간단한 사용법에 대해서 알아보세요.
+        \n· 마스크 사용 지침 및 공적 마스크 관련 세부 안내에 관련해서는 [식약처 홈페이지]를 참고해 주세요.
+        \n· 약국, 우체국 및 농협 등 일선 현장분들의 협조로 국민들께 편의를 드리는 서비스입니다. [코로나 솔루션]은 일선 현장분들의 노고에 감사드립니다.
+        \n
+        \n☞ 안내사항
+        \n· 공적마스크 판매 정보는 5분 이상 지연된 정보입니다.
+        \n· 혼선을 방지하기 위해 정확한 재고 수치는 제공하지 않으며, 4구간으로 분할된 상태로 제공됩니다.
+        \n· 8시부터 23시 사이에만 데이터가 갱신됩니다. 이 점 참고해서 이용해주시기 바랍니다.
+        \n· 정부 데이터 공개는 베타서비스 중으로 실수량과 일부 차이가 있을 수 있습니다
+        \n· 위치 정보는 사용자 근처 위치의 마스크 판매 장소를 조회하기 위한 목적으로만 사용되며, 위치 정보를 저장하지 않습니다.
+        \n· 위 내용을 숙지해 주시고, 공적 마스크 정보가 실제와 차이가 날 수 있으니, 일선 현장분들에게 문제를 제기하지 말아 주세요.
+        \n· 위의 모든 내용에 동의하신다면, 동의 버튼을 누르고 서비스를 이용해 주세요.
+    </string>
+    <string name="disagree">거부</string>
+    <string name="agree">동의</string>
+    <string name="agreement">서비스 사용 서약 동의</string>
+    <string name="require_authority">권한요청</string>
+    <string name="require_authority_content">
+        서비스를 이용하기 위해서는 권한이 필요합니다. 위치 정보는 사용자 근처 위치의 마스크 판매 장소를 조회하기 위한 목적으로만 사용되며, 위치 정보를 저장하지 않습니다.</string>
+    <string name="permission_granted">권한 승인</string>
+    <string name="permission_denied">권한 거부시 서비스를 이용할 수 없습니다.</string>
+    <string name="authority_denied">서약 비동의시 서비스를 이용할 수 없습니다.</string>
+    <string name="authority_granted">서비스 사용 서약에 동의했습니다.</string>
+    <string name="call1339">1339 전화</string>
+    <string name="corona_manual">코로나 대응 수칙</string>
+    <string name="corona_status">코로나 현황 확인</string>
+    <string name="about_mask_5days_sys">마스크 5부제란?</string>
+    <string name="patient_status">환자 현황</string>
+    <string name="sido_status">시도별 확진현황</string>
+    <string name="total_patient">누적 확진자</string>
+    <string name="sample_number_corona_status">7,513</string>
+    <string name="sample_number_corona_status_changed">( + 131 )</string>
+    <string name="cured">완치</string>
+    <string name="curing">치료 중</string>
+    <string name="dead">사망</string>
+    <string name="city_name">지역명</string>
+    <string name="seoul">서울</string>
+    <string name="busan">부산</string>
+    <string name="daegu">대구</string>
+    <string name="incheon">인천</string>
+    <string name="gwangju">광주</string>
+    <string name="daejeon">대전</string>
+    <string name="ulsan">울산</string>
+    <string name="sejong">세종</string>
+    <string name="gyeonggi">경기</string>
+    <string name="gangwon">강원</string>
+    <string name="chungbuk">충북</string>
+    <string name="chungnam">충남</string>
+    <string name="jeonbuk">전북</string>
+    <string name="jeonnam">전남</string>
+    <string name="gyeongbuk">경북</string>
+    <string name="gyeongnam">경남</string>
+    <string name="jeju">제주</string>
+    <string name="my_mask">내 마스크 구매일</string>
+    <string name="corona_coc">국민 행동수칙 준수</string>
+    <string name="relief_hospital_title">국민 안심병원 이용하기</string>
+    <string name="relief_holpital_content">
+        ㆍ일반 환자의 의료이용을 보장하고 감염 위험을 막기 위해 비호흡기 질환자와 호흡기 질환자를 분리하여 진료하는 ‘국민안심병원’ 을 운영 중입니다.
+        \nㆍ안심병원은 일반환자와 호흡기환자 외래 구역을 구분하여 운영하는 유형(유형 A)과 호흡기 외래와 더불어 검채채취 가능한 선별진료소, 호흡기환자 전용 입원실까지 함께 운영하는 유형(유형 B)이 있습니다.
+        \nㆍ안심병원 외에도, 일반 환자는 의료기관에 방문하지 않아도 전화 상담 · 처방 및 대리 처방을 받을 수 있어 병원 내 감염을 예방할 수 있습니다.
+        \nㆍ고혈압, 심장질환 등 비호흡기 환자분들은 국민안심병원 일반외래를 이용하시고, 단순 경미한 호흡기 증상을 가진 환자분들은 가까운 의원이나 국민안심병원 호흡기 외래를 이용하시기 바랍니다.
+        \nㆍ코로나19 증상이 의심되는 의사환자나 조사대상유증상자는 먼저 관할 보건소 또는 1339 콜센터 등에서 상담을 받으신 후 선별진료소를 방문할 것을 권장합니다</string>
+    <string name="elderly_manual_title">어린이 노약자 등 집단시설 이용 자제</string>
+    <string name="elderly_manual_content">
+        ㆍ어린이집은 3월 22일까지 휴원하며, 유·초·중·고의 개학은 당초 3월 2일에서 23일로 연기하였습니다.
+        \nㆍ요양시설 등 종사자는 발열, 기침 등 호흡기 증상이 있거나 환자발생국가 해외여행력이 있으면 14일 간 업무에서 배제하고 있으며, 시설 내 외부인 출입도 제한하고 있습니다.
+        \nㆍ사회복지 이용시설이 휴관하더라도 일상생활 유지에 필수적인 아동 도시락 지원, 장애인 활동지원 등의 서비스는 지속 제공합니다.</string>
+    <string name="corona_manual_source">자료 출저: 질병관리본부 코로나 바이러스 감염증 예방 조치 안내</string>
+    <string name="plenty_status">재고 100개 이상</string>
+    <string name="some_status">재고 30개 이상</string>
+    <string name="few_status">재고 30개 이하</string>
+    <string name="empty_status">품절</string>
+    <string name="break_status">판매 중지</string>
+    <string name="few_number_status">~ 30</string>
+    <string name="some_number_status">30 ~</string>
+    <string name="plenty_number_status">100 ~</string>
+    <string name="my_mask_date">내 마스크 구매일 계산기</string>
+    <string name="enter_your_year">아래를 눌러 자신의 출생년도 4자리를 선택해주세요</string>
+    <string name="sample_year">ex)1998</string>
+    <string name="available_date">구매 가능 요일</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="cancel">취소</string>
+    <string name="confirm">확인</string>
+    <string name="touch_to_select_year">눌러서 연도를 선택해 주세요</string>
+    <string name="pick_year">연도를 선택해 주세요</string>
+    <string name="status_renewal">데이터 갱신 시간 : 갱신 중</string>
 </resources>
