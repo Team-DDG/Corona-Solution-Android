@@ -54,26 +54,10 @@ fun setStoreMarkerTag(
     val statusStart = tagString.indexOf(status)
     val statusEnd = statusStart + status.length
 
-    val spannableString = SpannableString(tagString)
-    spannableString.setSpan(
-        StyleSpan(Typeface.BOLD),
-        storeNameStart,
-        storeNameEnd,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    spannableString.setSpan(
-        RelativeSizeSpan(1.35f),
-        storeNameStart,
-        storeNameEnd,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    spannableString.setSpan(
-        ForegroundColorSpan(colorCode),
-        statusStart,
-        statusEnd,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    return spannableString
+    return SpannableString(tagString)
+        .bold(storeNameStart, storeNameEnd)
+        .sizeUp(storeNameStart, storeNameEnd)
+        .color(colorCode, statusStart, statusEnd)
 }
 
 fun setHospitalClinicMarkerTag(
@@ -87,23 +71,16 @@ fun setHospitalClinicMarkerTag(
     val firstLineStart = 0
     val firstLineEnd = storeName.length + 3 + hospitalOrClinic.length
 
-    val spannableString = SpannableString(tagString)
-    spannableString.setSpan(
-        StyleSpan(Typeface.BOLD),
-        firstLineStart,
-        firstLineEnd,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    spannableString.setSpan(
-        RelativeSizeSpan(1.35f),
-        firstLineStart,
-        firstLineEnd,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-    return spannableString
+    return SpannableString(tagString)
+        .bold(firstLineStart, firstLineEnd)
+        .sizeUp(firstLineStart, firstLineEnd)
 }
 
-fun setStoreMarker(storeSales: StoreSales, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+fun setStoreMarker(
+    storeSales: StoreSales,
+    infoBottomSheet: InfoBottomSheet,
+    context: Context
+): Marker {
     val marker = Marker()
     val status = storeSales.remainStat
     var tag = SpannableString("")
@@ -158,7 +135,12 @@ fun setStoreMarker(storeSales: StoreSales, infoBottomSheet: InfoBottomSheet, con
 }
 
 
-fun setClinicMarker(clinic: HospitalClinic, naverMap: NaverMap, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+fun setClinicMarker(
+    clinic: HospitalClinic,
+    naverMap: NaverMap,
+    infoBottomSheet: InfoBottomSheet,
+    context: Context
+): Marker {
     val marker = Marker()
     marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
     setMarkerVisible(listOf(marker), naverMap)
@@ -172,7 +154,12 @@ fun setClinicMarker(clinic: HospitalClinic, naverMap: NaverMap, infoBottomSheet:
     return marker
 }
 
-fun setHospitalMarker(hospital: HospitalClinic, naverMap: NaverMap, infoBottomSheet: InfoBottomSheet, context: Context): Marker {
+fun setHospitalMarker(
+    hospital: HospitalClinic,
+    naverMap: NaverMap,
+    infoBottomSheet: InfoBottomSheet,
+    context: Context
+): Marker {
     val marker = Marker()
     marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
     setMarkerVisible(listOf(marker), naverMap)
