@@ -3,7 +3,6 @@ package com.golddog.mask_location.ext
 import android.content.Context
 import android.text.SpannableString
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import com.golddog.mask_location.R
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
@@ -78,40 +77,40 @@ fun setStoreMarker(
 ): Marker {
     val marker = Marker()
     val status = storeSales.remainStat
-    var tag = SpannableString("")
+    var infoString = SpannableString("")
     marker.position = LatLng(storeSales.lat, storeSales.lng)
 
     if (status == "plenty") {
         setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
-        tag = setStoreMarkerTag(
+        infoString = setStoreMarkerTag(
             storeSales,
             context.getString(R.string.plenty_status),
             ContextCompat.getColor(context, R.color.marker_plenty)
         )
     } else if (status == "some") {
         setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
-        tag = setStoreMarkerTag(
+        infoString = setStoreMarkerTag(
             storeSales,
             context.getString(R.string.some_status),
             ContextCompat.getColor(context, R.color.marker_some)
         )
     } else if (status == "few") {
         setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
-        tag = setStoreMarkerTag(
+        infoString = setStoreMarkerTag(
             storeSales,
             context.getString(R.string.few_status),
             ContextCompat.getColor(context, R.color.marker_few)
         )
     } else if (status == "empty") {
         setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
-        tag = setStoreMarkerTag(
+        infoString = setStoreMarkerTag(
             storeSales,
             context.getString(R.string.empty_status),
             ContextCompat.getColor(context, R.color.marker_none)
         )
     } else if (status == "break") {
         setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
-        tag = setStoreMarkerTag(
+        infoString = setStoreMarkerTag(
             storeSales,
             context.getString(R.string.break_status),
             ContextCompat.getColor(context, R.color.marker_none)
@@ -121,8 +120,7 @@ fun setStoreMarker(
     }
 
     marker.setOnClickListener {
-        infoBottomSheet.setInfo(tag)
-        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
+        infoBottomSheet.showWithInfo(context, infoString)
         true
     }
 
@@ -140,8 +138,7 @@ fun setHospitalClinicMarker(
     marker.position = LatLng(hospitalClinic.lat.toDouble(), hospitalClinic.lng.toDouble())
     setMarkerVisible(listOf(marker), naverMap)
     marker.setOnClickListener {
-        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospitalClinic, isClinic))
-        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
+        infoBottomSheet.showWithInfo(context, setHospitalClinicMarkerTag(hospitalClinic, isClinic))
         true
     }
     if (isClinic) marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
