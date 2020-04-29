@@ -1,12 +1,7 @@
 package com.golddog.mask_location.ext
 
 import android.content.Context
-import android.graphics.Typeface
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.golddog.mask_location.R
@@ -66,12 +61,12 @@ fun setHospitalClinicMarkerTag(
 ): SpannableString {
     val storeName = hospitalClinic.name
     val hospitalOrClinic = if (isClinic) "선별진료소" else "국민안심병원"
-    val tagString = "$storeName ($hospitalOrClinic)\n" +
+    val tag = "$storeName ($hospitalOrClinic)\n" +
             "${hospitalClinic.address}\n${hospitalClinic.phone}"
     val firstLineStart = 0
     val firstLineEnd = storeName.length + 3 + hospitalOrClinic.length
 
-    return SpannableString(tagString)
+    return SpannableString(tag)
         .bold(firstLineStart, firstLineEnd)
         .sizeUp(firstLineStart, firstLineEnd)
 }
@@ -134,41 +129,23 @@ fun setStoreMarker(
     return marker
 }
 
-
-fun setClinicMarker(
-    clinic: HospitalClinic,
+fun setHospitalClinicMarker(
+    hospitalClinic: HospitalClinic,
     naverMap: NaverMap,
     infoBottomSheet: InfoBottomSheet,
-    context: Context
-): Marker {
+    context: Context,
+    isClinic: Boolean
+): Marker{
     val marker = Marker()
-    marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
+    marker.position = LatLng(hospitalClinic.lat.toDouble(), hospitalClinic.lng.toDouble())
     setMarkerVisible(listOf(marker), naverMap)
-    marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
     marker.setOnClickListener {
-        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(clinic, true))
+        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospitalClinic, isClinic))
         infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
         true
     }
-
-    return marker
-}
-
-fun setHospitalMarker(
-    hospital: HospitalClinic,
-    naverMap: NaverMap,
-    infoBottomSheet: InfoBottomSheet,
-    context: Context
-): Marker {
-    val marker = Marker()
-    marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
-    setMarkerVisible(listOf(marker), naverMap)
-    marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
-    marker.setOnClickListener {
-        infoBottomSheet.setInfo(setHospitalClinicMarkerTag(hospital, false))
-        infoBottomSheet.show((context as FragmentActivity).supportFragmentManager, "infoWindow")
-        true
-    }
+    if (isClinic) marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
+    else marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
 
     return marker
 }

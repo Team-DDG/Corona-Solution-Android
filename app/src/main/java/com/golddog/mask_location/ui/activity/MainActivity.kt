@@ -102,7 +102,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
                 list.forEach {
                     if (::naverMap.isInitialized) {
-                        clinicMarkerList.add(setClinicMarker(it, naverMap, infoBottomSheet, this))
+                        clinicMarkerList.add(
+                            setHospitalClinicMarker(
+                                it,
+                                naverMap,
+                                infoBottomSheet,
+                                this,
+                                true
+                            )
+                        )
                     }
                 }
             })
@@ -116,12 +124,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 list.forEach {
                     if (::naverMap.isInitialized) {
                         hospitalMarkerList.add(
-                            setHospitalMarker(
-                                it,
-                                naverMap,
-                                infoBottomSheet,
-                                this
-                            )
+                            setHospitalClinicMarker(it, naverMap, infoBottomSheet, this, false)
                         )
                     }
                 }
@@ -173,7 +176,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) return
+        if (locationSource.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
+        ) return
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 

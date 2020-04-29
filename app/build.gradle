@@ -2,8 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.firebase.crashlytics'
-
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -83,7 +82,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
     // add SDKs for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
 
     // Naver Map
     implementation 'com.naver.maps:map-sdk:3.7.1'
