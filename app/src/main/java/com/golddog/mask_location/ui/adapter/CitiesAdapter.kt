@@ -29,17 +29,8 @@ class CitiesAdapter :
         result?.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CitiesViewHolder =
-        CitiesViewHolder(
-            ItemCitiesStatusBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder =
+        CitiesViewHolder(ItemCitiesStatusBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(
         holder: CitiesViewHolder,
