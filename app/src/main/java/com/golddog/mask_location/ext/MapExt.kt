@@ -10,6 +10,7 @@ import com.golddog.mask_location.ui.dialog.InfoBottomSheet
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 
 fun setMarkerVisible(markers: List<Marker>, naverMap: NaverMap) {
     markers.forEach {
@@ -82,4 +83,28 @@ fun setHospitalClinicMarker(
     else marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
 
     return marker
+}
+
+fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
+    marker.icon = overlayImage
+}
+
+fun setStoreMarkerTag(
+    storeSales: StoreSales,
+    status: String,
+    colorCode: Int
+): SpannableString {
+    val storeName = "${storeSales.name}\n"
+    val tagString =
+        "${storeSales.name}\n${storeSales.address}\n${status}\n" +
+                "입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
+    val storeNameStart = 0
+    val storeNameEnd = storeName.length
+    val statusStart = tagString.indexOf(status)
+    val statusEnd = statusStart + status.length
+
+    return SpannableString(tagString)
+        .bold(storeNameStart, storeNameEnd)
+        .sizeUp(storeNameStart, storeNameEnd)
+        .color(colorCode, statusStart, statusEnd)
 }
