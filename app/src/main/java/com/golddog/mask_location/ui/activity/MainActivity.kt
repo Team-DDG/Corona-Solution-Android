@@ -2,17 +2,12 @@ package com.golddog.mask_location.ui.activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
-import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import androidx.annotation.UiThread
-import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,21 +16,17 @@ import com.golddog.mask_location.base.BaseActivity
 import com.golddog.mask_location.data.ApiClient
 import com.golddog.mask_location.data.pref.SharedPreference
 import com.golddog.mask_location.databinding.ActivityMainBinding
-import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
-import com.golddog.mask_location.ext.showToast
-import com.golddog.mask_location.ui.dialog.InfoWindowDialog
+import com.golddog.mask_location.ext.*
+import com.golddog.mask_location.ui.dialog.InfoBottomSheet
 import com.golddog.mask_location.viewmodel.MainViewModel
 import com.golddog.mask_location.viewmodelfactory.MainViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapSdk
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -58,8 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private var clinicMarkerList: ArrayList<Marker> = arrayListOf()
     private var hospitalMarkerList: ArrayList<Marker> = arrayListOf()
 
-    private val infoWindow = InfoWindow()
-    private val infoWindowDialog = InfoWindowDialog()
+    private val infoBottomSheet = InfoBottomSheet()
 
     private val preference by lazy { SharedPreference(this) }
 
@@ -111,56 +101,74 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 clinicMarkerList.clear()
 
                 list.forEach {
-                    setClinicMarkerOnMap(it)
+                    if (::naverMap.isInitialized) {
+                        clinicMarkerList.add(
+                            setHospitalClinicMarker(
+                                it,
+                                naverMap,
+                                infoBottomSheet,
+                                this,
+                                true
+                            )
+                        )
+                    }
                 }
-        })
+            })
 
         viewModel.hospitalsData.observe(this,
-            Observer{list ->
+            Observer { list ->
                 setMarkerInvisible(hospitalMarkerList)
 
                 hospitalMarkerList.clear()
 
                 list.forEach {
-                    setHospitalMarkerOnMap(it)
+                    if (::naverMap.isInitialized) {
+                        hospitalMarkerList.add(
+                            setHospitalClinicMarker(it, naverMap, infoBottomSheet, this, false)
+                        )
+                    }
                 }
-        })
+            })
 
         viewModel.plentyChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(plentyMarkerList)
-                else setMarkerInvisible(plentyMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(plentyMarkerList, naverMap)
+                    else setMarkerInvisible(plentyMarkerList)
+                }
             })
 
         viewModel.someChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(someMarkerList)
-                else setMarkerInvisible(someMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(someMarkerList, naverMap)
+                    else setMarkerInvisible(someMarkerList)
+                }
             })
 
         viewModel.fewChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(fewMarkerList)
-                else setMarkerInvisible(fewMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(fewMarkerList, naverMap)
+                    else setMarkerInvisible(fewMarkerList)
+                }
             })
 
         viewModel.emptyChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(emptyMarkerList)
-                else setMarkerInvisible(emptyMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(emptyMarkerList, naverMap)
+                    else setMarkerInvisible(emptyMarkerList)
+                }
             })
 
         viewModel.breakChecked.observe(this,
             Observer {
-                if (it) setMarkerVisible(breakMarkerList)
-                else setMarkerInvisible(breakMarkerList)
+                if (::naverMap.isInitialized) {
+                    if (it) setMarkerVisible(breakMarkerList, naverMap)
+                    else setMarkerInvisible(breakMarkerList)
+                }
             })
-
-        infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(this) {
-            override fun getText(infoWindow: InfoWindow): CharSequence {
-                return infoWindow.marker?.tag as CharSequence? ?: ""
-            }
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -182,14 +190,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
-        naverMap.setOnMapClickListener { _, _ ->
-            infoWindow.close()
-        }
         naverMap.addOnCameraIdleListener {
-            val cameraLatLng = naverMap.cameraPosition.target
-            viewModel.getAroundMaskData(cameraLatLng.latitude, cameraLatLng.longitude)
-            viewModel.getAroundClinicData(cameraLatLng.latitude, cameraLatLng.longitude)
-            viewModel.getAroundHospitalData(cameraLatLng.latitude, cameraLatLng.longitude)
+            val latitude = naverMap.cameraPosition.target.latitude
+            val longitude = naverMap.cameraPosition.target.longitude
+            viewModel.getAroundMaskData(latitude, longitude)
+            viewModel.getAroundClinicData(latitude, longitude)
+            viewModel.getAroundHospitalData(latitude, longitude)
         }
         this.naverMap = naverMap
     }
@@ -200,188 +206,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.mapView, it).commit()
             }
-
         mapView.getMapAsync(this)
     }
 
-    private fun setMarkerVisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = naverMap
-        }
-    }
-
-    private fun setMarkerInvisible(markers: List<Marker>) {
-        markers.forEach {
-            it.map = null
-        }
-    }
-
-    private fun setMarkerVisibility(marker: Marker, visibility: Boolean) {
-        if (visibility) marker.map = naverMap
-        else marker.map = null
-    }
-
-    private fun setMarkerImage(overlayImage: OverlayImage, marker: Marker) {
-        marker.icon = overlayImage
-    }
-
     private fun setStoreMarkerOnMap(storeSales: StoreSales) {
-        val marker = Marker()
         val status = storeSales.remainStat
-
-        marker.position = LatLng(storeSales.lat, storeSales.lng)
-        marker.setOnClickListener {
-            infoWindow.open(marker)
-            infoWindowDialog.setInfo(marker.tag.toString())
-            infoWindowDialog.show(supportFragmentManager, "infoWindow")
-            true
-        }
+        val marker = setStoreMarker(storeSales, infoBottomSheet, this)
 
         if (status == "plenty") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_plenty), marker)
-            setStoreMarkerTag(
-                storeSales,
-                getString(R.string.plenty_status),
-                ContextCompat.getColor(this, R.color.marker_plenty),
-                marker
-            )
-            viewModel.plentyChecked.value?.let { setMarkerVisibility(marker, it) }
+            setMarkerVisibility(marker, viewModel.plentyChecked.value!!, naverMap)
             plentyMarkerList.add(marker)
         } else if (status == "some") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_some), marker)
-            setStoreMarkerTag(
-                storeSales,
-                getString(R.string.some_status),
-                ContextCompat.getColor(this, R.color.marker_some),
-                marker
-            )
-            viewModel.someChecked.value?.let { setMarkerVisibility(marker, it) }
+            setMarkerVisibility(marker, viewModel.someChecked.value!!, naverMap)
             someMarkerList.add(marker)
         } else if (status == "few") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_few), marker)
-            setStoreMarkerTag(
-                storeSales,
-                getString(R.string.few_status),
-                ContextCompat.getColor(this, R.color.marker_few),
-                marker
-            )
-            viewModel.fewChecked.value?.let { setMarkerVisibility(marker, it) }
+            setMarkerVisibility(marker, viewModel.fewChecked.value!!, naverMap)
             fewMarkerList.add(marker)
         } else if (status == "empty") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_empty), marker)
-            setStoreMarkerTag(
-                storeSales,
-                getString(R.string.empty_status),
-                ContextCompat.getColor(this, R.color.marker_none),
-                marker
-            )
-            viewModel.emptyChecked.value?.let { setMarkerVisibility(marker, it) }
+            setMarkerVisibility(marker, viewModel.emptyChecked.value!!, naverMap)
             emptyMarkerList.add(marker)
         } else if (status == "break") {
-            setMarkerImage(OverlayImage.fromResource(R.drawable.marker_break), marker)
-            setStoreMarkerTag(
-                storeSales,
-                getString(R.string.break_status),
-                ContextCompat.getColor(this, R.color.marker_none),
-                marker
-            )
-            viewModel.breakChecked.value?.let { setMarkerVisibility(marker, it) }
+            setMarkerVisibility(marker, viewModel.breakChecked.value!!, naverMap)
             breakMarkerList.add(marker)
         } else {
             marker.map = null
         }
-        // if문으로 비교하는 이유는 when문은 hashcode 까지 비교해서 오류가 발생함.
-    }
-
-    private fun setClinicMarkerOnMap(clinic: HospitalClinic) {
-        val marker = Marker()
-        marker.position = LatLng(clinic.lat.toDouble(), clinic.lng.toDouble())
-        marker.setOnClickListener {
-            infoWindow.open(marker)
-            true
-        }
-        setMarkerVisible(listOf(marker))
-        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_clinic)
-        setHospitalClinicMarkerTag(clinic, true, marker)
-        clinicMarkerList.add(marker)
-    }
-
-    private fun setHospitalMarkerOnMap(hospital: HospitalClinic) {
-        val marker = Marker()
-        marker.position = LatLng(hospital.lat.toDouble(), hospital.lng.toDouble())
-        marker.setOnClickListener {
-            infoWindow.open(marker)
-            true
-        }
-        setMarkerVisible(listOf(marker))
-        marker.iconTintColor = ContextCompat.getColor(this, R.color.marker_hospital)
-        setHospitalClinicMarkerTag(hospital, false, marker)
-        hospitalMarkerList.add(marker)
-    }
-
-    private fun setStoreMarkerTag(
-        storeSales: StoreSales,
-        status: String,
-        colorCode: Int,
-        marker: Marker
-    ) {
-        val storeName = "${storeSales.name}\n"
-        val tagString =
-            "${storeSales.name}\n${storeSales.address}\n${status}\n" +
-                    "입고시간 : ${storeSales.stockAt}\n갱신시간 : ${storeSales.createdAt}"
-        val storeNameStart = 0
-        val storeNameEnd = storeName.length
-        val statusStart = tagString.indexOf(status)
-        val statusEnd = statusStart + status.length
-
-        val spannableString = SpannableString(tagString)
-        spannableString.setSpan(
-            StyleSpan(Typeface.BOLD),
-            storeNameStart,
-            storeNameEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            RelativeSizeSpan(1.35f),
-            storeNameStart,
-            storeNameEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            ForegroundColorSpan(colorCode),
-            statusStart,
-            statusEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        marker.tag = spannableString
-    }
-
-    private fun setHospitalClinicMarkerTag(
-        hospitalClinic: HospitalClinic,
-        isClinic: Boolean,
-        marker: Marker
-    ) {
-        val storeName = hospitalClinic.name
-        val hospitalOrClinic = if (isClinic) "선별진료소" else "국민안심병원"
-        val tagString = "$storeName ($hospitalOrClinic)\n" +
-                "${hospitalClinic.address}\n${hospitalClinic.phone}"
-        val firstLineStart = 0
-        val firstLineEnd = storeName.length + 3 + hospitalOrClinic.length
-
-        val spannableString = SpannableString(tagString)
-        spannableString.setSpan(
-            StyleSpan(Typeface.BOLD),
-            firstLineStart,
-            firstLineEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            RelativeSizeSpan(1.35f),
-            firstLineStart,
-            firstLineEnd,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        marker.tag = spannableString
     }
 
     private fun checkAgreement() {

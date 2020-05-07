@@ -91,4 +91,5 @@
     <string name="touch_to_select_year">눌러서 연도를 선택해 주세요</string>
     <string name="pick_year">연도를 선택해 주세요</string>
     <string name="status_renewal">데이터 갱신 시간 : 갱신 중</string>
+    <string name="find_road">현 위치에서 길 찾기</string>
 </resources>

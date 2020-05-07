@@ -5,7 +5,6 @@
     tools:context=".ui.activity.MainActivity">
 
     <data>
-
         <variable
             name="isFabOpen"
             type="Boolean" />
