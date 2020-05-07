@@ -11,7 +11,7 @@ import com.naver.maps.map.overlay.OverlayImage
 class IntoStringFactory {
     companion object {
         fun createInfoString(
-            status: String,
+            status: String?,
             context: Context,
             marker: Marker,
             storeSales: StoreSales

@@ -103,13 +103,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 list.forEach {
                     if (::naverMap.isInitialized) {
                         clinicMarkerList.add(
-                            setHospitalClinicMarker(
-                                it,
-                                naverMap,
-                                infoBottomSheet,
-                                this,
-                                true
-                            )
+                            setHospitalClinicMarker(it, naverMap, infoBottomSheet, this, true)
                         )
                     }
                 }
