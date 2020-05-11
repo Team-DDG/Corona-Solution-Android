@@ -1,6 +1,8 @@
 package com.golddog.mask_location.ui.dialog
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.view.LayoutInflater
@@ -26,6 +28,10 @@ class InfoBottomSheet : BottomSheetDialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tv_infowindow.text = text
+        btn_infowindow.setOnClickListener {
+            val uri = "nmap://map?&appname=com.golddog.mask_location"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+        }
     }
 
     fun showWithInfo(context: Context, info : SpannableString) {
