@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Constraint
+            android:id="@+id/fab_mask_rotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_main"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_mask_rotation_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/fab_mask_rotation"
+            app:layout_constraintRight_toLeftOf="@id/fab_mask_rotation"
+            app:layout_constraintTop_toTopOf="@id/fab_mask_rotation" />
+
+        <Constraint
+            android:id="@+id/fab_1339call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_mask_rotation"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_1339call_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/fab_1339call"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_1339call" />
+
+        <Constraint
+            android:id="@+id/fab_corona_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_1339call"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_corona_manual_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_corona_manual" />
+
+        <Constraint
+            android:id="@+id/fab_corona_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_corona_manual"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_corona_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.0"
+            android:scaleY="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/fab_corona_status"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_corona_status" />
+    </ConstraintSet>
+
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:rotation="45"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Constraint
+            android:id="@+id/fab_mask_rotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_main"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_mask_rotation_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/fab_mask_rotation"
+            app:layout_constraintRight_toLeftOf="@id/fab_mask_rotation"
+            app:layout_constraintTop_toTopOf="@id/fab_mask_rotation" />
+
+        <Constraint
+            android:id="@+id/fab_1339call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_mask_rotation"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_1339call_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/fab_1339call"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_1339call" />
+
+        <Constraint
+            android:id="@+id/fab_corona_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_1339call"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_corona_manual_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/fab_corona_manual"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_corona_manual" />
+
+        <Constraint
+            android:id="@+id/fab_corona_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            app:layout_constraintBottom_toTopOf="@id/fab_corona_manual"
+            app:layout_constraintLeft_toLeftOf="@id/fab_main"
+            app:layout_constraintRight_toRightOf="@id/fab_main" />
+
+        <Constraint
+            android:id="@+id/tv_corona_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            app:layout_constraintBottom_toBottomOf="@id/fab_corona_status"
+            app:layout_constraintRight_toRightOf="@id/tv_mask_rotation_label"
+            app:layout_constraintTop_toTopOf="@id/fab_corona_status" />
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="300">
+        <OnClick
+            app:clickAction="toggle"
+            app:targetId="@id/fab_main" />
+    </Transition>
+</MotionScene>

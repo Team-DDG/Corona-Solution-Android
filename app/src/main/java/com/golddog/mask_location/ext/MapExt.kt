@@ -51,7 +51,7 @@ fun setStoreMarker(
     context: Context
 ): Marker {
     val marker = Marker()
-    val status = storeSales.remainStat
+    val status = storeSales.remainStat ?: ""
     var infoString = SpannableString("")
     marker.position = LatLng(storeSales.lat, storeSales.lng)
 
