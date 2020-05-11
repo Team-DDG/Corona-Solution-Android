@@ -15,7 +15,7 @@ data class StoreSales(
 	val address: String,
 	val type: String,
 	@SerializedName("remain_stat")
-	val remainStat: String
+	val remainStat: String?
 ) {
 	override fun toString(): String {
 		return "[$code : $name($lat, $lng), $remainStat] "

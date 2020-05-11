@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
-import android.view.View
 import androidx.annotation.UiThread
 import androidx.core.text.toSpannable
 import androidx.lifecycle.Observer
@@ -66,13 +65,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.vm = viewModel
-        binding.isFabOpen = false
 
-        val toolbar = toolbar
+        val toolbar = tb_main
         toolbar.title = ""
         setSupportActionBar(toolbar)
 
         setNaverMap()
+        setupFabOnClickListener()
         checkAgreement()
 
         viewModel.storesData.observe(this,
@@ -202,9 +201,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
     private fun setNaverMap() {
         val fm = supportFragmentManager
-        mapView = fm.findFragmentById(R.id.mapView) as MapFragment?
+        mapView = fm.findFragmentById(R.id.fragment_map) as MapFragment?
             ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.mapView, it).commit()
+                fm.beginTransaction().add(R.id.fragment_map, it).commit()
             }
         mapView.getMapAsync(this)
     }
@@ -237,10 +236,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         if (!preference.getAgreement()) getAgreementDialog().show()
     }
 
-    private fun changeIsFabOpen() {
-        binding.isFabOpen = !binding.isFabOpen!!
-    }
-
     private fun getAgreementDialog(): MaterialAlertDialogBuilder {
         val contentSpan: Spannable = getString(R.string.service_agreement).toSpannable()
         contentSpan.setSpan(
@@ -268,33 +263,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             .setCancelable(false)
     }
 
+    private fun setupFabOnClickListener() {
+        fab_mask_rotation.setOnClickListener { startActivity<MaskActivity>() }
+        fab_1339call.setOnClickListener { startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339"))) }
+        fab_corona_manual.setOnClickListener { startActivity<CoronaManualActivity>() }
+        fab_corona_status.setOnClickListener { startActivity<CoronaStatusActivity>() }
+    }
+
     override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
         if (e.errorCode == "429") {
             showToast("사용량이 많아 지도를 사용할 수 없습니다.")
         }
-    }
-
-    fun clickFabMain(view: View) {
-        changeIsFabOpen()
-    }
-
-    fun clickFabMask(view: View) {
-        startActivity(Intent(applicationContext, MaskActivity::class.java))
-        changeIsFabOpen()
-    }
-
-    fun clickFabCall(view: View) {
-        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339")))
-        changeIsFabOpen()
-    }
-
-    fun clickFabManualCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaManualActivity::class.java))
-        changeIsFabOpen()
-    }
-
-    fun clickFabCurrentCorona(view: View) {
-        startActivity(Intent(applicationContext, CoronaStatusActivity::class.java))
-        changeIsFabOpen()
     }
 }
