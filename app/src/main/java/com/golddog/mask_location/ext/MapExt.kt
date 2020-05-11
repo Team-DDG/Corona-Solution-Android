@@ -58,7 +58,7 @@ fun setStoreMarker(
     infoString = IntoStringFactory.createInfoString(status, context, marker, storeSales)
 
     marker.setOnClickListener {
-        infoBottomSheet.showWithInfo(context, infoString)
+        infoBottomSheet.showWithInfo(context, infoString, storeSales.lat, storeSales.lng, storeSales.name)
         true
     }
 
@@ -71,17 +71,22 @@ fun setHospitalClinicMarker(
     infoBottomSheet: InfoBottomSheet,
     context: Context,
     isClinic: Boolean
-): Marker{
+): Marker {
     val marker = Marker()
-    marker.position = LatLng(hospitalClinic.lat.toDouble(), hospitalClinic.lng.toDouble())
-    setMarkerVisible(listOf(marker), naverMap)
+    val hospitalClinicLat = hospitalClinic.lat.toDouble()
+    val hospitalClinicLng = hospitalClinic.lng.toDouble()
+
+    marker.position = LatLng(hospitalClinicLat, hospitalClinicLng)
     marker.setOnClickListener {
-        infoBottomSheet.showWithInfo(context, setHospitalClinicMarkerTag(hospitalClinic, isClinic))
+        infoBottomSheet.showWithInfo(context, setHospitalClinicMarkerTag(hospitalClinic, isClinic), hospitalClinicLat, hospitalClinicLng, hospitalClinic.name)
         true
     }
-    if (isClinic) marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
-    else marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
-
+    setMarkerVisible(listOf(marker), naverMap)
+    if (isClinic) {
+        marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_clinic)
+    } else {
+        marker.iconTintColor = ContextCompat.getColor(context, R.color.marker_hospital)
+    }
     return marker
 }
 
