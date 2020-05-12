@@ -72,6 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
 
         setNaverMap()
         setupFabOnClickListener()
+        setupToastEvent()
         checkAgreement()
 
         viewModel.storesData.observe(this,
@@ -186,9 +187,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         naverMap.addOnCameraIdleListener {
             val latitude = naverMap.cameraPosition.target.latitude
             val longitude = naverMap.cameraPosition.target.longitude
-            viewModel.getAroundMaskData(latitude, longitude)
-            viewModel.getAroundClinicData(latitude, longitude)
-            viewModel.getAroundHospitalData(latitude, longitude)
+            viewModel.getMapData(latitude, longitude)
         }
         this.naverMap = naverMap
     }
@@ -262,6 +261,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         fab_1339call.setOnClickListener { startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:1339"))) }
         fab_corona_manual.setOnClickListener { startActivity<CoronaManualActivity>() }
         fab_corona_status.setOnClickListener { startActivity<CoronaStatusActivity>() }
+    }
+
+    private fun setupToastEvent() {
+        viewModel.toastEvent.observe(this, Observer { showToast(it) })
     }
 
     override fun onAuthFailed(e: NaverMapSdk.AuthFailedException) {
