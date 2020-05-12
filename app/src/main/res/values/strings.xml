@@ -92,6 +92,7 @@
     <string name="pick_year">연도를 선택해 주세요</string>
     <string name="status_renewal">데이터 갱신 시간 : 갱신 중</string>
     <string name="find_road">현 위치에서 길 찾기</string>
-
+    <string name="open_navermap">네이버 지도에서 위치 보기</string>
+  
     <string name="message_load_failed">정보를 불러오는데 실패했습니다</string>
 </resources>
