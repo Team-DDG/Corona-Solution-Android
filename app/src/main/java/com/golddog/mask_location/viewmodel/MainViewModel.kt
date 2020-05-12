@@ -1,52 +1,43 @@
 package com.golddog.mask_location.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.golddog.mask_location.R
 import com.golddog.mask_location.base.BaseViewModel
 import com.golddog.mask_location.data.datasource.HospitalDataSource
 import com.golddog.mask_location.data.datasource.MaskDataSource
 import com.golddog.mask_location.entity.HospitalClinic
 import com.golddog.mask_location.entity.StoreSales
+import com.golddog.mask_location.util.SingleLiveEvent
 
-class MainViewModel(private val maskDataSource: MaskDataSource, private val hospitalDataSource: HospitalDataSource) : BaseViewModel() {
-    var storesData: MutableLiveData<List<StoreSales>> = MutableLiveData()
-    var clinicsData: MutableLiveData<List<HospitalClinic>> = MutableLiveData()
-    var hospitalsData: MutableLiveData<List<HospitalClinic>> = MutableLiveData()
+class MainViewModel(
+    private val maskDataSource: MaskDataSource,
+    private val hospitalDataSource: HospitalDataSource
+) : BaseViewModel() {
+    val storesData: MutableLiveData<List<StoreSales>> = MutableLiveData()
+    val clinicsData: MutableLiveData<List<HospitalClinic>> = MutableLiveData()
+    val hospitalsData: MutableLiveData<List<HospitalClinic>> = MutableLiveData()
 
-    var plentyChecked: MutableLiveData<Boolean> = MutableLiveData(true)
-    var someChecked: MutableLiveData<Boolean> = MutableLiveData(true)
-    var fewChecked: MutableLiveData<Boolean> = MutableLiveData(true)
-    var emptyChecked: MutableLiveData<Boolean> = MutableLiveData(false)
-    var breakChecked: MutableLiveData<Boolean> = MutableLiveData(false)
+    val plentyChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    val someChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    val fewChecked: MutableLiveData<Boolean> = MutableLiveData(true)
+    val emptyChecked: MutableLiveData<Boolean> = MutableLiveData(false)
+    val breakChecked: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    fun getAroundMaskData(lat: Double, lng: Double) {
+    val toastEvent = SingleLiveEvent<Int>()
+
+    fun getMapData(lat: Double, lng: Double) {
         addDisposable(
             maskDataSource.getAroundMaskData(lat, lng)
-                .subscribe({
+                .flatMap {
                     storesData.value = it.stores
-                }, {
-                    // TODO : "공적 마스크 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
-                })
-        )
-    }
-
-    fun getAroundClinicData(lat: Double, lng: Double) {
-        addDisposable(
-            hospitalDataSource.getClinicData(lat, lng)
-                .subscribe({
+                    hospitalDataSource.getClinicData(lat, lng)
+                }.flatMap {
                     clinicsData.value = it.result
-                }, {
-                    // TODO : "선별진로소 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
-                })
-        )
-    }
-
-    fun getAroundHospitalData(lat: Double, lng: Double) {
-        addDisposable(hospitalDataSource.getHospitalData(lat, lng)
-                .subscribe({
+                    hospitalDataSource.getHospitalData(lat, lng)
+                }.subscribe({
                     hospitalsData.value = it.result
                 }, {
-                    // TODO : "국민 안심 병원 정보를 불러오는데 실패했습니다." 토스트 띄우는 로직 작성
+                    toastEvent.value = R.string.message_load_failed
                 })
         )
     }
