@@ -1,6 +1,6 @@
 # 코로나 솔루션
 코로나 솔루션은 코로나19 극복에 실질적인 도움이 되는 공적 마스크 재고 확인, 예방 수칙 및 현황 등을 제공합니다.  
-현 버전은 2.0 버전으로, 현재 원스토어에서 만나보실 수 있습니다. 많은 다운로드 부탁드립니다. [원스토어 링크!](https://onestore.co.kr/userpoc/apps/view?pid=0000747123)
+현재는 2.0 버전으로 작성되어 있고. 서비스는 종료된 상태입니다.
 
 ### 나도 컨트리뷰터!?
 누구나, 언제나, 여러분의 도움은 환영입니다. 아래 방법을 통해 '코로나 솔루션'을 직접 개선할 수 있습니다.
@@ -25,7 +25,7 @@
  
 ### 아키텍처
 ![아키텍처 다이어그램](https://user-images.githubusercontent.com/36754680/81561384-0f739300-93ce-11ea-906f-a6e0d4ed1351.png)  
-'코로나 솔루션'에서 다루는 자원은 마스크, 병원, 현황입니다. 공통적으로 data계층에서 처리할 로직이 적으며, 단순 처리를 하는 경우가 많습니다. 그렇기 때문에 API Client에서 모든 data로직을 처리하는 방향으로 설계했습니다. 그리고 ViewModel은 API Client에 직접 참조하는 것이 아니라, DataSource 인터페이스를 참조하고 있습니다. 그렇기 때문에 API Client는 언제든지 교체, 개선이 가능합니다. 
+'코로나 솔루션'에서 다루는 자원은 마스크, 병원, 현황입니다. 공통적으로 data계층에서 처리할 로직이 적으며, 단순 처리를 하는 경우가 많습니다. 그렇기 때문에 API Client에서 모든 Data로직을 처리하는 방향으로 설계했습니다. 그리고 ViewModel은 API Client에 직접 참조하는 것이 아니라, DataSource 인터페이스를 참조하고 있습니다. 그렇기 때문에 API Client는 언제든지 교체, 개선이 가능합니다. 
  
 ### 라이브러리
 * [Android Jetpack](https://developer.android.com/jetpack/?gclid=Cj0KCQiAwP3yBRCkARIsAABGiPqdj2dwHr5d0lsRM7dkP4c9A3Ih-e2C-CHnM26xGD89-tdQpWOGes8aAlzjEALw_wcB)  
@@ -52,7 +52,3 @@
 * [Material](https://material.io/develop/android/docs/getting-started/)
 * [NaverMap](https://navermaps.github.io/android-map-sdk/guide-ko/1.html)
 * [TedPermission](https://github.com/ParkSangGwon/TedPermission)
-
-### Error 대비
-Crashlytics
-* https://antdevhistory.tistory.com/42
